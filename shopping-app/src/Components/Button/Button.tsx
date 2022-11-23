@@ -4,7 +4,8 @@ import "./button.styles.scss";
 type ButtonProps = {
   children: ReactNode;
   buttonType?: string;
-  type: "button" | "submit" | "reset" | undefined;
+  type?: "button" | "submit" | "reset" | undefined;
+  onClick?: () => void;
 };
 
 type ButtonTypes = "google" | "inverted";

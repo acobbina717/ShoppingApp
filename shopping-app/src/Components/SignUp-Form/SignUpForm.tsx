@@ -12,7 +12,7 @@ import Button from "../Button/Button";
 
 type SignUpFormProps = {};
 
-interface FormFields {
+export interface FormFields {
   displayName: string;
   email: string;
   password: string;
