@@ -1,47 +1,20 @@
-import { faker } from "@faker-js/faker";
-import Directory from "./Components/Directory/Directory";
+import { Routes, Route } from "react-router-dom";
+
+import Home from "./Routes/Home/Home";
+import Navigation from "./Routes/Navigation/Navigation";
+import SignIn from "./Routes/Sign-In/SignIn";
 
 type AppProps = {};
 
-export interface Categories {
-  id: string;
-  title: string;
-  imageUrl: string;
-}
-
 const App = (props: AppProps) => {
-  const categories: Categories[] = [
-    {
-      id: faker.datatype.uuid(),
-      title: faker.commerce.department(),
-      imageUrl: faker.image.fashion(),
-    },
-    {
-      id: faker.datatype.uuid(),
-      title: faker.commerce.department(),
-      imageUrl: faker.image.fashion(),
-    },
-    {
-      id: faker.datatype.uuid(),
-      title: faker.commerce.department(),
-      imageUrl: faker.image.fashion(),
-    },
-    {
-      id: faker.datatype.uuid(),
-      title: faker.commerce.department(),
-      imageUrl: faker.image.fashion(),
-    },
-    {
-      id: faker.datatype.uuid(),
-      title: faker.commerce.department(),
-      imageUrl: faker.image.fashion(),
-    },
-  ];
-
   return (
-    <div>
-      <Directory categories={categories} />
-    </div>
+    <Routes>
+      <Route path="/" element={<Navigation />}>
+        <Route index element={<Home />} />
+        <Route path="shop" />
+        <Route path="sign-in" element={<SignIn />} />
+      </Route>
+    </Routes>
   );
 };
 
