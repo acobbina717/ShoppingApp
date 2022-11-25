@@ -1,12 +1,14 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import toast from "react-hot-toast";
 import {
-  signInAuthUserWithEmailAndPassword,
-  createUserDocFromGoogleAuth,
   signInWithGooglePopup,
+  createUserDocFromGoogleAuth,
+  signInAuthUserWithEmailAndPassword,
 } from "../../Utils/Firebase/firebase.utils";
+
+import toast from "react-hot-toast";
 import Button from "../Button/Button";
 import FormInput from "../Form-Input/FormInput";
+
 import { FormFields } from "../SignUp-Form/SignUpForm";
 
 import "./sign-in-form.styles.scss";
@@ -44,13 +46,12 @@ const SignInForm = (props: SignInFormProps) => {
         email,
         password
       );
-      console.log(response);
-
-      // if (response) await createUserDocFromGoogleAuth(response);
-
-      resetFormFields();
-
-      toast.success("Sign in successful");
+      if (response) {
+        const { user } = response;
+        await createUserDocFromGoogleAuth(user);
+        resetFormFields();
+        toast.success("Sign in successful");
+      }
     } catch (error: any) {
       switch (error.code) {
         case "auth/wrong-password":
@@ -67,9 +68,7 @@ const SignInForm = (props: SignInFormProps) => {
 
   const signInWithGoogle = async () => {
     try {
-      const response = await signInWithGooglePopup();
-
-      if (response) await createUserDocFromGoogleAuth(response);
+      await signInWithGooglePopup();
     } catch (error) {
       if (error instanceof Error) console.log(error.message);
     }

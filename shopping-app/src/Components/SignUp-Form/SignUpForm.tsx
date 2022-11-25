@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocFromGoogleAuth,
@@ -51,10 +51,12 @@ const SignUpForm = (props: SignUpFormProps) => {
         email,
         password
       );
-      if (response)
-        await createUserDocFromGoogleAuth(response, { displayName });
-      resetFormFields();
-      toast.success("Sign Up Successful");
+      if (response) {
+        const { user } = response;
+        await createUserDocFromGoogleAuth(user, { displayName });
+        resetFormFields();
+        toast.success("Sign Up Successful");
+      }
     } catch (error: any) {
       if (error.code === "auth/weak-password") {
         toast.error("Password should be at least 6 characters");

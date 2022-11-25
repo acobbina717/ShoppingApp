@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "RED-TONE WOOL BALACLAVA",
+    "imageUrl": "/src/assets/shop-data/hats/ACZC0031Q0_UFH941_MXR64_F.jpg",
+    "price": 237
+  },
+  {
+    "id": 2,
+    "name": "FUCHSIA WOOL BALACLAVA WITH CONTRASTING MENDING",
+    "imageUrl": "/src/assets/shop-data/hats/ACZC0031Q4_UFWH07_00C73_F.jpg",
+    "price": 550
+  },
+  {
+    "id": 3,
+    "name": "BLACK STRIPED MOHAIR AND WOOL BEANIE",
+    "imageUrl": "/src/assets/shop-data/hats/CLZC0085Q0_UFU116_RGN99_F.jpg",
+    "price": 450
+  },
+  {
+    "id": 4,
+    "name": "SHEARLING BASEBALL HAT",
+    "imageUrl": "/src/assets/shop-data/hats/CLZC0087QX_USCT48_STR35_F.jpg",
+    "price": 590
+  },
+  {
+    "id": 5,
+    "name": "GREY CHEVRON WOOL BUCKET HAT",
+    "imageUrl": "/src/assets/shop-data/hats/CLZC0088Q0_UTW968_00N39_F.jpg",
+    "price": 285
+  },
+  {
+    "id": 6,
+    "name": "GREY TARTAN WOOL BUCKET HAT",
+    "imageUrl": "/src/assets/shop-data/hats/CLZC0088SY_USCU54_FWN80_F.jpg",
+    "price": 321
+  },
+  {
+    "id": 7,
+    "name": "MULTICOLOR TARTAN WOOL BUCKET HAT",
+    "imageUrl": "/src/assets/shop-data/hats/CLZC0088SY_USCU54_FWV61_F.jpg",
+    "price": 321
+  },
+  {
+    "id": 8,
+    "name": "SKY BLUE BRUSHED WOOL BLEND BUCKET HAT",
+    "imageUrl": "/src/assets/shop-data/hats/CLZC0090Q0_UAW004_MTB44_F.jpg",
+    "price": 174
+  },
+  {
+    "id": 9,
+    "name": "GREY WOOL TARTAN BASEBALL HAT",
+    "imageUrl": "/src/assets/shop-data/hats/CLZC0098SY_USCU54_FWN80_F.jpg",
+    "price": 285
+  }
+]
