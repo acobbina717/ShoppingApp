@@ -4,6 +4,7 @@ import Navigation from "./Routes/Navigation/Navigation";
 import Home from "./Routes/Home/Home";
 import Shop from "./Routes/Shop/Shop";
 import Auth from "./Routes/Auth/Auth";
+import Checkout from "./Routes/Checkout/Checkout";
 
 type AppProps = {};
 
@@ -14,6 +15,7 @@ const App = (props: AppProps) => {
         <Route index element={<Home />} />
         <Route path="shop" element={<Shop />} />
         <Route path="auth" element={<Auth />} />
+        <Route path="checkout" element={<Checkout />} />
       </Route>
     </Routes>
   );

@@ -18,11 +18,14 @@ export interface ProductsObj {
   name: string;
   imageUrl: string;
   price: number;
+  quantity: number;
 }
 
+export type ProductsNoQuantity = Omit<ProductsObj, "quantity">;
+
 type Context = {
-  products: ProductsObj[] | [];
-  setProducts: Dispatch<SetStateAction<ProductsObj[] | []>>;
+  products: ProductsNoQuantity[] | [];
+  setProducts: Dispatch<SetStateAction<ProductsNoQuantity[] | []>>;
 };
 
 const productContext: Context = {
@@ -33,7 +36,7 @@ const productContext: Context = {
 export const ProductsContext = createContext(productContext);
 
 export const ProductsProvider = ({ children }: ProviderProps) => {
-  const [products, setProducts] = useState<ProductsObj[] | []>(PRODUCTS);
+  const [products, setProducts] = useState<ProductsNoQuantity[]>(PRODUCTS);
   const value = { products, setProducts };
 
   return (
