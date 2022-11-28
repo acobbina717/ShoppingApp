@@ -6,20 +6,22 @@ import {
   useEffect,
   useState,
 } from "react";
-import { ProductsNoQuantity, ProductsObj } from "./products.context";
+import { Products } from "./categories.context";
 
 interface CartProviderProps {
   children: ReactNode;
 }
 
+export type CartItem = Omit<Products, "quantity">;
+
 type Context = {
   isCartOpen: boolean;
   setIsCartOpen: Dispatch<SetStateAction<boolean>>;
-  cartItems: Array<ProductsObj>;
-  setCartItems: Dispatch<SetStateAction<Array<ProductsObj>>>;
-  addToCart: (productToAdd: ProductsNoQuantity) => void;
-  removeFromCart: (productToRemove: ProductsObj) => void;
-  clearFromCart: (productToRemove: ProductsObj) => void;
+  cartItems: Array<Products>;
+  setCartItems: Dispatch<SetStateAction<Array<Products>>>;
+  addToCart: (productToAdd: CartItem) => void;
+  removeFromCart: (productToRemove: Products) => void;
+  clearFromCart: (productToRemove: Products) => void;
   cartCount: number;
   cartTotal: number;
 };
@@ -36,10 +38,7 @@ const cartContextState: Context = {
   cartTotal: 0,
 };
 
-const addItemToCart = (
-  cartItems: Array<ProductsObj>,
-  productToAdd: ProductsNoQuantity
-) => {
+const addItemToCart = (cartItems: Array<Products>, productToAdd: CartItem) => {
   const existingCartItem = cartItems.find(
     (product) => product.id === productToAdd.id
   );
@@ -47,7 +46,7 @@ const addItemToCart = (
   if (existingCartItem) {
     return cartItems.map((product) =>
       product.id === productToAdd.id
-        ? { ...product, quantity: product.quantity + 1 }
+        ? { ...product, quantity: (product.quantity as number) + 1 }
         : product
     );
   }
@@ -56,8 +55,8 @@ const addItemToCart = (
 };
 
 const removeCartItem = (
-  cartItems: Array<ProductsObj>,
-  productToRemove: ProductsObj
+  cartItems: Array<Products>,
+  productToRemove: Products
 ) => {
   const existingCartItem = cartItems.find(
     (cartItem) => cartItem.id === productToRemove.id
@@ -68,14 +67,14 @@ const removeCartItem = (
 
   return cartItems.map((product) =>
     product.id === productToRemove.id
-      ? { ...product, quantity: product.quantity - 1 }
+      ? { ...product, quantity: (product.quantity as number) - 1 }
       : product
   );
 };
 
 const clearCartItem = (
-  cartItems: Array<ProductsObj>,
-  productToRemove: ProductsObj
+  cartItems: Array<Products>,
+  productToRemove: Products
 ) => {
   return cartItems.filter((product) => product.id !== productToRemove.id);
 };
@@ -84,17 +83,17 @@ export const CartContext = createContext(cartContextState);
 
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
-  const [cartItems, setCartItems] = useState<Array<ProductsObj>>([]);
+  const [cartItems, setCartItems] = useState<Array<Products>>([]);
   const [cartCount, setCartCount] = useState<number>(0);
   const [cartTotal, setCartTotal] = useState<number>(0);
 
-  const addToCart = (productToAdd: ProductsNoQuantity) => {
+  const addToCart = (productToAdd: CartItem) => {
     setCartItems(addItemToCart(cartItems, productToAdd));
   };
 
   useEffect(() => {
     const newCartCount = cartItems.reduce(
-      (total, cartItem) => total + cartItem.quantity,
+      (total, cartItem) => total + (cartItem.quantity as number),
       0
     );
     setCartCount(newCartCount);
@@ -102,17 +101,18 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   useEffect(() => {
     const newCartTotal = cartItems.reduce(
-      (total, cartItem) => total + cartItem.quantity * cartItem.price,
+      (total, cartItem) =>
+        total + (cartItem.quantity as number) * cartItem.price,
       0
     );
     setCartTotal(newCartTotal);
   }, [cartItems]);
 
-  const removeFromCart = (productToRemove: ProductsObj) => {
+  const removeFromCart = (productToRemove: Products) => {
     setCartItems(removeCartItem(cartItems, productToRemove));
   };
 
-  const clearFromCart = (productToRemove: ProductsObj) => {
+  const clearFromCart = (productToRemove: Products) => {
     setCartItems(clearCartItem(cartItems, productToRemove));
   };
 

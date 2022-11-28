@@ -1,6 +1,5 @@
 import { ChangeEvent } from "react";
-
-import "./form-input.styles.scss";
+import { FormInputLabel, Group, Input } from "./form-input.styles";
 
 type FormInputProps = {
   label: string;
@@ -13,19 +12,15 @@ type FormInputProps = {
 
 const FormInput = ({ label, ...otherProps }: FormInputProps) => {
   return (
-    <div className="group">
-      <input {...otherProps} className="form-input" />
+    <Group>
+      <Input {...otherProps} />
 
       {label && (
-        <label
-          className={`${
-            otherProps.value.length ? "shrink" : ""
-          } form-input-label`}
-        >
+        <FormInputLabel shrink={otherProps.value.length}>
           {label}
-        </label>
+        </FormInputLabel>
       )}
-    </div>
+    </Group>
   );
 };
 

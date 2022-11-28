@@ -1,22 +1,22 @@
-import { ProductsObj } from "../../Contexts/products.context";
-import "./cart-item.styles.scss";
+import { Products } from "../../Contexts/categories.context";
+import { CartItemContainer, ItemDetails } from "./cart-item.styles";
 
 type CartItemProps = {
-  cartItem: ProductsObj;
+  cartItem: Products;
 };
 
 const CartItem = ({ cartItem }: CartItemProps) => {
   const { name, quantity, imageUrl, price } = cartItem;
   return (
-    <div className="cart-item-container">
+    <CartItemContainer>
       <img src={imageUrl} alt={`${name}`} />
-      <div className="item-details">
-        <span className="name">{name}</span>
-        <span className="price">
+      <ItemDetails>
+        <span>{name}</span>
+        <span>
           {quantity} x ${price}
         </span>
-      </div>
-    </div>
+      </ItemDetails>
+    </CartItemContainer>
   );
 };
 

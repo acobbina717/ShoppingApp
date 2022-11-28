@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useContext, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocFromGoogleAuth,
@@ -7,10 +7,9 @@ import {
 import FromInput from "../Form-Input/FormInput";
 
 import toast from "react-hot-toast";
-import "./sign-up-form.styles.scss";
-import Button from "../Button/Button";
 
-type SignUpFormProps = {};
+import Button from "../Button/Button";
+import { SignUpContainer } from "./sign-up-form.styles";
 
 export interface FormFields {
   displayName: string;
@@ -26,7 +25,7 @@ const defaultFormFields: FormFields = {
   confirmPassword: "",
 };
 
-const SignUpForm = (props: SignUpFormProps) => {
+const SignUpForm = () => {
   const [formFields, setFormFields] = useState<FormFields>(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
@@ -67,7 +66,7 @@ const SignUpForm = (props: SignUpFormProps) => {
   };
 
   return (
-    <div className="sign-up-container">
+    <SignUpContainer>
       <h2>Don't have an account?</h2>
       <span>Sign up with your email and password</span>
       <form onSubmit={handleSubmit}>
@@ -109,7 +108,7 @@ const SignUpForm = (props: SignUpFormProps) => {
 
         <Button type="submit">Sign Up</Button>
       </form>
-    </div>
+    </SignUpContainer>
   );
 };
 

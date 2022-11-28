@@ -8,9 +8,25 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   User,
-  UserCredential,
 } from "firebase/auth";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  writeBatch,
+  query,
+  getDocs,
+} from "firebase/firestore";
+import { Products } from "../../Contexts/categories.context";
+
+export interface ShopDataCollection {
+  title: string;
+  items: Array<Products>;
+}
+
+type UserAuthState = (user: User | null) => void;
 
 const firebaseConfig = {
   apiKey: "AIzaSyCIJv8KdmNFt-HqKunt3hDoKdMH5-LS23k",
@@ -23,6 +39,40 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 
 export const db = getFirestore();
+
+export const addCollectionAndDocuments = async (
+  collectionKey: string,
+  objectsToAdd: Array<ShopDataCollection>
+) => {
+  const collectionRef = collection(db, collectionKey);
+
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);
+  });
+
+  await batch.commit();
+};
+
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, "categories");
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+
+  const categoryMap = querySnapshot.docs.reduce(
+    (acc: { [key: string]: Array<Products> }, docSnapshot) => {
+      const { items, title } = docSnapshot.data();
+      acc[title.toLowerCase()] = items;
+      return acc;
+    },
+    {}
+  );
+
+  return categoryMap;
+};
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });
@@ -78,8 +128,6 @@ export const signInAuthUserWithEmailAndPassword = async (
 };
 
 export const signOutUser = async () => await signOut(auth);
-
-type UserAuthState = (user: User | null) => void;
 
 export const onAuthStateChangeListener = (callback: UserAuthState) =>
   onAuthStateChanged(auth, callback);

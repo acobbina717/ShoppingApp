@@ -6,12 +6,11 @@ import {
 } from "../../Utils/Firebase/firebase.utils";
 
 import toast from "react-hot-toast";
-import Button from "../Button/Button";
+import Button, { BUTTON_TYPE_CLASSES } from "../Button/Button";
 import FormInput from "../Form-Input/FormInput";
 
 import { FormFields } from "../SignUp-Form/SignUpForm";
-
-import "./sign-in-form.styles.scss";
+import { ButtonsContainer, SignInContainer } from "./sign-in-form.styles";
 
 type SignInFormProps = {};
 
@@ -75,7 +74,7 @@ const SignInForm = (props: SignInFormProps) => {
   };
 
   return (
-    <div className="sign-in-container">
+    <SignInContainer>
       <form onSubmit={handleSubmit}>
         <h2>I already have an account</h2>
 
@@ -98,14 +97,18 @@ const SignInForm = (props: SignInFormProps) => {
           value={password}
           onChange={handleChange}
         />
-        <div className="buttons-container">
+        <ButtonsContainer className="buttons-container">
           <Button type="submit">Sign in</Button>
-          <Button type="button" buttonType="google" onClick={signInWithGoogle}>
+          <Button
+            type="button"
+            buttonType={BUTTON_TYPE_CLASSES.google}
+            onClick={signInWithGoogle}
+          >
             Google Sign In
           </Button>
-        </div>
+        </ButtonsContainer>
       </form>
-    </div>
+    </SignInContainer>
   );
 };
 
