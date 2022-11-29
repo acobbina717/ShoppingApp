@@ -1,6 +1,11 @@
-import { useContext } from "react";
-import { CartContext } from "../../Contexts/cart.context";
-import { Products } from "../../Contexts/categories.context";
+import {
+  addToCart,
+  removeFromCart,
+  clearFromCart,
+} from "../../Utils/Redux/features/cart/cartSlice";
+import type { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
+import { useAppDispatch } from "../../Utils/Redux/hooks/hooks";
+
 import {
   Arrow,
   Value,
@@ -12,18 +17,19 @@ import {
 } from "./checkout-item.styles";
 
 type Props = {
-  cartItem: Products;
+  cartItem: Product;
 };
 
 const CheckoutItem = ({ cartItem }: Props) => {
-  const { addToCart, removeFromCart, clearFromCart } = useContext(CartContext);
+  const dispatch = useAppDispatch();
+
   const { imageUrl, name, price, quantity } = cartItem;
 
-  const removeItemHandler = () => removeFromCart(cartItem);
+  const removeItemHandler = () => dispatch(removeFromCart(cartItem));
 
-  const addItemHandler = () => addToCart(cartItem);
+  const addItemHandler = () => dispatch(addToCart(cartItem));
 
-  const clearItemHandler = () => clearFromCart(cartItem);
+  const clearItemHandler = () => dispatch(clearFromCart(cartItem));
 
   return (
     <CheckoutItemContainer>

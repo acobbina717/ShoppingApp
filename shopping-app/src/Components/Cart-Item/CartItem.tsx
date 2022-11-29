@@ -1,8 +1,8 @@
-import { Products } from "../../Contexts/categories.context";
+import type { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
 import { CartItemContainer, ItemDetails } from "./cart-item.styles";
 
 type CartItemProps = {
-  cartItem: Products;
+  cartItem: Product;
 };
 
 const CartItem = ({ cartItem }: CartItemProps) => {

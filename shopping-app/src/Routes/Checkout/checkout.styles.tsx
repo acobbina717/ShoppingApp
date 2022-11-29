@@ -30,12 +30,3 @@ export const CheckoutTotal = styled.span`
   margin-left: auto;
   font-size: 36px;
 `;
-
-// .checkout - container {
-//   .checkout-header {
-//     .header-block {
-//     }
-//   }
-//   .total {
-//   }
-// }

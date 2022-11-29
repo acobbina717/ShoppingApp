@@ -1,23 +1,24 @@
 import Button, { BUTTON_TYPE_CLASSES } from "../Button/Button";
-import { Products } from "../../Contexts/categories.context";
 import {
   ProductCardContainer,
   ProductCardFooter,
   ProductName,
   ProductPrice,
 } from "./product-card.styles";
-import { useContext } from "react";
-import { CartContext } from "../../Contexts/cart.context";
+import type { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
+import { useAppDispatch } from "../../Utils/Redux/hooks/hooks";
+import { addToCart } from "../../Utils/Redux/features/cart/cartSlice";
 
 type ProductCardProps = {
-  product: Products;
+  product: Product;
 };
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const { imageUrl, name, price } = product;
-  const { addToCart } = useContext(CartContext);
+  const dispatch = useAppDispatch();
 
-  const addProductToCart = () => addToCart(product);
+  const addProductToCart = () => dispatch(addToCart(product));
+
   return (
     <ProductCardContainer>
       <img src={imageUrl} alt={`${name}`} />

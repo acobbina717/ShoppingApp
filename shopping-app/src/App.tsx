@@ -6,9 +6,39 @@ import Shop from "./Routes/Shop/Shop";
 import Auth from "./Routes/Auth/Auth";
 import Checkout from "./Routes/Checkout/Checkout";
 
-type AppProps = {};
+import { useEffect } from "react";
 
-const App = (props: AppProps) => {
+import {
+  createUserDocFromGoogleAuth,
+  onAuthStateChangeListener,
+} from "./Utils/Firebase/firebase.utils";
+
+import { useAppDispatch, useAppSelector } from "./Utils/Redux/hooks/hooks";
+import { setCurrentUser } from "./Utils/Redux/features/user/userSlice";
+import {
+  setCartTotal,
+  setCartCount,
+} from "./Utils/Redux/features/cart/cartSlice";
+
+const App = () => {
+  const dispatch = useAppDispatch();
+  const { cartItems } = useAppSelector((state) => state.cart);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChangeListener((user) => {
+      if (user) {
+        createUserDocFromGoogleAuth(user);
+      }
+      dispatch(setCurrentUser(user));
+    });
+
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    dispatch(setCartTotal());
+    dispatch(setCartCount());
+  }, [cartItems]);
+
   return (
     <Routes>
       <Route path="/" element={<Navigation />}>

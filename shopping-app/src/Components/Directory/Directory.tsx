@@ -1,8 +1,8 @@
-import { Products } from "../../Contexts/categories.context";
+import type { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
 import DirecoryItem from "../Directory-Item/DirectoryItem";
 import { DirectoryContainer } from "./directory.styles";
 
-export interface Directory extends Pick<Products, "id" | "imageUrl"> {
+export interface Directory extends Pick<Product, "id" | "imageUrl"> {
   title: string;
   route: string;
 }

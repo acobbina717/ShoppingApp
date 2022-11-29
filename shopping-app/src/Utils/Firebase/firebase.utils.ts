@@ -19,11 +19,11 @@ import {
   query,
   getDocs,
 } from "firebase/firestore";
-import { Products } from "../../Contexts/categories.context";
+import type { Product } from "../Redux/features/categories/categoriesSlice";
 
 export interface ShopDataCollection {
   title: string;
-  items: Array<Products>;
+  items: Array<Product>;
 }
 
 type UserAuthState = (user: User | null) => void;
@@ -63,7 +63,7 @@ export const getCategoriesAndDocuments = async () => {
   const querySnapshot = await getDocs(q);
 
   const categoryMap = querySnapshot.docs.reduce(
-    (acc: { [key: string]: Array<Products> }, docSnapshot) => {
+    (acc: { [key: string]: Array<Product> }, docSnapshot) => {
       const { items, title } = docSnapshot.data();
       acc[title.toLowerCase()] = items;
       return acc;

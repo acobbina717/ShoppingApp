@@ -1,19 +1,28 @@
-import { Fragment, useContext } from "react";
-import { CategoriesContext, Products } from "../../Contexts/categories.context";
+import { Fragment, useEffect } from "react";
+
+import { getCategoriesAndDocuments } from "../../Utils/Firebase/firebase.utils";
+import { setCategoriesMap } from "../../Utils/Redux/features/categories/categoriesSlice";
+import { useAppDispatch, useAppSelector } from "../../Utils/Redux/hooks/hooks";
 import CategoryPreview from "../Category-Preview/CategoryPreview";
 
-type Props = {};
+const CategoriesPreview = () => {
+  const { categoriesMap } = useAppSelector((state) => state.categories);
 
-const CategoriesPreview = (props: Props) => {
-  const { categoriesMap } = useContext(CategoriesContext);
-  const catergories = categoriesMap as unknown as {
-    [key: string]: Products[];
-  };
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const getCategoriesMap = async () => {
+      const categoryMap = await getCategoriesAndDocuments();
+      dispatch(setCategoriesMap(categoryMap));
+    };
+
+    getCategoriesMap();
+  }, []);
 
   return (
     <Fragment>
       {Object.keys(categoriesMap).map((title) => {
-        const products = catergories[title];
+        const products = categoriesMap[title];
         return (
           <CategoryPreview key={title} title={title} products={products} />
         );

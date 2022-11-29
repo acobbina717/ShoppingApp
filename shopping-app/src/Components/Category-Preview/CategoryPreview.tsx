@@ -1,4 +1,4 @@
-import { Products } from "../../Contexts/categories.context";
+import { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
 import ProductCard from "../Product-Card/ProductCard";
 
 import {
@@ -9,7 +9,7 @@ import {
 
 type CategoryPreviewProps = {
   title: string;
-  products: Products[];
+  products: Product[];
 };
 
 function CategoryPreview({ title, products }: CategoryPreviewProps) {
