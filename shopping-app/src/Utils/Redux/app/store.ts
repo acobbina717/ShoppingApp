@@ -1,8 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, applyMiddleware } from "@reduxjs/toolkit";
 import rootReducer from "../reducers";
 import logger from "redux-logger";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { composeWithDevToolsDevelopmentOnly } from "@redux-devtools/extension";
 
 export type RootState = ReturnType<typeof store.getState>;
 
@@ -14,13 +15,11 @@ const persistConfig = {
   blacklist: ["user"],
 };
 
-const isProduction = process.env.NODE_ENV === "production";
-
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: isProduction ? [logger] : [],
+  middleware: process.env.NODE_ENV === "development" && logger ? [logger] : [],
 });
 
 export const persistor = persistStore(store);
