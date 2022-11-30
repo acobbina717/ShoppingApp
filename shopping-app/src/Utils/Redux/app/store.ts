@@ -14,11 +14,13 @@ const persistConfig = {
   blacklist: ["user"],
 };
 
+const isProduction = process.env.NODE_ENV === "production";
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: [logger],
+  middleware: isProduction ? [logger] : [],
 });
 
 export const persistor = persistStore(store);
