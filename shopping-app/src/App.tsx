@@ -10,6 +10,7 @@ import { useEffect } from "react";
 
 import {
   createUserDocFromGoogleAuth,
+  getCategoriesAndDocuments,
   onAuthStateChangeListener,
 } from "./Utils/Firebase/firebase.utils";
 
@@ -19,6 +20,7 @@ import {
   setCartTotal,
   setCartCount,
 } from "./Utils/Redux/features/cart/cartSlice";
+import { setCategoriesMap } from "./Utils/Redux/features/categories/categoriesSlice";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -38,6 +40,15 @@ const App = () => {
     dispatch(setCartTotal());
     dispatch(setCartCount());
   }, [cartItems]);
+
+  useEffect(() => {
+    const getCategoriesMap = async () => {
+      const categoryMap = await getCategoriesAndDocuments();
+      dispatch(setCategoriesMap(categoryMap));
+    };
+
+    getCategoriesMap();
+  }, []);
 
   return (
     <Routes>
