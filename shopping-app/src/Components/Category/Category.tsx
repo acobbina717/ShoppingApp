@@ -1,16 +1,19 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 import ProductCard from "../Product-Card/ProductCard";
 
 import { CategoryContainer } from "./category.styles";
 import { useAppSelector } from "../../Utils/Redux/hooks/hooks";
 import { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
+import Spinner from "../Spinner/Spinner";
 
 const Category = () => {
-  const { categoriesMap } = useAppSelector((state) => state.categories);
   const { category } = useParams();
   const [products, setProducts] = useState<Product[]>([]);
+  const { categoriesMap, error, status } = useAppSelector(
+    (state) => state.categories
+  );
 
   useEffect(() => {
     if (category) {
@@ -19,12 +22,19 @@ const Category = () => {
   }, [category, categoriesMap]);
 
   return (
-    <CategoryContainer>
-      {products &&
-        products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-    </CategoryContainer>
+    <Fragment>
+      <h1>{category?.toUpperCase()}</h1>
+      {status === "loading" ? (
+        <Spinner />
+      ) : (
+        <CategoryContainer>
+          {products &&
+            products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+        </CategoryContainer>
+      )}
+    </Fragment>
   );
 };
 
