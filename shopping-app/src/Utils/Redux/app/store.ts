@@ -23,7 +23,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: [thunk, logger],
+  middleware: middleWares,
   devTools: true,
 });
 
