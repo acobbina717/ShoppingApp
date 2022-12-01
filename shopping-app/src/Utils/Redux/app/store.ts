@@ -16,15 +16,18 @@ const persistConfig = {
   whitelist: ["cart"],
 };
 
-let middleWares =
-  process.env.NODE_ENV !== "production" && logger ? [thunk, logger] : [thunk];
+const isProduction = process.env.NODE_ENV !== "production";
+
+const middleWares = isProduction && logger ? [thunk, logger] : [thunk];
+
+const devToolsOptions = isProduction ? true : false;
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: middleWares,
-  devTools: true,
+  devTools: devToolsOptions,
 });
 
 export const persistor = persistStore(store);
