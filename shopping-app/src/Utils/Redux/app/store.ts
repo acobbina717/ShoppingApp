@@ -1,8 +1,4 @@
-import {
-  applyMiddleware,
-  configureStore,
-  MiddlewareArray,
-} from "@reduxjs/toolkit";
+import { applyMiddleware, configureStore } from "@reduxjs/toolkit";
 import rootReducer from "../reducers";
 import logger from "redux-logger";
 import { persistStore, persistReducer } from "redux-persist";
@@ -21,15 +17,13 @@ const persistConfig = {
 };
 
 let middleWares =
-  process.env.NODE_ENV !== "production" && logger
-    ? new MiddlewareArray().concat(logger)
-    : new MiddlewareArray();
+  process.env.NODE_ENV !== "production" && logger ? [thunk, logger] : [thunk];
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: middleWares,
+  middleware: [thunk, logger],
   devTools: true,
 });
 
