@@ -18,6 +18,8 @@ import {
   writeBatch,
   query,
   getDocs,
+  DocumentSnapshot,
+  DocumentData,
 } from "firebase/firestore";
 import type { Product } from "../Redux/features/categories/categoriesSlice";
 
@@ -82,10 +84,10 @@ export const auth = getAuth();
 export const signInWithGooglePopup = () =>
   signInWithPopup(auth, googleProvider);
 
-export const createUserDocFromGoogleAuth = async (
+export const createUserDocFromAuth = async (
   user: User,
   additionInfomation = {}
-) => {
+): Promise<DocumentSnapshot<DocumentData> | undefined> => {
   if (!user) return;
 
   const userDocRef = doc(db, "users", user.uid);
@@ -106,7 +108,7 @@ export const createUserDocFromGoogleAuth = async (
       if (error instanceof Error) console.log(error.message);
     }
   }
-  return userDocRef;
+  return userSnapshot;
 };
 
 export const createAuthUserWithEmailAndPassword = async (
@@ -131,3 +133,16 @@ export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangeListener = (callback: UserAuthState) =>
   onAuthStateChanged(auth, callback);
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (userAuth) => {
+        unsubscribe();
+        resolve(userAuth);
+      },
+      reject
+    );
+  });
+};

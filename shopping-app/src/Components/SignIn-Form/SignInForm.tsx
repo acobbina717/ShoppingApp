@@ -1,9 +1,4 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import {
-  signInWithGooglePopup,
-  createUserDocFromGoogleAuth,
-  signInAuthUserWithEmailAndPassword,
-} from "../../Utils/Firebase/firebase.utils";
 
 import toast from "react-hot-toast";
 import Button, { BUTTON_TYPE_CLASSES } from "../Button/Button";
@@ -11,6 +6,11 @@ import FormInput from "../Form-Input/FormInput";
 
 import { FormFields } from "../SignUp-Form/SignUpForm";
 import { ButtonsContainer, SignInContainer } from "./sign-in-form.styles";
+import { useAppDispatch } from "../../Utils/Redux/hooks/hooks";
+import {
+  googleSignInLoading,
+  emailSignInLoading,
+} from "../../Utils/Redux/features/user/userSlice";
 
 type SignUpFormFields = Omit<FormFields, "displayName" | "confirmPassword">;
 
@@ -20,6 +20,7 @@ const defaultFormFields: SignUpFormFields = {
 };
 
 const SignInForm = () => {
+  const dispatch = useAppDispatch();
   const [formFields, setFormFields] =
     useState<SignUpFormFields>(defaultFormFields);
 
@@ -39,16 +40,9 @@ const SignInForm = () => {
 
     if (!email || !password) return;
     try {
-      const response = await signInAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
-      if (response) {
-        const { user } = response;
-        await createUserDocFromGoogleAuth(user);
-        resetFormFields();
-        toast.success("Sign in successful");
-      }
+      dispatch(emailSignInLoading({ email, password }));
+      resetFormFields();
+      toast.success("Sign in successful");
     } catch (error: any) {
       switch (error.code) {
         case "auth/wrong-password":
@@ -64,11 +58,7 @@ const SignInForm = () => {
   };
 
   const signInWithGoogle = async () => {
-    try {
-      await signInWithGooglePopup();
-    } catch (error) {
-      if (error instanceof Error) console.log(error.message);
-    }
+    dispatch(googleSignInLoading());
   };
 
   return (

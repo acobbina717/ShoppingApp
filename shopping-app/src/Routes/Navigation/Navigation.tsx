@@ -12,12 +12,19 @@ import {
   NavLinkContainer,
   NavLink,
 } from "./navigation.styles";
-import { RootState } from "../../Utils/Redux/app/store";
-import { useAppSelector } from "../../Utils/Redux/hooks/hooks";
+import { RootState } from "../../Utils/Redux/app/store/store";
+import { useAppDispatch, useAppSelector } from "../../Utils/Redux/hooks/hooks";
+
+import { signOutLoading } from "../../Utils/Redux/features/user/userSlice";
 
 const Navigation = () => {
+  const dispatch = useAppDispatch();
   const { currentUser } = useAppSelector((state: RootState) => state.user);
   const { isCartOpen } = useAppSelector((state: RootState) => state.cart);
+
+  const handleSignOut = () => {
+    dispatch(signOutLoading());
+  };
 
   return (
     <Fragment>
@@ -28,7 +35,7 @@ const Navigation = () => {
         <NavLinkContainer className="nav-links-container">
           <NavLink to="/shop">SHOP</NavLink>
           {currentUser ? (
-            <NavLink as={"span"} onClick={signOutUser}>
+            <NavLink as={"span"} onClick={handleSignOut}>
               SIGN OUT
             </NavLink>
           ) : (

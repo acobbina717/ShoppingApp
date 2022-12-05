@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import {
   createAuthUserWithEmailAndPassword,
-  createUserDocFromGoogleAuth,
+  createUserDocFromAuth,
 } from "../../Utils/Firebase/firebase.utils";
 
 import FromInput from "../Form-Input/FormInput";
@@ -10,6 +10,8 @@ import toast from "react-hot-toast";
 
 import Button from "../Button/Button";
 import { SignUpContainer } from "./sign-up-form.styles";
+import { useDispatch } from "react-redux";
+import { emailSignUpLoading } from "../../Utils/Redux/features/user/userSlice";
 
 export interface FormFields {
   displayName: string;
@@ -26,6 +28,7 @@ const defaultFormFields: FormFields = {
 };
 
 const SignUpForm = () => {
+  const dispatch = useDispatch();
   const [formFields, setFormFields] = useState<FormFields>(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
@@ -46,16 +49,9 @@ const SignUpForm = () => {
       return;
     }
     try {
-      const response = await createAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
-      if (response) {
-        const { user } = response;
-        await createUserDocFromGoogleAuth(user, { displayName });
-        resetFormFields();
-        toast.success("Sign Up Successful");
-      }
+      dispatch(emailSignUpLoading({ email, password, displayName }));
+      resetFormFields();
+      toast.success("Sign Up Successful");
     } catch (error: any) {
       if (error.code === "auth/weak-password") {
         toast.error("Password should be at least 6 characters");
