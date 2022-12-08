@@ -66,7 +66,7 @@ export const userSlice = createSlice({
       state.status = "failed";
       state.error = payload;
     },
-    emailSignUpLoading(state) {
+    emailSignUpLoading(state, { payload }: PayloadAction<EmailProps>) {
       state.status = "loading";
     },
     emailSignUpFulfilled(
