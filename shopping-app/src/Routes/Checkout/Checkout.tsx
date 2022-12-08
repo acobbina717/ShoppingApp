@@ -1,4 +1,5 @@
 import CheckoutItem from "../../Components/Checkout-Item/CheckoutItem";
+import PaymentForm from "../../Components/Payment-Form/PaymentForm";
 import { useAppSelector } from "../../Utils/Redux/hooks/hooks";
 
 import {
@@ -33,6 +34,7 @@ const Checkout = () => {
         return <CheckoutItem key={product.id} cartItem={product} />;
       })}
       <CheckoutTotal className="total">Total: ${cartTotal}</CheckoutTotal>
+      <PaymentForm />
     </CheckoutContainer>
   );
 };

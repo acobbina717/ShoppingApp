@@ -35,7 +35,7 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    emailSignInLoading(state) {
+    emailSignInLoading(state, { payload }) {
       state.status = "loading";
     },
     signInFulfilled(

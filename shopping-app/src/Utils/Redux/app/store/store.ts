@@ -18,23 +18,19 @@ const persistConfig = {
   whitelist: ["cart"],
 };
 
-const isProduction = process.env.NODE_ENV !== "production";
-
 const sagaMiddleware = createSagaMiddleware();
 
 const middleWares =
-  isProduction && logger
+  import.meta.env.MODE !== "production" && logger
     ? [thunk, sagaMiddleware, logger]
     : [thunk, sagaMiddleware];
-
-const devToolsOptions = isProduction ? true : false;
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: middleWares,
-  devTools: devToolsOptions,
+  devTools: import.meta.env.MODE !== "production",
 });
 
 sagaMiddleware.run(rootSaga);
