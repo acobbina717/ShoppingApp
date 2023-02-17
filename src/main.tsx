@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import { BrowserRouter } from "react-router-dom";
 
 import { persistor, store } from "./Utils/Redux/app/store/store";
 import { Provider } from "react-redux";
@@ -18,12 +17,10 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <BrowserRouter>
-          <Elements stripe={stripePromise}>
-            <App />
-          </Elements>
-          <Toaster />
-        </BrowserRouter>
+        <Elements stripe={stripePromise}>
+          <App />
+        </Elements>
+        <Toaster />
       </PersistGate>
     </Provider>
   </React.StrictMode>

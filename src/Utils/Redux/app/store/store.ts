@@ -21,7 +21,7 @@ const persistConfig = {
 const sagaMiddleware = createSagaMiddleware();
 
 const middleWares =
-  import.meta.env.MODE !== "production" && logger
+  process.env.NODE_ENV !== "production" && logger
     ? [thunk, sagaMiddleware, logger]
     : [thunk, sagaMiddleware];
 
@@ -30,7 +30,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: middleWares,
-  devTools: import.meta.env.MODE !== "production",
+  devTools: process.env.NODE_ENV !== "production",
 });
 
 sagaMiddleware.run(rootSaga);

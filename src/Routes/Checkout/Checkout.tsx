@@ -1,5 +1,5 @@
-import CheckoutItem from "../../Components/Checkout-Item/CheckoutItem";
-import PaymentForm from "../../Components/Payment-Form/PaymentForm";
+import CheckoutItem from "../../components/Checkout-Item/CheckoutItem";
+import PaymentForm from "../../components/Payment-Form/PaymentForm";
 import { useAppSelector } from "../../Utils/Redux/hooks/hooks";
 
 import {

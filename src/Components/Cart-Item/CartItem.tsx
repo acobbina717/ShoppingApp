@@ -1,22 +1,24 @@
+import Image from "next/image";
 import type { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
-import { CartItemContainer, ItemDetails } from "./cart-item.styles";
+import { useStyles } from "./cart-item.styles";
 
 type CartItemProps = {
   cartItem: Product;
 };
 
 const CartItem = ({ cartItem }: CartItemProps) => {
+  const { classes } = useStyles();
   const { name, quantity, imageUrl, price } = cartItem;
   return (
-    <CartItemContainer>
-      <img src={imageUrl} alt={`${name}`} />
-      <ItemDetails>
+    <div className={classes.container}>
+      <Image className={classes.img} src={imageUrl} alt={`${name}`} />
+      <div className={classes.itemDetails}>
         <span>{name}</span>
         <span>
           {quantity} x ${price}
         </span>
-      </ItemDetails>
-    </CartItemContainer>
+      </div>
+    </div>
   );
 };
 
