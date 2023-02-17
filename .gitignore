@@ -1,5 +1,7 @@
 # Local Netlify folder
+.next
 .netlify
+
 
 
 # Logs
