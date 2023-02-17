@@ -1,21 +1,14 @@
-import { setIsCartOpen } from "../../Utils/Redux/features/cart/cartSlice";
-import { useAppDispatch, useAppSelector } from "../../Utils/Redux/hooks/hooks";
-import { useStyles } from "./cart.styles";
-
 import { BsBag } from "react-icons/bs";
+import CartItem from "../Cart-Item/CartItem";
 import { Button, Popover } from "@mantine/core";
 
-import CartItem from "../Cart-Item/CartItem";
+import { useStyles } from "./cart.styles";
+
+import { useAppSelector } from "../../Utils/Redux/hooks/hooks";
 
 const Cart = () => {
   const { classes } = useStyles();
-  const { isCartOpen, cartCount, cartItems } = useAppSelector(
-    (state) => state.cart
-  );
-
-  const dispatch = useAppDispatch();
-
-  const handleToggleDropdown = () => dispatch(setIsCartOpen(!isCartOpen));
+  const { cartCount, cartItems } = useAppSelector((state) => state.cart);
 
   const goToCheckoutHandler = () => {
     // navigate("/checkout");
@@ -30,6 +23,7 @@ const Cart = () => {
           <span className={classes.itemCount}>{cartCount}</span>
         </div>
       </Popover.Target>
+
       <Popover.Dropdown>
         <div className={classes.cartItems}>
           {cartItems.length ? (

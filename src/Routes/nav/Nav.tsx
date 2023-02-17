@@ -3,34 +3,22 @@ import {
   Container,
   Group,
   Avatar,
-  Button,
   Burger,
-  Transition,
-  Paper,
   Stack,
+  Popover,
 } from "@mantine/core";
-import AuthButton from "../../components/auth-button/AuthButton";
-import Link from "next/link";
+import NavLinks from "../../components/nav-links/NavLinks";
 import Cart from "../../components/cart/Cart";
-import { useDisclosure } from "@mantine/hooks";
 
+import { useDisclosure } from "@mantine/hooks";
 import { useStyles } from "./nav.styles";
 
-const NavLinks = () => (
-  <>
-    <Button component={Link} variant="subtle" color="dark" href={"/"}>
-      Shop
-    </Button>
-    <AuthButton />
-  </>
-);
-
 const Nav = () => {
-  const [opened, { toggle, close }] = useDisclosure(false);
   const { classes } = useStyles();
+  const [opened, { toggle }] = useDisclosure(false);
 
   return (
-    <Header height={60} mb={120} className={classes.root}>
+    <Header height={60} mb={30} className={classes.root}>
       <Container className={classes.header}>
         <Avatar size={28} />
 
@@ -39,20 +27,22 @@ const Nav = () => {
           <Cart />
         </Group>
 
-        <Group className={classes.burger}>
-          <Burger opened={opened} onClick={toggle} size="sm" />
-          <Cart />
-        </Group>
+        <div className={classes.burger}>
+          <Popover position="bottom" withArrow shadow="md" onChange={toggle}>
+            <Group>
+              <Popover.Target>
+                <Burger opened={opened} size="sm" />
+              </Popover.Target>
+              <Cart />
+            </Group>
 
-        <Transition transition="pop-top-right" duration={200} mounted={opened}>
-          {(styles) => (
-            <Paper className={classes.dropdown} withBorder style={styles}>
+            <Popover.Dropdown>
               <Stack>
                 <NavLinks />
               </Stack>
-            </Paper>
-          )}
-        </Transition>
+            </Popover.Dropdown>
+          </Popover>
+        </div>
       </Container>
     </Header>
   );
