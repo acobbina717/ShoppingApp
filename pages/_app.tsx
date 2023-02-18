@@ -2,7 +2,7 @@ import React from "react";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
-import Navigation from "../src/Routes/nav/Nav";
+import Navigation from "../src/components/nav/Nav";
 import { Provider } from "react-redux";
 import { persistor, store } from "../src/Utils/Redux/app/store/store";
 

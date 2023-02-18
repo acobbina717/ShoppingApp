@@ -1,67 +1,44 @@
-import styled from "styled-components";
+import { createStyles } from "@mantine/core";
 
-export const BackgroundImage = styled.div<{ imageUrl?: string }>`
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  background-image: ${({ imageUrl }) => `url(${imageUrl})`};
-`;
+export const useStyles = createStyles((theme, _params, getRef) => {
+  const image = getRef("image");
 
-export const Body = styled.div`
-  height: 90px;
-  padding: 0 25px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid black;
-  background-color: white;
-  opacity: 0.7;
-  position: absolute;
+  return {
+    card: {
+      position: "relative",
+      height: 280,
+      backgroundColor:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[6]
+          : theme.colors.gray[0],
 
-  h2 {
-    font-weight: bold;
-    margin: 0 6px 0;
-    font-size: 22px;
-    color: #4a4a4a;
-  }
+      [`&:hover .${image}`]: {
+        transform: "scale(1.03)",
+      },
+    },
 
-  p {
-    font-weight: lighter;
-    font-size: 16px;
-  }
-`;
+    image: {
+      ref: image,
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundSize: "cover",
+      transition: "transform 500ms ease",
+    },
 
-export const DirectoryItemContainer = styled.div`
-  min-width: 30%;
-  height: 240px;
-  flex: 1 1 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid black;
-  margin: 0 7.5px 15px;
-  overflow: hidden;
-
-  &:first-child {
-    margin-right: 7.5px;
-  }
-
-  &:last-child {
-    margin-left: 7.5px;
-  }
-
-  &:hover {
-    cursor: pointer;
-
-    ${BackgroundImage} {
-      transform: scale(1.1);
-      transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
-    }
-
-    ${Body} {
-      opacity: 0.9;
-    }
-  }
-`;
+    content: {
+      top: "25%",
+      left: "25%",
+      height: "50%",
+      width: "50%",
+      position: "absolute",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: theme.fn.rgba(theme.colors.dark[9], 0.65),
+    },
+  };
+});

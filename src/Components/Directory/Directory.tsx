@@ -1,6 +1,6 @@
+import { Container, Grid } from "@mantine/core";
 import type { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
-import DirecoryItem from "../Directory-Item/DirectoryItem";
-import { DirectoryContainer } from "./directory.styles";
+import DirectoryItem from "../directory-item/DirectoryItem";
 
 export interface Directory extends Pick<Product, "id" | "imageUrl"> {
   title: string;
@@ -28,25 +28,31 @@ const categories: Directory[] = [
   },
   {
     id: 4,
-    title: "womens",
+    title: "women",
     imageUrl: "https://i.ibb.co/GCCdy8t/womens.png",
-    route: "shop/womens",
+    route: "shop/women",
   },
   {
     id: 5,
     title: "mens",
     imageUrl: "https://i.ibb.co/R70vBrQ/men.png",
-    route: "shop/mens",
+    route: "shop/men",
   },
 ];
 
 const Directory = () => {
   return (
-    <DirectoryContainer>
-      {categories.map((category) => {
-        return <DirecoryItem key={category.id} category={category} />;
-      })}
-    </DirectoryContainer>
+    <Container>
+      <Grid grow gutter="xs">
+        {categories.map((category) => {
+          return (
+            <Grid.Col key={category.id} span={6} xs={4}>
+              <DirectoryItem category={category} />
+            </Grid.Col>
+          );
+        })}
+      </Grid>
+    </Container>
   );
 };
 

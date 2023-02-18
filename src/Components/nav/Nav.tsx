@@ -6,12 +6,23 @@ import {
   Burger,
   Stack,
   Popover,
+  Button,
 } from "@mantine/core";
-import NavLinks from "../../components/nav-links/NavLinks";
-import Cart from "../../components/cart/Cart";
+import Cart from "../cart/Cart";
+import Link from "next/link";
+import AuthButton from "../auth-button/AuthButton";
 
 import { useDisclosure } from "@mantine/hooks";
 import { useStyles } from "./nav.styles";
+
+const NavLinks = () => (
+  <>
+    <Button component={Link} variant="subtle" color="dark" href={"/"}>
+      Shop
+    </Button>
+    <AuthButton />
+  </>
+);
 
 const Nav = () => {
   const { classes } = useStyles();
