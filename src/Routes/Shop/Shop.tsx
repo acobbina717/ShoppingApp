@@ -1,7 +1,7 @@
 import { AnyAction } from "@reduxjs/toolkit";
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import CategoriesPreview from "../../components/Categories-Preview/CategoriesPreview";
+import CategoriesPreview from "../../components/categories-preview/CategoriesPreview";
 import Category from "../../components/Category/Category";
 import { fetchCategoriesLoading } from "../../Utils/Redux/features/categories/categoriesSlice";
 

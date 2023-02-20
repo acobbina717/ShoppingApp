@@ -1,6 +1,6 @@
 import { Card, Overlay, Stack, Text } from "@mantine/core";
 import Link from "next/link";
-
+import Image from "next/image";
 import { useStyles } from "./directory-item.styles";
 
 import type { Directory } from "../directory/Directory";
@@ -15,17 +15,17 @@ const DirectoryItem = ({ category }: DirectoryProps) => {
 
   return (
     <Card
-      p="lg"
-      shadow="lg"
-      className={classes.card}
+      h={380}
       radius="md"
+      shadow="lg"
+      p="lg"
       component={Link}
       href={route}
+      className={classes.card}
     >
-      <div
-        className={classes.image}
-        style={{ backgroundImage: `url(${imageUrl})` }}
-      />
+      <Card.Section>
+        <Image src={imageUrl} alt={title} fill className={classes.image} />
+      </Card.Section>
 
       <Overlay
         zIndex={0}
@@ -35,10 +35,10 @@ const DirectoryItem = ({ category }: DirectoryProps) => {
       <div className={classes.content}>
         <Stack color="white">
           <Text
-            transform="capitalize"
             size="lg"
             weight={700}
             color={theme.white}
+            transform="capitalize"
           >
             {title}
           </Text>

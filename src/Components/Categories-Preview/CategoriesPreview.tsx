@@ -1,16 +1,24 @@
-import { Fragment } from "react";
+import { Container, Skeleton } from "@mantine/core";
+import { AnyAction } from "@reduxjs/toolkit";
+import { useEffect } from "react";
+import { fetchCategoriesLoading } from "../../Utils/Redux/features/categories/categoriesSlice";
 
-import { useAppSelector } from "../../Utils/Redux/hooks/hooks";
-import CategoryPreview from "../Category-Preview/CategoryPreview";
-import Spinner from "../Spinner/Spinner";
+import { useAppDispatch, useAppSelector } from "../../Utils/Redux/hooks/hooks";
+import CategoryPreview from "../category-preview/CategoryPreview";
 
 const CategoriesPreview = () => {
   const { categoriesMap, status } = useAppSelector((state) => state.categories);
+  const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchCategoriesLoading() as unknown as AnyAction);
+    }
+  });
   return (
-    <Fragment>
+    <Container fluid>
       {status === "loading" ? (
-        <Spinner />
+        <Skeleton />
       ) : (
         Object.keys(categoriesMap).map((title) => {
           const products = categoriesMap[title];
@@ -19,7 +27,7 @@ const CategoriesPreview = () => {
           );
         })
       )}
-    </Fragment>
+    </Container>
   );
 };
 

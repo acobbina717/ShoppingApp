@@ -1,4 +1,3 @@
-import Button, { BUTTON_TYPE_CLASSES } from "../Button/Button";
 import {
   ProductCardContainer,
   ProductCardFooter,
@@ -8,6 +7,8 @@ import {
 import type { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
 import { useAppDispatch } from "../../Utils/Redux/hooks/hooks";
 import { addToCart } from "../../Utils/Redux/features/cart/cartSlice";
+import { Card } from "@mantine/core";
+import Image from "next/image";
 
 type ProductCardProps = {
   product: Product;
@@ -20,20 +21,37 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const addProductToCart = () => dispatch(addToCart(product));
 
   return (
-    <ProductCardContainer>
-      <img src={imageUrl} alt={`${name}`} />
-      <ProductCardFooter>
-        <ProductName>{name}</ProductName>
-        <ProductPrice>{price}</ProductPrice>
-      </ProductCardFooter>
+    <Card
+      h={380}
+      radius="md"
+      shadow="lg"
+      p="lg"
+      styles={{ position: "relative" }}
+    >
+      <Card.Section>
+        <Image src={imageUrl} alt={name} fill style={{ objectFit: "cover" }} />
+      </Card.Section>
 
-      <Button
-        buttonType={BUTTON_TYPE_CLASSES.inverted}
-        onClick={addProductToCart}
-      >
-        Add to cart
-      </Button>
-    </ProductCardContainer>
+      {/* <Overlay
+        zIndex={0}
+        gradient="linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .85) 90%)"
+      /> */}
+    </Card>
+
+    // <ProductCardContainer>
+    //   <img src={imageUrl} alt={`${name}`} />
+    //   <ProductCardFooter>
+    //     <ProductName>{name}</ProductName>
+    //     <ProductPrice>{price}</ProductPrice>
+    //   </ProductCardFooter>
+
+    //   <Button
+    //     buttonType={BUTTON_TYPE_CLASSES.inverted}
+    //     onClick={addProductToCart}
+    //   >
+    //     Add to cart
+    //   </Button>
+    // </ProductCardContainer>
   );
 };
 

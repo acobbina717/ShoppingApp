@@ -1,4 +1,4 @@
-import { Container, Grid } from "@mantine/core";
+import { Container, Grid, createStyles } from "@mantine/core";
 import type { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
 import DirectoryItem from "../directory-item/DirectoryItem";
 
@@ -40,10 +40,13 @@ const categories: Directory[] = [
   },
 ];
 
+const useStyles = createStyles({});
+
 const Directory = () => {
+  const { theme } = useStyles();
   return (
-    <Container>
-      <Grid grow gutter="xs">
+    <Container fluid>
+      <Grid bg={theme.colors.dark[0]} grow gutter="xs">
         {categories.map((category) => {
           return (
             <Grid.Col key={category.id} span={6} xs={4}>

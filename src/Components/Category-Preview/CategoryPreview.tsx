@@ -1,32 +1,32 @@
+import { Grid, Stack, Title, Text } from "@mantine/core";
+import Link from "next/link";
 import { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
 import ProductCard from "../Product-Card/ProductCard";
-
-import {
-  Title,
-  Preview,
-  CategoryPreviewContainer,
-} from "./category-preview.styles";
 
 type CategoryPreviewProps = {
   title: string;
   products: Product[];
 };
 
-function CategoryPreview({ title, products }: CategoryPreviewProps) {
+function CategoriesPreviewItem({ title, products }: CategoryPreviewProps) {
   return (
-    <CategoryPreviewContainer>
-      <h2>
-        <Title to={title}>{title.toUpperCase()}</Title>
-      </h2>
-      <Preview>
+    <Stack>
+      <Title order={2}>
+        <Text component={Link} href={title}>
+          {title.toUpperCase()}
+        </Text>
+      </Title>
+      <Grid gutter={"xl"}>
         {products
           .filter((_, idx) => idx < 4)
           .map((product) => (
-            <ProductCard product={product} key={product.id} />
+            <Grid.Col span={6} xs={3} sm={3}>
+              <ProductCard product={product} key={product.id} />
+            </Grid.Col>
           ))}
-      </Preview>
-    </CategoryPreviewContainer>
+      </Grid>
+    </Stack>
   );
 }
 
-export default CategoryPreview;
+export default CategoriesPreviewItem;

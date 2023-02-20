@@ -6,25 +6,15 @@ export const useStyles = createStyles((theme, _params, getRef) => {
   return {
     card: {
       position: "relative",
-      height: 280,
-      backgroundColor:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[6]
-          : theme.colors.gray[0],
-
       [`&:hover .${image}`]: {
         transform: "scale(1.03)",
       },
     },
 
     image: {
+      objectFit: "cover",
+      objectPosition: "center",
       ref: image,
-      position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundSize: "cover",
       transition: "transform 500ms ease",
     },
 
