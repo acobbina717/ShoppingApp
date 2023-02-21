@@ -1,14 +1,8 @@
-import {
-  ProductCardContainer,
-  ProductCardFooter,
-  ProductName,
-  ProductPrice,
-} from "./product-card.styles";
 import type { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
 import { useAppDispatch } from "../../Utils/Redux/hooks/hooks";
 import { addToCart } from "../../Utils/Redux/features/cart/cartSlice";
-import { Card } from "@mantine/core";
-import Image from "next/image";
+import { Button, Card, Center, createStyles, Image } from "@mantine/core";
+import { useHover } from "@mantine/hooks";
 
 type ProductCardProps = {
   product: Product;
@@ -18,40 +12,30 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const { imageUrl, name, price } = product;
   const dispatch = useAppDispatch();
 
+  const { hovered, ref } = useHover();
   const addProductToCart = () => dispatch(addToCart(product));
 
   return (
-    <Card
-      h={380}
-      radius="md"
-      shadow="lg"
-      p="lg"
-      styles={{ position: "relative" }}
-    >
-      <Card.Section>
-        <Image src={imageUrl} alt={name} fill style={{ objectFit: "cover" }} />
+    <Card radius="md" shadow="lg" style={{ position: "relative" }}>
+      <Card.Section ref={ref}>
+        <Image src={imageUrl} alt={name} radius={"sm"} />
+        <Center>
+          <Button
+            style={{ position: "absolute" }}
+            w={"80%"}
+            bottom={10}
+            display={!hovered && "none"}
+            onClick={addProductToCart}
+          >
+            Add To Cart
+          </Button>
+        </Center>
       </Card.Section>
-
-      {/* <Overlay
-        zIndex={0}
-        gradient="linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .85) 90%)"
-      /> */}
     </Card>
-
-    // <ProductCardContainer>
-    //   <img src={imageUrl} alt={`${name}`} />
-    //   <ProductCardFooter>
-    //     <ProductName>{name}</ProductName>
-    //     <ProductPrice>{price}</ProductPrice>
-    //   </ProductCardFooter>
 
     //   <Button
     //     buttonType={BUTTON_TYPE_CLASSES.inverted}
-    //     onClick={addProductToCart}
     //   >
-    //     Add to cart
-    //   </Button>
-    // </ProductCardContainer>
   );
 };
 

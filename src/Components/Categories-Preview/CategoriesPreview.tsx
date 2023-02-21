@@ -15,13 +15,15 @@ const CategoriesPreview = () => {
       dispatch(fetchCategoriesLoading() as unknown as AnyAction);
     }
   });
+
   return (
-    <Container fluid>
+    <Container size={1600}>
       {status === "loading" ? (
         <Skeleton />
       ) : (
         Object.keys(categoriesMap).map((title) => {
           const products = categoriesMap[title];
+
           return (
             <CategoryPreview key={title} title={title} products={products} />
           );

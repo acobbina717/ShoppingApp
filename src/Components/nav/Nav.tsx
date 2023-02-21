@@ -2,7 +2,6 @@ import {
   Header,
   Container,
   Group,
-  Avatar,
   Burger,
   Stack,
   Popover,
@@ -12,6 +11,7 @@ import {
 import Cart from "../cart/Cart";
 import Link from "next/link";
 import AuthButton from "../auth-button/AuthButton";
+import { IconCrown } from "@tabler/icons-react";
 
 import { useDisclosure } from "@mantine/hooks";
 import { useStyles } from "./nav.styles";
@@ -32,14 +32,25 @@ const NavLinks = () => (
 );
 
 const Nav = () => {
-  const { classes } = useStyles();
+  const { classes, theme } = useStyles();
   const [opened, { toggle }] = useDisclosure(false);
 
   return (
-    <Header height={90} mb={30} style={{ position: "sticky" }}>
+    <Header
+      height={90}
+      mb={30}
+      bg={
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[8]
+          : theme.colors.gray[6]
+      }
+      style={{ position: "sticky" }}
+    >
       <Container ml={15} mr={15} fluid>
         <Flex justify={"space-between"} align="center" h={"90px"}>
-          <Avatar size={28} />
+          <Link href={"/"}>
+            <IconCrown size={38} color={theme.colors.yellow[5]} />
+          </Link>
 
           <Group spacing={5} className={classes.links}>
             <NavLinks />
@@ -54,7 +65,6 @@ const Nav = () => {
                 </Popover.Target>
                 <Cart />
               </Group>
-
               <Popover.Dropdown>
                 <Stack>
                   <NavLinks />

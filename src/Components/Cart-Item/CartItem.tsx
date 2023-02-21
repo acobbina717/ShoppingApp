@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Image } from "@mantine/core";
 import type { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
 import { useStyles } from "./cart-item.styles";
 

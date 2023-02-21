@@ -1,4 +1,4 @@
-import { Grid, Stack, Title, Text } from "@mantine/core";
+import { Grid, Stack, Title, Text, Container } from "@mantine/core";
 import Link from "next/link";
 import { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
 import ProductCard from "../Product-Card/ProductCard";
@@ -9,23 +9,35 @@ type CategoryPreviewProps = {
 };
 
 function CategoriesPreviewItem({ title, products }: CategoryPreviewProps) {
+  const productCard = products
+    .filter((_, idx) => idx < 4)
+    .map((product) => {
+      if (title === "sneakers") {
+        return (
+          <Grid.Col span={12} xs={10} sm={6} xl={3}>
+            <ProductCard product={product} key={product.id} />
+          </Grid.Col>
+        );
+      }
+
+      return (
+        <Grid.Col span={6} xs={5} sm={3}>
+          <ProductCard product={product} key={product.id} />
+        </Grid.Col>
+      );
+    });
+
   return (
-    <Stack>
-      <Title order={2}>
-        <Text component={Link} href={title}>
-          {title.toUpperCase()}
-        </Text>
-      </Title>
-      <Grid gutter={"xl"}>
-        {products
-          .filter((_, idx) => idx < 4)
-          .map((product) => (
-            <Grid.Col span={6} xs={3} sm={3}>
-              <ProductCard product={product} key={product.id} />
-            </Grid.Col>
-          ))}
-      </Grid>
-    </Stack>
+    <Container fluid mb={50}>
+      <Stack>
+        <Title order={2}>
+          <Text component={Link} href={`/shop/${title}`}>
+            {title.toUpperCase()}
+          </Text>
+        </Title>
+        <Grid justify="center">{productCard}</Grid>
+      </Stack>
+    </Container>
   );
 }
 

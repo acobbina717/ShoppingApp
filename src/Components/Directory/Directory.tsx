@@ -1,7 +1,7 @@
 import { Container, Grid, createStyles } from "@mantine/core";
-import type { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
 import DirectoryItem from "../directory-item/DirectoryItem";
 
+import type { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
 export interface Directory extends Pick<Product, "id" | "imageUrl"> {
   title: string;
   route: string;
