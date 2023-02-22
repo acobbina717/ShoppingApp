@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { fetchCategoriesLoading } from "../../Utils/Redux/features/categories/categoriesSlice";
 
 import { useAppDispatch, useAppSelector } from "../../Utils/Redux/hooks/hooks";
-import CategoryPreview from "../category-preview/CategoryPreview";
+import CategoryPreview from "../CategoryPreview";
 
 const CategoriesPreview = () => {
   const { categoriesMap, status } = useAppSelector((state) => state.categories);

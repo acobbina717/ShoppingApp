@@ -1,8 +1,8 @@
 import { Button, ButtonProps } from "@mantine/core";
 import Link from "next/link";
-import { RootState } from "../../Utils/Redux/app/store/store";
-import { signOutLoading } from "../../Utils/Redux/features/user/userSlice";
-import { useAppDispatch, useAppSelector } from "../../Utils/Redux/hooks/hooks";
+import { RootState } from "../Utils/Redux/app/store/store";
+import { signOutLoading } from "../Utils/Redux/features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "../Utils/Redux/hooks/hooks";
 
 type AuthButtonProps = {
   otherProps?: ButtonProps;

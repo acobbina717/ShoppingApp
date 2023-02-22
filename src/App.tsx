@@ -1,9 +1,9 @@
-import { Routes, Route } from "react-router-dom";
-import Nav from "./components/nav/Nav";
-import Home from "./Routes/Home/Home";
-import Shop from "./Routes/Shop/Shop";
-import Auth from "./Routes/Auth/Auth";
-import Checkout from "./Routes/Checkout/Checkout";
+// import { Routes, Route } from "react-router-dom";
+// import Nav from "./components/nav/Nav";
+// import Home from "./Routes/Home/Home";
+// import Shop from "./Routes/Shop/Shop";
+// import Auth from "./Routes/Auth/Auth";
+import Checkout from "./components/Checkout";
 
 import { useEffect } from "react";
 
@@ -28,14 +28,15 @@ const App = () => {
   }, [cartItems]);
 
   return (
-    <Routes>
-      <Route path="/" element={<Nav />}>
-        <Route index element={<Home />} />
-        <Route path="shop/*" element={<Shop />} />
-        <Route path="auth" element={<Auth />} />
-        <Route path="checkout" element={<Checkout />} />
-      </Route>
-    </Routes>
+    <></>
+    // <Routes>
+    //   <Route path="/" element={<Nav />}>
+    //     <Route index element={<Home />} />
+    //     <Route path="shop/*" element={<Shop />} />
+    //     <Route path="auth" element={<Auth />} />
+    //     <Route path="checkout" element={<Checkout />} />
+    //   </Route>
+    // </Routes>
   );
 };
 

@@ -9,7 +9,7 @@ import {
   Stack,
   TextInput,
 } from "@mantine/core";
-import { GoogleButton } from "../google-button/GoogleButton";
+import { GoogleButton } from "./google-button/GoogleButton";
 import { useToggle, upperFirst } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 

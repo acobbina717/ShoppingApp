@@ -1,18 +1,25 @@
+import { Button, Container, Drawer } from "@mantine/core";
 import { BsBag } from "react-icons/bs";
 import CartItem from "../Cart-Item/CartItem";
-import { Button, Container, Drawer } from "@mantine/core";
 
 import { useStyles } from "./cart.styles";
 
 import { useAppSelector } from "../../Utils/Redux/hooks/hooks";
 import { useState } from "react";
-import Link from "next/link";
+
+import { useRouter } from "next/router";
 
 const Cart = () => {
+  const router = useRouter();
   const { classes } = useStyles();
   const { cartCount, cartItems } = useAppSelector((state) => state.cart);
 
   const [opened, setOpened] = useState(false);
+
+  const navigateToCheckout = () => {
+    router.push("/checkout");
+    setOpened(false);
+  };
 
   return (
     <>
@@ -34,9 +41,7 @@ const Cart = () => {
               <span className={classes.emptyMessage}>Your cart is empty</span>
             )}
           </div>
-          <Button component={Link} href="/checkout">
-            GO TO CHECKOUT
-          </Button>
+          <Button onClick={navigateToCheckout}>GO TO CHECKOUT</Button>
         </Container>
       </Drawer>
 

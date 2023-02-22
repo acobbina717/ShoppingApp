@@ -1,12 +1,13 @@
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
 
-import ProductCard from "../Product-Card/ProductCard";
+import ProductCard from "../ProductCard";
 
 import { CategoryContainer } from "./category.styles";
 import { useAppSelector } from "../../Utils/Redux/hooks/hooks";
 import { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
-import Spinner from "../Spinner/Spinner";
+import { Skeleton } from "@mantine/core";
+// import Spinner from "../Spinner/Spinner";
 
 const Category = () => {
   const { category } = useParams();
@@ -25,7 +26,7 @@ const Category = () => {
     <Fragment>
       <h1>{category?.toUpperCase()}</h1>
       {status === "loading" ? (
-        <Spinner />
+        <Skeleton />
       ) : (
         <CategoryContainer>
           {products &&

@@ -1,7 +1,7 @@
 import { Card, Center, Container, Grid, Title } from "@mantine/core";
 import React from "react";
 import Image from "next/image";
-import Directory from "../src/components/directory/Directory";
+import Directory from "../src/components/Directory";
 
 type Props = {};
 

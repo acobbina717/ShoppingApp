@@ -2,11 +2,12 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import {
   FormContainer,
   PaymentFormContainer,
-  PaymentButton,
+  // PaymentButton,
 } from "./payment-form.styles";
-import Button, { BUTTON_TYPE_CLASSES } from "../Button/Button";
+// import Button, { BUTTON_TYPE_CLASSES } from "../Button/Button";
 import { FormEvent, useState } from "react";
 import { useAppSelector } from "../../Utils/Redux/hooks/hooks";
+import { Button } from "@mantine/core";
 
 const PaymentForm = () => {
   const { cartTotal } = useAppSelector((state) => state.cart);
@@ -52,18 +53,21 @@ const PaymentForm = () => {
   };
 
   return (
-    <PaymentFormContainer>
-      <FormContainer onSubmit={paymentHandler}>
-        <h2>Credit Card Payment: </h2>
-        <CardElement />
-        <PaymentButton
-          isLoading={isPaymentProccessing}
-          buttonType={BUTTON_TYPE_CLASSES.inverted}
-        >
-          Pay Now
-        </PaymentButton>
-      </FormContainer>
-    </PaymentFormContainer>
+    <>
+      <CardElement />
+    </>
+    // <PaymentFormContainer>
+    //   <FormContainer onSubmit={paymentHandler}>
+    //     <h2>Credit Card Payment: </h2>
+    //     <CardElement />
+    //     <Button
+    //     // isLoading={isPaymentProccessing}
+    //     // buttonType={BUTTON_TYPE_CLASSES.inverted}
+    //     >
+    //       Pay Now
+    //     </Button>
+    //   </FormContainer>
+    // </PaymentFormContainer>
   );
 };
 

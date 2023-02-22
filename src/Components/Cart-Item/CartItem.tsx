@@ -1,4 +1,4 @@
-import { Image } from "@mantine/core";
+import { Container, Image } from "@mantine/core";
 import type { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
 import { useStyles } from "./cart-item.styles";
 
@@ -10,7 +10,7 @@ const CartItem = ({ cartItem }: CartItemProps) => {
   const { classes } = useStyles();
   const { name, quantity, imageUrl, price } = cartItem;
   return (
-    <div className={classes.container}>
+    <Container h={80} mb={15}>
       <Image className={classes.img} src={imageUrl} alt={`${name}`} />
       <div className={classes.itemDetails}>
         <span>{name}</span>
@@ -18,7 +18,7 @@ const CartItem = ({ cartItem }: CartItemProps) => {
           {quantity} x ${price}
         </span>
       </div>
-    </div>
+    </Container>
   );
 };
 

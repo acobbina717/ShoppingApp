@@ -10,7 +10,7 @@ import {
 } from "@mantine/core";
 import Cart from "../cart/Cart";
 import Link from "next/link";
-import AuthButton from "../auth-button/AuthButton";
+import AuthButton from "../AuthButton";
 import { IconCrown } from "@tabler/icons-react";
 
 import { useDisclosure } from "@mantine/hooks";

@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useStyles } from "./directory-item.styles";
 
-import type { Directory } from "../directory/Directory";
+import type { Directory } from "../Directory";
 
 type DirectoryProps = {
   category: Directory;

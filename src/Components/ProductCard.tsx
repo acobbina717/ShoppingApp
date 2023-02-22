@@ -1,6 +1,6 @@
-import type { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
-import { useAppDispatch } from "../../Utils/Redux/hooks/hooks";
-import { addToCart } from "../../Utils/Redux/features/cart/cartSlice";
+import type { Product } from "../Utils/Redux/features/categories/categoriesSlice";
+import { useAppDispatch } from "../Utils/Redux/hooks/hooks";
+import { addToCart } from "../Utils/Redux/features/cart/cartSlice";
 import { Button, Card, Center, createStyles, Image } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
 
