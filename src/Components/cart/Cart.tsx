@@ -50,7 +50,7 @@ const Cart = () => {
                 ))}
               </ScrollArea.Autosize>
               <Group mt={10} position="right">
-                <Text>{`Cart Total: $${cartTotal}`}</Text>
+                <Text>Cart Total: ${cartTotal}</Text>
               </Group>
               <Container mt={40}>
                 <Center>

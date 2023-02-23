@@ -3,9 +3,10 @@ import {
   Center,
   Container,
   Divider,
+  Group,
   Modal,
   Table,
-  Text,
+  Title,
 } from "@mantine/core";
 import CheckoutItem from "./CheckoutItem";
 import PaymentForm from "./Payment-Form/PaymentForm";
@@ -44,12 +45,29 @@ const Checkout = () => {
         </thead>
         <tbody>{tableData}</tbody>
       </Table>
+
       <Divider />
-      <Text>Total: ${cartTotal}</Text>
-      <Button onClick={() => setOpened(true)}>Checkout</Button>
-      <Modal centered opened={opened} onClose={() => setOpened(false)}>
-        <PaymentForm />
-      </Modal>
+
+      <Group position="right" mt={15}>
+        <Title order={3}>Total: ${cartTotal}</Title>
+      </Group>
+      <Container size={"xs"} p={50}>
+        <Center>
+          <Button
+            fullWidth
+            h={50}
+            radius="xl"
+            variant="outline"
+            color="gray"
+            onClick={() => setOpened(true)}
+          >
+            Checkout
+          </Button>
+          <Modal centered opened={opened} onClose={() => setOpened(false)}>
+            <PaymentForm />
+          </Modal>
+        </Center>
+      </Container>
     </Container>
   );
 };

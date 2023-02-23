@@ -29,21 +29,23 @@ const CheckoutItem = ({ cartItem }: Props) => {
 
   return (
     <tr>
-      <td style={{ width: "23%" }}>
-        <Image src={imageUrl} alt={name} />
+      <td style={{ width: "25%" }}>
+        <Image src={imageUrl} alt={name} height={"100%"} />
       </td>
 
       <td style={{ width: "23%" }}>
-        <Text size={"lg"}>{name}</Text>
+        <Text align="center" size={"sm"}>
+          {name}
+        </Text>
       </td>
 
-      <td style={{ width: "17%" }}>
+      <td style={{ width: "20%" }}>
         <Center>
-          <Text size={"lg"}>{`$${price * Number(quantity)}`}</Text>
+          <Text size={"md"}>${price * Number(quantity)}</Text>
         </Center>
       </td>
 
-      <td style={{ width: "27%" }}>
+      <td style={{ width: "5%" }}>
         <QuantityCounter
           quantity={Number(quantity)}
           addToCart={addToCart}
@@ -52,11 +54,11 @@ const CheckoutItem = ({ cartItem }: Props) => {
       </td>
 
       <td>
-        <Center ref={ref}>
+        <Center>
           <IconTrash
             cursor={"pointer"}
             onClick={removeFromCart}
-            color={hovered ? theme.colors.red[5] : theme.colors.gray[4]}
+            // color={hovered ? theme.colors.red[5] : theme.colors.gray[4]}
           />
         </Center>
       </td>

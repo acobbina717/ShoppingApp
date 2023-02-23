@@ -63,7 +63,7 @@ function QuantityCounter({
         size={28}
         variant="transparent"
         onClick={subtractFromCart}
-        // disabled={quantity === 1}
+        disabled={quantity === 1}
         className={classes.control}
         onMouseDown={(event) => event.preventDefault()}
       >
