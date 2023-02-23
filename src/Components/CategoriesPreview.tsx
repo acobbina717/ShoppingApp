@@ -1,10 +1,10 @@
 import { Container, Skeleton } from "@mantine/core";
 import { AnyAction } from "@reduxjs/toolkit";
 import { useEffect } from "react";
-import { fetchCategoriesLoading } from "../../Utils/Redux/features/categories/categoriesSlice";
+import { fetchCategoriesLoading } from "../Utils/Redux/features/categories/categoriesSlice";
 
-import { useAppDispatch, useAppSelector } from "../../Utils/Redux/hooks/hooks";
-import CategoryPreview from "../CategoryPreview";
+import { useAppDispatch, useAppSelector } from "../Utils/Redux/hooks/hooks";
+import CategoryPreview from "./CategoryPreview";
 
 const CategoriesPreview = () => {
   const { categoriesMap, status } = useAppSelector((state) => state.categories);
@@ -19,7 +19,11 @@ const CategoriesPreview = () => {
   return (
     <Container size={1600}>
       {status === "loading" ? (
-        <Skeleton />
+        <>
+          <Skeleton height={50} />
+          <Skeleton height={200} />
+          <Skeleton height={50} />
+        </>
       ) : (
         Object.keys(categoriesMap).map((title) => {
           const products = categoriesMap[title];

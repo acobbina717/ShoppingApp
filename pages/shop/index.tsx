@@ -1,5 +1,5 @@
 import React from "react";
-import CategoriesPreview from "../../src/components/categories-preview/CategoriesPreview";
+import CategoriesPreview from "../../src/components/CategoriesPreview";
 
 type Props = {};
 

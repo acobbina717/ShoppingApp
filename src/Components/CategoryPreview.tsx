@@ -14,14 +14,14 @@ function CategoriesPreviewItem({ title, products }: CategoryPreviewProps) {
     .map((product, idx) => {
       if (title === "sneakers") {
         return (
-          <Grid.Col key={idx} span={12} xs={10} sm={6} xl={3}>
+          <Grid.Col key={idx} span={12} xs={10} sm={6} xl={3} mb={10}>
             <ProductCard product={product} key={product.id} />
           </Grid.Col>
         );
       }
 
       return (
-        <Grid.Col key={idx} span={6} xs={5} sm={3}>
+        <Grid.Col key={idx} span={6} xs={5} sm={3} mb={10}>
           <ProductCard product={product} key={product.id} />
         </Grid.Col>
       );
@@ -29,7 +29,7 @@ function CategoriesPreviewItem({ title, products }: CategoryPreviewProps) {
 
   return (
     <Container fluid mb={50}>
-      <Stack>
+      <Stack pb={10}>
         <Title order={2}>
           <Text component={Link} href={`/shop/${title}`}>
             {title.toUpperCase()}

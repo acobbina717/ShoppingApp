@@ -1,4 +1,4 @@
-import { Button, Container, Drawer } from "@mantine/core";
+import { Button, Container, Drawer, ScrollArea } from "@mantine/core";
 import { BsBag } from "react-icons/bs";
 import CartItem from "../Cart-Item/CartItem";
 
@@ -28,11 +28,11 @@ const Cart = () => {
         opened={opened}
         onClose={() => setOpened(false)}
         padding="xl"
-        size="md"
+        size="xl"
         zIndex={99999}
       >
-        <Container fluid h={"80vh"} style={{ border: "2px solid red" }}>
-          <div className={classes.cartItems}>
+        <Container fluid h={"80vh"} p={10}>
+          <ScrollArea.Autosize maxHeight={"70vh"}>
             {cartItems.length ? (
               cartItems.map((product) => (
                 <CartItem key={product.id} cartItem={product} />
@@ -40,7 +40,7 @@ const Cart = () => {
             ) : (
               <span className={classes.emptyMessage}>Your cart is empty</span>
             )}
-          </div>
+          </ScrollArea.Autosize>
           <Button onClick={navigateToCheckout}>GO TO CHECKOUT</Button>
         </Container>
       </Drawer>
