@@ -3,8 +3,8 @@ import QuantityCounter from "../QuantityCounter";
 
 import { useAppDispatch } from "../../Utils/Redux/hooks/hooks";
 import {
-  decreaseCartItemQuantity,
-  increaseCartItemQuantity,
+  decreaseItemQuantity,
+  increaseItemQuantity,
 } from "../../Utils/Redux/features/cart/cartSlice";
 
 import { useStyles } from "./cart-item.styles";
@@ -21,9 +21,9 @@ const CartItem = ({ cartItem }: CartItemProps) => {
 
   const dispatch = useAppDispatch();
 
-  const addToCart = () => dispatch(increaseCartItemQuantity(cartItem));
+  const addToCart = () => dispatch(increaseItemQuantity(cartItem));
 
-  const subtractFromCart = () => dispatch(decreaseCartItemQuantity(cartItem));
+  const subtractFromCart = () => dispatch(decreaseItemQuantity(cartItem));
 
   return (
     <Card
