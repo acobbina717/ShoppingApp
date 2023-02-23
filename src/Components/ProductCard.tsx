@@ -10,7 +10,7 @@ import {
 } from "@mantine/core";
 
 import { useAppDispatch } from "../Utils/Redux/hooks/hooks";
-import { increaseCartItemQuantity } from "../Utils/Redux/features/cart/cartSlice";
+import { increaseItemQuantity } from "../Utils/Redux/features/cart/cartSlice";
 
 import { useHover } from "@mantine/hooks";
 
@@ -23,7 +23,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const { imageUrl, name, price } = product;
 
   const dispatch = useAppDispatch();
-  const addProductToCart = () => dispatch(increaseCartItemQuantity(product));
+  const addProductToCart = () => dispatch(increaseItemQuantity(product));
 
   const { hovered, ref } = useHover();
 

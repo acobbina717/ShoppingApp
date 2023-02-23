@@ -10,24 +10,21 @@ import {
 import { useStyles } from "./cart-item.styles";
 
 import type { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
+import { IconTrash } from "@tabler/icons-react";
 type CartItemProps = {
   cartItem: Product;
 };
 
 const CartItem = ({ cartItem }: CartItemProps) => {
   const { name, quantity, imageUrl, price } = cartItem;
+  const dispatch = useAppDispatch();
+  const addToCart = () => dispatch(increaseItemQuantity(cartItem));
+  const subtractFromCart = () => dispatch(decreaseItemQuantity(cartItem));
 
   const { theme } = useStyles();
 
-  const dispatch = useAppDispatch();
-
-  const addToCart = () => dispatch(increaseItemQuantity(cartItem));
-
-  const subtractFromCart = () => dispatch(decreaseItemQuantity(cartItem));
-
   return (
     <Card
-      h={150}
       withBorder
       display={"flex"}
       mb={15}
@@ -38,25 +35,22 @@ const CartItem = ({ cartItem }: CartItemProps) => {
           theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
       }}
     >
-      <Group noWrap spacing={0}>
+      <Card.Section>
         <Image src={imageUrl} alt={`${name}`} width={136} mr={4} />
-        <Stack>
-          <Group position="apart">
-            <Text size={"sm"} w={210} ml={3}>
-              {name}
-            </Text>
-            <Text>{`$${price}`}</Text>
-          </Group>
-          <Group position="right" ml={20}>
-            <QuantityCounter
-              quantity={Number(quantity)}
-              addToCart={addToCart}
-              subtractFromCart={subtractFromCart}
-            />
-          </Group>
-          <Text align="right">{`Total: $${Number(quantity) * price} `}</Text>
-        </Stack>
-      </Group>
+      </Card.Section>
+
+      <Stack w={"100%"}>
+        <Text>{name}</Text>
+        <Text>{`$${Number(quantity) * price} `}</Text>
+        <Group position="right" mr={10}>
+          <IconTrash size={20} />
+          <QuantityCounter
+            quantity={Number(quantity)}
+            addToCart={addToCart}
+            subtractFromCart={subtractFromCart}
+          />
+        </Group>
+      </Stack>
     </Card>
   );
 };
