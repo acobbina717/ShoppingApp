@@ -1,18 +1,30 @@
-import { Card, Group, Image, Stack, Text, Tooltip } from "@mantine/core";
-import { useHover } from "@mantine/hooks";
-import { IconCircleMinus } from "@tabler/icons-react";
-import type { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
+import { Card, Group, Image, Stack, Text } from "@mantine/core";
 import QuantityCounter from "../QuantityCounter";
+
+import { useAppDispatch } from "../../Utils/Redux/hooks/hooks";
+import {
+  decreaseCartItemQuantity,
+  increaseCartItemQuantity,
+} from "../../Utils/Redux/features/cart/cartSlice";
+
 import { useStyles } from "./cart-item.styles";
 
+import type { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
 type CartItemProps = {
   cartItem: Product;
 };
 
 const CartItem = ({ cartItem }: CartItemProps) => {
-  const { theme } = useStyles();
   const { name, quantity, imageUrl, price } = cartItem;
-  const { hovered, ref } = useHover();
+
+  const { theme } = useStyles();
+
+  const dispatch = useAppDispatch();
+
+  const addToCart = () => dispatch(increaseCartItemQuantity(cartItem));
+
+  const subtractFromCart = () => dispatch(decreaseCartItemQuantity(cartItem));
+
   return (
     <Card
       h={150}
@@ -36,16 +48,11 @@ const CartItem = ({ cartItem }: CartItemProps) => {
             <Text>{`$${price}`}</Text>
           </Group>
           <Group position="right" ml={20}>
-            <div ref={ref}>
-              <Tooltip label="Remove from cart">
-                <IconCircleMinus
-                  size={20}
-                  color={hovered ? theme.colors.red[5] : theme.colors.dark[2]}
-                  cursor={"pointer"}
-                />
-              </Tooltip>
-            </div>
-            <QuantityCounter quantity={quantity as number} width={40} />
+            <QuantityCounter
+              quantity={Number(quantity)}
+              addToCart={addToCart}
+              subtractFromCart={subtractFromCart}
+            />
           </Group>
           <Text align="right">{`Total: $${Number(quantity) * price} `}</Text>
         </Stack>

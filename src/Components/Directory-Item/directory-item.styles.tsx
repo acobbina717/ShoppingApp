@@ -5,15 +5,12 @@ export const useStyles = createStyles((theme, _params, getRef) => {
 
   return {
     card: {
-      position: "relative",
       [`&:hover .${image}`]: {
         transform: "scale(1.03)",
       },
     },
 
     image: {
-      objectFit: "cover",
-      objectPosition: "center",
       ref: image,
       transition: "transform 500ms ease",
     },
@@ -28,6 +25,7 @@ export const useStyles = createStyles((theme, _params, getRef) => {
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
+      color: theme.white,
       backgroundColor: theme.fn.rgba(theme.colors.dark[9], 0.65),
     },
   };

@@ -8,9 +8,9 @@ import {
 
 import { useAppDispatch } from "../Utils/Redux/hooks/hooks";
 import {
-  addToCart,
-  removeFromCart,
-  clearFromCart,
+  increaseCartItemQuantity,
+  decreaseCartItemQuantity,
+  removeItemFromCart,
 } from "../Utils/Redux/features/cart/cartSlice";
 
 import type { Product } from "../Utils/Redux/features/categories/categoriesSlice";
@@ -23,11 +23,11 @@ const CheckoutItem = ({ cartItem }: Props) => {
 
   const { imageUrl, name, price, quantity } = cartItem;
 
-  const removeItemHandler = () => dispatch(removeFromCart(cartItem));
+  const addToCart = () => dispatch(increaseCartItemQuantity(cartItem));
 
-  const addItemHandler = () => dispatch(addToCart(cartItem));
+  const subtractFromCart = () => dispatch(decreaseCartItemQuantity(cartItem));
 
-  const clearItemHandler = () => dispatch(clearFromCart(cartItem));
+  const removeFromCart = () => dispatch(removeItemFromCart(cartItem));
 
   return (
     <tr>
@@ -39,14 +39,14 @@ const CheckoutItem = ({ cartItem }: Props) => {
       </td>
       <td>
         <Flex>
-          <IconChevronLeft cursor={"pointer"} onClick={removeItemHandler} />
+          <IconChevronLeft cursor={"pointer"} onClick={subtractFromCart} />
           <Text size={"md"}>{quantity}</Text>
-          <IconChevronRight cursor={"pointer"} onClick={addItemHandler} />
+          <IconChevronRight cursor={"pointer"} onClick={addToCart} />
         </Flex>
       </td>
       <td style={{ width: "23%" }}>{`$${price}`}</td>
       <td style={{ paddingLeft: 25 }}>
-        <IconTrash cursor={"pointer"} onClick={clearItemHandler} />
+        <IconTrash cursor={"pointer"} onClick={removeFromCart} />
       </td>
     </tr>
   );

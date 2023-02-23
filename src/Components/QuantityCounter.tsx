@@ -1,11 +1,4 @@
-import { useRef, useState } from "react";
-import {
-  createStyles,
-  NumberInput,
-  NumberInputHandlers,
-  ActionIcon,
-  Group,
-} from "@mantine/core";
+import { createStyles, ActionIcon, Group, Paper } from "@mantine/core";
 import { IconPlus, IconMinus } from "@tabler/icons-react";
 
 const useStyles = createStyles((theme) => ({
@@ -43,58 +36,52 @@ const useStyles = createStyles((theme) => ({
 }));
 
 type Props = {
-  min?: number;
   max?: number;
-  width?: number;
-  quantity?: number;
+  quantity: number;
+  addToCart: () => void;
+  subtractFromCart: () => void;
 };
 
-function QuantityCounter({ min = 1, max = 10, width, quantity }: Props) {
+function QuantityCounter({
+  max = 10,
+  quantity,
+  addToCart,
+  subtractFromCart,
+}: Props) {
   const { classes, theme } = useStyles();
-  const handlers = useRef<NumberInputHandlers>(null);
-  const [value, setValue] = useState<number | undefined>(1);
 
   return (
     <Group
-      align="center"
-      position="apart"
       p={`6px ${theme.spacing.sm}px`}
-      style={{ border: `1px solid ${theme.colors.gray[7]}` }}
+      style={{
+        border: `1px solid ${theme.colors.gray[7]}`,
+        borderRadius: theme.radius.md,
+      }}
     >
       <ActionIcon<"button">
         size={28}
         variant="transparent"
-        onClick={() => handlers.current?.decrement()}
-        disabled={value === min}
+        onClick={subtractFromCart}
         className={classes.control}
         onMouseDown={(event) => event.preventDefault()}
       >
         <IconMinus size={16} stroke={1.5} />
       </ActionIcon>
 
-      <NumberInput
-        variant="unstyled"
-        min={min}
-        max={max}
-        handlersRef={handlers}
-        w={width}
-        value={quantity}
-        onChange={setValue}
-        classNames={{ input: classes.input }}
+      <Paper
         style={{
           backgroundColor:
-            theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.white,
-          border: `1px solid ${
-            theme.colorScheme === "dark" ? "transparent" : theme.colors.gray[3]
-          }`,
+            theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
         }}
-      />
+      >
+        {quantity}
+      </Paper>
 
       <ActionIcon<"button">
         size={28}
         variant="transparent"
-        onClick={() => handlers.current?.increment()}
-        disabled={value === max}
+        onClick={addToCart}
+        disabled={quantity === max}
         className={classes.control}
         onMouseDown={(event) => event.preventDefault()}
       >

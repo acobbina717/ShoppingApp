@@ -1,4 +1,12 @@
-import { Button, Container, Drawer, ScrollArea } from "@mantine/core";
+import {
+  Button,
+  Center,
+  Container,
+  Drawer,
+  Group,
+  ScrollArea,
+  Text,
+} from "@mantine/core";
 import { BsBag } from "react-icons/bs";
 import CartItem from "../Cart-Item/CartItem";
 
@@ -12,7 +20,9 @@ import { useRouter } from "next/router";
 const Cart = () => {
   const router = useRouter();
   const { classes } = useStyles();
-  const { cartCount, cartItems } = useAppSelector((state) => state.cart);
+  const { cartCount, cartItems, cartTotal } = useAppSelector(
+    (state) => state.cart
+  );
 
   const [opened, setOpened] = useState(false);
 
@@ -32,16 +42,32 @@ const Cart = () => {
         zIndex={99999}
       >
         <Container fluid h={"80vh"} p={10}>
-          <ScrollArea.Autosize maxHeight={"70vh"}>
-            {cartItems.length ? (
-              cartItems.map((product) => (
-                <CartItem key={product.id} cartItem={product} />
-              ))
-            ) : (
-              <span className={classes.emptyMessage}>Your cart is empty</span>
-            )}
-          </ScrollArea.Autosize>
-          <Button onClick={navigateToCheckout}>GO TO CHECKOUT</Button>
+          {cartItems.length > 0 ? (
+            <>
+              <ScrollArea.Autosize maxHeight={"70vh"}>
+                {cartItems.map((product) => (
+                  <CartItem key={product.id} cartItem={product} />
+                ))}
+              </ScrollArea.Autosize>
+              <Group mt={10} position="right">
+                <Text>{`Cart Total: $${cartTotal}`}</Text>
+              </Group>
+              <Container mt={40}>
+                <Center>
+                  <Button
+                    variant="outline"
+                    color="gray"
+                    w={400}
+                    onClick={navigateToCheckout}
+                  >
+                    GO TO CHECKOUT
+                  </Button>
+                </Center>
+              </Container>
+            </>
+          ) : (
+            <span className={classes.emptyMessage}>Your cart is empty</span>
+          )}
         </Container>
       </Drawer>
 

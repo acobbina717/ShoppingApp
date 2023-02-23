@@ -1,7 +1,6 @@
-import { Card, Center, Container, Grid, Title } from "@mantine/core";
+import { Card, Center, Container, Grid, Title, Image } from "@mantine/core";
 import React from "react";
-import Image from "next/image";
-import Directory from "../src/components/Directory";
+import Directory from "../src/components/directory/Directory";
 
 type Props = {};
 
@@ -11,21 +10,21 @@ const Home = (props: Props) => {
     <div>
       <Directory />
       <Container size="lg">
-        <Title order={2}>Products</Title>
+        {/* <Title order={2}>Products</Title>
         <div>
           <Center>
             <Title order={3}>Products List</Title>
           </Center>
           <Grid grow>
-            {products.map((product) => (
-              <Grid.Col span={3}>
+            {products.map((product, idx) => (
+              <Grid.Col key={idx} span={3}>
                 <Card>
                   <Image src={""} alt={""} />
                 </Card>
               </Grid.Col>
             ))}
           </Grid>
-        </div>
+        </div> */}
       </Container>
     </div>
   );
