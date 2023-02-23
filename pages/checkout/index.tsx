@@ -3,7 +3,7 @@ import Checkout from "../../src/components/Checkout";
 
 function Page() {
   return (
-    <Container>
+    <Container size="xl">
       <Checkout />
     </Container>
   );

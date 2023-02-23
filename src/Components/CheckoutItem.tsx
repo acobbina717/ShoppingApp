@@ -14,6 +14,7 @@ import {
 } from "../Utils/Redux/features/cart/cartSlice";
 
 import type { Product } from "../Utils/Redux/features/categories/categoriesSlice";
+import QuantityCounter from "./QuantityCounter";
 type Props = {
   cartItem: Product;
 };
@@ -37,12 +38,12 @@ const CheckoutItem = ({ cartItem }: Props) => {
       <td style={{ width: "23%" }}>
         <Text size={"lg"}>{name}</Text>
       </td>
-      <td>
-        <Flex>
-          <IconChevronLeft cursor={"pointer"} onClick={subtractFromCart} />
-          <Text size={"md"}>{quantity}</Text>
-          <IconChevronRight cursor={"pointer"} onClick={addToCart} />
-        </Flex>
+      <td style={{ width: "18%" }}>
+        <QuantityCounter
+          quantity={Number(quantity)}
+          addToCart={addToCart}
+          subtractFromCart={subtractFromCart}
+        />
       </td>
       <td style={{ width: "23%" }}>{`$${price}`}</td>
       <td style={{ paddingLeft: 25 }}>

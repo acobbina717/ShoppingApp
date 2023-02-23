@@ -52,6 +52,8 @@ function QuantityCounter({
 
   return (
     <Group
+      position="center"
+      w={125}
       p={`6px ${theme.spacing.sm}px`}
       style={{
         border: `1px solid ${theme.colors.gray[7]}`,
@@ -62,6 +64,7 @@ function QuantityCounter({
         size={28}
         variant="transparent"
         onClick={subtractFromCart}
+        disabled={quantity === 1}
         className={classes.control}
         onMouseDown={(event) => event.preventDefault()}
       >

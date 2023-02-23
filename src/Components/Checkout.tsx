@@ -14,7 +14,7 @@ const Checkout = () => {
   const [opened, setOpened] = useState(false);
 
   return (
-    <Container mih={"90vh"}>
+    <Container fluid mih={"90vh"}>
       <Table horizontalSpacing={"sm"} verticalSpacing="xs">
         <thead>
           <tr>
