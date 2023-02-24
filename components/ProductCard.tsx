@@ -12,9 +12,10 @@ import {
 import { useAppDispatch } from "../src/Utils/Redux/hooks/hooks";
 import { increaseItemQuantity } from "../src/Utils/Redux/features/cart/cartSlice";
 
-import { useHover } from "@mantine/hooks";
+// import { useHover } from "@mantine/hooks";
 
 import type { Product } from "../src/Utils/Redux/features/categories/categoriesSlice";
+
 type ProductCardProps = {
   product: Product;
 };
@@ -25,19 +26,19 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const dispatch = useAppDispatch();
   const addProductToCart = () => dispatch(increaseItemQuantity(product));
 
-  const { hovered, ref } = useHover();
+  // const { hovered, ref } = useHover();
 
   return (
     <Stack>
       <Card radius="md" shadow="lg">
-        <Card.Section ref={ref}>
-          <Image src={imageUrl} alt={name} radius={"sm"} />
+        <Card.Section>
+          <Image src={imageUrl} alt={name} radius="sm" />
           <Center>
             <Button
               style={{ position: "absolute" }}
-              w={"80%"}
+              w="80%"
               bottom={10}
-              display={!hovered && "none"}
+              display="none"
               onClick={addProductToCart}
             >
               Add To Cart
@@ -46,8 +47,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </Card.Section>
       </Card>
       <Paper>
-        <Group display={"flex"} position="apart">
-          <Text w={"65%"}>{name}</Text>
+        <Group display="flex" position="apart">
+          <Text w="65%">{name}</Text>
           <Text>{`$${price}`}</Text>
         </Group>
       </Paper>

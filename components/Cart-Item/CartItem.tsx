@@ -1,4 +1,6 @@
 import { Card, Group, Image, Stack, Text } from "@mantine/core";
+import { IconTrash } from "@tabler/icons-react";
+
 import QuantityCounter from "../QuantityCounter";
 
 import { useAppDispatch } from "../../src/Utils/Redux/hooks/hooks";
@@ -11,8 +13,7 @@ import {
 import { useStyles } from "./cart-item.styles";
 
 import type { Product } from "../../src/Utils/Redux/features/categories/categoriesSlice";
-import { IconTrash } from "@tabler/icons-react";
-import { useHover } from "@mantine/hooks";
+
 type CartItemProps = {
   cartItem: Product;
 };
@@ -25,12 +26,11 @@ const CartItem = ({ cartItem }: CartItemProps) => {
   const removeFromCart = () => dispatch(removeItemFromCart(cartItem));
 
   const { theme } = useStyles();
-  const { hovered, ref } = useHover();
 
   return (
     <Card
       withBorder
-      display={"flex"}
+      display="flex"
       mb={15}
       p={0}
       style={{
@@ -43,7 +43,7 @@ const CartItem = ({ cartItem }: CartItemProps) => {
         <Image src={imageUrl} alt={`${name}`} width={136} mr={4} />
       </Card.Section>
 
-      <Stack pl={10} w={"100%"}>
+      <Stack pl={10} w="100%">
         <Text>{name}</Text>
         <Text>{`$${Number(quantity) * price} `}</Text>
         <Group position="right" mr={15}>

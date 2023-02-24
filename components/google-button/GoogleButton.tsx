@@ -1,7 +1,7 @@
 import { Button, ButtonProps } from "@mantine/core";
 import { GoogleIcon } from "./GoogleIcon";
 
-export function GoogleButton(props: ButtonProps) {
+export const GoogleButton = (props: ButtonProps) => {
   return (
     <Button
       leftIcon={<GoogleIcon />}
@@ -10,4 +10,4 @@ export function GoogleButton(props: ButtonProps) {
       {...props}
     />
   );
-}
+};

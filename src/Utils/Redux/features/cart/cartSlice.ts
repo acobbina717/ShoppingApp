@@ -1,24 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { Product } from "../categories/categoriesSlice";
+
 export type CartItem = Omit<Product, "quantity">;
 
 interface CartState {
   cartItems: Array<Product>;
-  cartCount: number;
-  cartTotal: number;
 }
 const initialState: CartState = {
   cartItems: [],
-  cartCount: 0,
-  cartTotal: 0,
 };
 
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    increaseItemQuantity: (state, { payload }: PayloadAction<CartItem>) => {
+    increaseCartItemQuantity: (state, { payload }: PayloadAction<CartItem>) => {
       const existingCartItem = state.cartItems.find(
         (product) => product.id === payload.id
       );
@@ -33,7 +30,7 @@ const cartSlice = createSlice({
       }
     },
 
-    decreaseItemQuantity: (state, { payload }: PayloadAction<Product>) => {
+    decreaseCartItemQuantity: (state, { payload }: PayloadAction<Product>) => {
       const existingCartItem = state.cartItems.find(
         (product) => product.id === payload.id
       );
@@ -55,29 +52,13 @@ const cartSlice = createSlice({
         (product) => product.id !== payload.id
       );
     },
-
-    setCartCount: (state) => {
-      state.cartCount = state.cartItems.reduce(
-        (total, cartItem) => total + Number(cartItem.quantity),
-        0
-      );
-    },
-
-    setCartTotal: (state) => {
-      state.cartTotal = state.cartItems.reduce(
-        (total, cartItem) => total + Number(cartItem.quantity) * cartItem.price,
-        0
-      );
-    },
   },
 });
 
 export const {
-  setCartCount,
-  setCartTotal,
   removeItemFromCart,
-  increaseItemQuantity,
-  decreaseItemQuantity,
+  increaseCartItemQuantity,
+  decreaseCartItemQuantity,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

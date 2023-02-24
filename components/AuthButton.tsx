@@ -5,10 +5,11 @@ import { signOutLoading } from "../src/Utils/Redux/features/user/userSlice";
 import { useAppDispatch, useAppSelector } from "../src/Utils/Redux/hooks/hooks";
 
 type AuthButtonProps = {
+  // eslint-disable-next-line react/require-default-props
   otherProps?: ButtonProps;
 };
 
-function AuthButton({ otherProps }: AuthButtonProps) {
+const AuthButton = ({ otherProps }: AuthButtonProps) => {
   const dispatch = useAppDispatch();
 
   const { currentUser } = useAppSelector((state: RootState) => state.user);
@@ -39,6 +40,6 @@ function AuthButton({ otherProps }: AuthButtonProps) {
       Sign Out
     </Button>
   );
-}
+};
 
 export default AuthButton;

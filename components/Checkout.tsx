@@ -8,10 +8,10 @@ import {
   Table,
   Title,
 } from "@mantine/core";
+import { useState } from "react";
 import CheckoutItem from "./CheckoutItem";
 import PaymentForm from "./Payment-Form/PaymentForm";
 import { useAppSelector } from "../src/Utils/Redux/hooks/hooks";
-import { useState } from "react";
 
 const Checkout = () => {
   const [opened, setOpened] = useState(false);
@@ -22,7 +22,7 @@ const Checkout = () => {
   });
 
   return (
-    <Container fluid mih={"90vh"}>
+    <Container fluid mih="90vh">
       <Table verticalSpacing="xs">
         <thead>
           <tr>
@@ -51,7 +51,7 @@ const Checkout = () => {
       <Group position="right" mt={15}>
         <Title order={3}>Total: ${cartTotal}</Title>
       </Group>
-      <Container size={"xs"} p={50}>
+      <Container size="xs" p={50}>
         <Center>
           <Button
             fullWidth

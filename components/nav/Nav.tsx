@@ -8,12 +8,14 @@ import {
   Button,
   Flex,
 } from "@mantine/core";
-import Cart from "../cart/Cart";
-import Link from "next/link";
-import AuthButton from "../AuthButton";
+import { useDisclosure } from "@mantine/hooks";
 import { IconCrown } from "@tabler/icons-react";
 
-import { useDisclosure } from "@mantine/hooks";
+import Link from "next/link";
+import AuthButton from "../AuthButton";
+
+import Cart from "../cart/Cart";
+
 import { useStyles } from "./nav.styles";
 
 const NavLinks = () => (
@@ -22,7 +24,7 @@ const NavLinks = () => (
       component={Link}
       variant="subtle"
       color="dark"
-      href={"/shop"}
+      href="/shop"
       size="md"
     >
       Shop
@@ -47,8 +49,8 @@ const Nav = () => {
       style={{ position: "sticky" }}
     >
       <Container ml={15} mr={15} fluid>
-        <Flex justify={"space-between"} align="center" h={"90px"}>
-          <Link href={"/"}>
+        <Flex justify="space-between" align="center" h="90px">
+          <Link href="/">
             <IconCrown size={38} color={theme.colors.yellow[5]} />
           </Link>
 

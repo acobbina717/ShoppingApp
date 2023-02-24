@@ -36,18 +36,20 @@ const useStyles = createStyles((theme) => ({
 }));
 
 type Props = {
+  // eslint-disable-next-line react/require-default-props
   max?: number;
   quantity: number;
   addToCart: () => void;
   subtractFromCart: () => void;
 };
 
-function QuantityCounter({
+const QuantityCounter = ({
+  // eslint-disable-next-line no-unused-vars
   max = 10,
   quantity,
   addToCart,
   subtractFromCart,
-}: Props) {
+}: Props) => {
   const { classes, theme } = useStyles();
 
   return (
@@ -91,6 +93,6 @@ function QuantityCounter({
       </ActionIcon>
     </Group>
   );
-}
+};
 
 export default QuantityCounter;

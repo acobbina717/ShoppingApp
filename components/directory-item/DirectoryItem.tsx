@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useStyles } from "./directory-item.styles";
 
 import { DirectoryObj } from "../directory/data";
+
 type DirectoryProps = {
   category: DirectoryObj;
 };
