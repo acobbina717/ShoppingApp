@@ -1,6 +1,6 @@
 import { Card, Center, Container, Grid, Title, Image } from "@mantine/core";
 import React from "react";
-import Directory from "../src/components/directory/Directory";
+import Directory from "../components/directory/Directory";
 
 type Props = {};
 

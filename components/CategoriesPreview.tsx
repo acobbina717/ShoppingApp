@@ -1,9 +1,9 @@
 import { Container, Skeleton } from "@mantine/core";
 import { AnyAction } from "@reduxjs/toolkit";
 import { useEffect } from "react";
-import { fetchCategoriesLoading } from "../Utils/Redux/features/categories/categoriesSlice";
+import { fetchCategoriesLoading } from "../src/Utils/Redux/features/categories/categoriesSlice";
 
-import { useAppDispatch, useAppSelector } from "../Utils/Redux/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../src/Utils/Redux/hooks/hooks";
 import CategoryPreview from "./CategoryPreview";
 
 const CategoriesPreview = () => {

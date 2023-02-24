@@ -3,7 +3,7 @@
 // import Home from "./Routes/Home/Home";
 // import Shop from "./Routes/Shop/Shop";
 // import Auth from "./Routes/Auth/Auth";
-import Checkout from "./components/Checkout";
+import Checkout from "../components/Checkout";
 
 import { useEffect } from "react";
 

@@ -1,16 +1,16 @@
 import { Card, Group, Image, Stack, Text } from "@mantine/core";
 import QuantityCounter from "../QuantityCounter";
 
-import { useAppDispatch } from "../../Utils/Redux/hooks/hooks";
+import { useAppDispatch } from "../../src/Utils/Redux/hooks/hooks";
 import {
   decreaseItemQuantity,
   increaseItemQuantity,
   removeItemFromCart,
-} from "../../Utils/Redux/features/cart/cartSlice";
+} from "../../src/Utils/Redux/features/cart/cartSlice";
 
 import { useStyles } from "./cart-item.styles";
 
-import type { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
+import type { Product } from "../../src/Utils/Redux/features/categories/categoriesSlice";
 import { IconTrash } from "@tabler/icons-react";
 import { useHover } from "@mantine/hooks";
 type CartItemProps = {

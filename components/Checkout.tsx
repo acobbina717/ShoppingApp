@@ -10,7 +10,7 @@ import {
 } from "@mantine/core";
 import CheckoutItem from "./CheckoutItem";
 import PaymentForm from "./Payment-Form/PaymentForm";
-import { useAppSelector } from "../Utils/Redux/hooks/hooks";
+import { useAppSelector } from "../src/Utils/Redux/hooks/hooks";
 import { useState } from "react";
 
 const Checkout = () => {

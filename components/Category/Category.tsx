@@ -4,8 +4,8 @@ import { Fragment, useEffect, useState } from "react";
 import ProductCard from "../ProductCard";
 
 import { CategoryContainer } from "./category.styles";
-import { useAppSelector } from "../../Utils/Redux/hooks/hooks";
-import { Product } from "../../Utils/Redux/features/categories/categoriesSlice";
+import { useAppSelector } from "../../src/Utils/Redux/hooks/hooks";
+import { Product } from "../../src/Utils/Redux/features/categories/categoriesSlice";
 import { Skeleton } from "@mantine/core";
 // import Spinner from "../Spinner/Spinner";
 

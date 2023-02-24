@@ -1,5 +1,5 @@
 import { Container } from "@mantine/core";
-import Checkout from "../../src/components/Checkout";
+import Checkout from "../../components/Checkout";
 
 function Page() {
   return (

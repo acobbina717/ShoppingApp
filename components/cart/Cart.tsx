@@ -12,7 +12,7 @@ import CartItem from "../Cart-Item/CartItem";
 
 import { useStyles } from "./cart.styles";
 
-import { useAppSelector } from "../../Utils/Redux/hooks/hooks";
+import { useAppSelector } from "../../src/Utils/Redux/hooks/hooks";
 import { useState } from "react";
 
 import { useRouter } from "next/router";

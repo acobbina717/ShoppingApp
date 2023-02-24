@@ -1,6 +1,6 @@
 import { Grid, Stack, Title, Text, Container } from "@mantine/core";
 import Link from "next/link";
-import { Product } from "../Utils/Redux/features/categories/categoriesSlice";
+import { Product } from "../src/Utils/Redux/features/categories/categoriesSlice";
 import ProductCard from "./ProductCard";
 
 type CategoryPreviewProps = {
