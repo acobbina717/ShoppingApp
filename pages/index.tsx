@@ -5,7 +5,6 @@ import Directory from "../src/components/directory/Directory";
 type Props = {};
 
 const Home = (props: Props) => {
-  const products = new Array(30).fill(1);
   return (
     <div>
       <Directory />
