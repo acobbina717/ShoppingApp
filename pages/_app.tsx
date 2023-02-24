@@ -1,12 +1,14 @@
 import React from "react";
+import { Provider } from "react-redux";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
+// eslint-disable-next-line no-unused-vars
+import { persister, store } from "../src/Utils/Redux/app/store/store";
 import Navigation from "../components/nav/Nav";
-import { Provider } from "react-redux";
-import { persistor, store } from "../src/Utils/Redux/app/store/store";
+import "../styles/global.css";
 
-export default function App(props: AppProps) {
+const App = (props: AppProps) => {
   const { Component, pageProps } = props;
 
   return (
@@ -32,4 +34,5 @@ export default function App(props: AppProps) {
       </Provider>
     </>
   );
-}
+};
+export default App;

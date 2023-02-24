@@ -1,5 +1,4 @@
-import { applyMiddleware, configureStore } from "@reduxjs/toolkit";
-import rootReducer from "./reducers";
+import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
@@ -7,10 +6,7 @@ import thunk from "redux-thunk";
 
 import createSagaMiddleware from "redux-saga";
 import { rootSaga } from "./root-saga";
-
-export type RootState = ReturnType<typeof store.getState>;
-
-export type AppDispatch = typeof store.dispatch;
+import rootReducer from "./reducers";
 
 const persistConfig = {
   key: "root",
@@ -35,4 +31,8 @@ export const store = configureStore({
 
 sagaMiddleware.run(rootSaga);
 
-export const persistor = persistStore(store);
+export type RootState = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;
+
+export const persister = persistStore(store);
