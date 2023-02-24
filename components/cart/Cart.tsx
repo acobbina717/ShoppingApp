@@ -10,35 +10,19 @@ import {
 } from "@mantine/core";
 import { BsBag } from "react-icons/bs";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { useStyles } from "./cart.styles";
 
 import CartItem from "../Cart-Item/CartItem";
 import { useAppSelector } from "../../src/Utils/Redux/hooks/hooks";
+import { useCart } from "../utils/useCart";
 
 const Cart = () => {
   const router = useRouter();
   const { classes } = useStyles();
   const { cartItems } = useAppSelector((state) => state.cart);
-
-  const cartCount = useMemo(
-    () =>
-      cartItems.reduce(
-        (total, cartItem) => total + Number(cartItem.quantity) * cartItem.price,
-        0
-      ),
-    [cartItems]
-  );
-
-  const cartTotal = useMemo(
-    () =>
-      cartItems.reduce(
-        (total, cartItem) => total + Number(cartItem.quantity) * cartItem.price,
-        0
-      ),
-    [cartItems]
-  );
+  const { cartCount, cartTotal } = useCart(cartItems);
 
   const [opened, setOpened] = useState(false);
 

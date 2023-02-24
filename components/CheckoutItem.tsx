@@ -3,8 +3,8 @@ import { IconTrash } from "@tabler/icons-react";
 
 import { useAppDispatch } from "../src/Utils/Redux/hooks/hooks";
 import {
-  increaseItemQuantity,
-  decreaseItemQuantity,
+  increaseCartItemQuantity,
+  decreaseCartItemQuantity,
   removeItemFromCart,
 } from "../src/Utils/Redux/features/cart/cartSlice";
 
@@ -18,8 +18,8 @@ type Props = {
 const CheckoutItem = ({ cartItem }: Props) => {
   const dispatch = useAppDispatch();
   const { imageUrl, name, price, quantity } = cartItem;
-  const addToCart = () => dispatch(increaseItemQuantity(cartItem));
-  const subtractFromCart = () => dispatch(decreaseItemQuantity(cartItem));
+  const addToCart = () => dispatch(increaseCartItemQuantity(cartItem));
+  const subtractFromCart = () => dispatch(decreaseCartItemQuantity(cartItem));
   const removeFromCart = () => dispatch(removeItemFromCart(cartItem));
 
   // const useStyles = createStyles({});

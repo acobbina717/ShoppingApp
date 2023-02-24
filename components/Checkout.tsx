@@ -12,11 +12,15 @@ import { useState } from "react";
 import CheckoutItem from "./CheckoutItem";
 import PaymentForm from "./Payment-Form/PaymentForm";
 import { useAppSelector } from "../src/Utils/Redux/hooks/hooks";
+import { useCart } from "./utils/useCart";
 
 const Checkout = () => {
   const [opened, setOpened] = useState(false);
 
-  const { cartItems, cartTotal } = useAppSelector((state) => state.cart);
+  const { cartItems } = useAppSelector((state) => state.cart);
+
+  const { cartTotal } = useCart(cartItems);
+
   const tableData = cartItems.map((product) => {
     return <CheckoutItem key={product.id} cartItem={product} />;
   });
