@@ -11,7 +11,7 @@ import {
 import { useState } from "react";
 import CheckoutItem from "./CheckoutItem";
 import PaymentForm from "./Payment-Form/PaymentForm";
-import { useAppSelector } from "../src/Utils/Redux/hooks/hooks";
+import { useAppSelector } from "../src/utils/redux/hooks/hooks";
 import { useCart } from "./utils/useCart";
 
 const Checkout = () => {

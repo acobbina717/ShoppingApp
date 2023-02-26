@@ -19,7 +19,7 @@ import {
   signInAuthUserWithEmailAndPassword,
   signOutUser,
   createAuthUserWithEmailAndPassword,
-} from "../../../Firebase/firebase.utils";
+} from "../../../firebase/firebase.utils";
 
 import {
   UserDocumentSnapshot,

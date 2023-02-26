@@ -1,4 +1,4 @@
-import type { Product } from "../../src/Utils/Redux/features/categories/categoriesSlice";
+import type { Product } from "../../src/utils/redux/features/categories/categoriesSlice";
 export interface DirectoryObj extends Pick<Product, "id" | "imageUrl"> {
   title: string;
   route: string;

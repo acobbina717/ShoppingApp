@@ -7,12 +7,12 @@ import Checkout from "../components/Checkout";
 
 import { useEffect } from "react";
 
-import { useAppDispatch, useAppSelector } from "./Utils/Redux/hooks/hooks";
-import { checkUserSession } from "./Utils/Redux/features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "./utils/redux/hooks/hooks";
+import { checkUserSession } from "./utils/redux/features/user/userSlice";
 import {
   setCartTotal,
   setCartCount,
-} from "./Utils/Redux/features/cart/cartSlice";
+} from "./utils/redux/features/cart/cartSlice";
 
 const App = () => {
   const dispatch = useAppDispatch();

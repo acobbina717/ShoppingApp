@@ -1,12 +1,12 @@
 import { Container } from "@mantine/core";
 import AuthForm from "../../components/AuthForm";
 
-function Auth() {
+const AuthPage = () => {
   return (
     <Container>
       <AuthForm />
     </Container>
   );
-}
+};
 
-export default Auth;
+export default AuthPage;

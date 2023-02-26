@@ -1,6 +1,7 @@
 import { Grid, Stack, Title, Text, Container } from "@mantine/core";
 import Link from "next/link";
-import { Product } from "../src/Utils/Redux/features/categories/categoriesSlice";
+import type { Product } from "../src/utils/typeDef";
+
 import ProductCard from "./ProductCard";
 
 type CategoryPreviewProps = {
@@ -8,25 +9,7 @@ type CategoryPreviewProps = {
   products: Product[];
 };
 
-const CategoriesPreviewItem = ({ title, products }: CategoryPreviewProps) => {
-  const productCard = products
-    .filter((_, idx) => idx < 4)
-    .map((product) => {
-      if (title === "sneakers") {
-        return (
-          <Grid.Col key={product.name} span={12} xs={10} sm={6} xl={3} mb={10}>
-            <ProductCard product={product} key={product.id} />
-          </Grid.Col>
-        );
-      }
-
-      return (
-        <Grid.Col key={product.name} span={6} xs={5} sm={3} mb={10}>
-          <ProductCard product={product} key={product.id} />
-        </Grid.Col>
-      );
-    });
-
+const CategoryPreview = ({ title, products }: CategoryPreviewProps) => {
   return (
     <Container fluid mb={50}>
       <Stack pb={10}>
@@ -35,10 +18,31 @@ const CategoriesPreviewItem = ({ title, products }: CategoryPreviewProps) => {
             {title.toUpperCase()}
           </Text>
         </Title>
-        <Grid justify="center">{productCard}</Grid>
+        <Grid justify="center">
+          {products
+            .filter((_, idx) => idx < 4)
+            .map((product) =>
+              title === "sneakers" ? (
+                <Grid.Col
+                  key={product.name}
+                  span={12}
+                  xs={10}
+                  sm={6}
+                  xl={3}
+                  mb={10}
+                >
+                  <ProductCard product={product} key={product.id} />
+                </Grid.Col>
+              ) : (
+                <Grid.Col key={product.name} span={6} xs={5} sm={3} mb={10}>
+                  <ProductCard product={product} key={product.id} />
+                </Grid.Col>
+              )
+            )}
+        </Grid>
       </Stack>
     </Container>
   );
 };
 
-export default CategoriesPreviewItem;
+export default CategoryPreview;

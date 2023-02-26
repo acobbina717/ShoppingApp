@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-import { Product } from "../categories/categoriesSlice";
+import { Product } from "../../../typeDef";
 
 export type CartItem = Omit<Product, "quantity">;
 

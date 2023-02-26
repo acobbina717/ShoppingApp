@@ -1,13 +1,30 @@
-import React from "react";
-import CategoriesPreview from "../../components/CategoriesPreview";
+import { Container, Skeleton, Space } from "@mantine/core";
 
-type Props = {};
+import CategoryPreview from "../../components/CategoryPreview";
+import { useCategories } from "../../src/utils/hooks";
 
-const Shop = (props: Props) => {
+const Shop = () => {
+  const { categories, isLoading } = useCategories();
   return (
-    <div>
-      <CategoriesPreview />
-    </div>
+    <Container size={1600}>
+      {isLoading && (
+        <>
+          <Skeleton height={50} />
+          <Space />
+          <Skeleton width={50} height={200} />
+          <Skeleton height={50} />
+        </>
+      )}
+
+      {categories &&
+        Object.keys(categories).map((title) => {
+          const products = categories[title];
+
+          return (
+            <CategoryPreview key={title} title={title} products={products} />
+          );
+        })}
+    </Container>
   );
 };
 

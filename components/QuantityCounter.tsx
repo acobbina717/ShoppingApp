@@ -85,7 +85,7 @@ const QuantityCounter = ({
         size={28}
         variant="transparent"
         onClick={addToCart}
-        // disabled={quantity === max}
+        disabled={quantity === max}
         className={classes.control}
         onMouseDown={(event) => event.preventDefault()}
       >

@@ -6,7 +6,7 @@ import {
 } from "./payment-form.styles";
 // import Button, { BUTTON_TYPE_CLASSES } from "../Button/Button";
 import { FormEvent, useState } from "react";
-import { useAppSelector } from "../../src/Utils/Redux/hooks/hooks";
+import { useAppSelector } from "../../src/utils/redux/hooks/hooks";
 import { Button } from "@mantine/core";
 
 const PaymentForm = () => {

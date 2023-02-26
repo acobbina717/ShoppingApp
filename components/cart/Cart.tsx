@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 import { useStyles } from "./cart.styles";
 
 import CartItem from "../Cart-Item/CartItem";
-import { useAppSelector } from "../../src/Utils/Redux/hooks/hooks";
+import { useAppSelector } from "../../src/utils/redux/hooks/hooks";
 import { useCart } from "../utils/useCart";
 
 const Cart = () => {

@@ -1,15 +1,15 @@
 import { Center, Image, Text } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 
-import { useAppDispatch } from "../src/Utils/Redux/hooks/hooks";
+import { useAppDispatch } from "../src/utils/redux/hooks/hooks";
 import {
   increaseCartItemQuantity,
   decreaseCartItemQuantity,
   removeItemFromCart,
-} from "../src/Utils/Redux/features/cart/cartSlice";
+} from "../src/utils/redux/features/cart/cartSlice";
 
-import type { Product } from "../src/Utils/Redux/features/categories/categoriesSlice";
 import QuantityCounter from "./QuantityCounter";
+import { Product } from "../src/utils/typeDef";
 
 type Props = {
   cartItem: Product;

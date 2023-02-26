@@ -1,19 +1,15 @@
-import { Paper } from "@mantine/core";
 import { useRouter } from "next/router";
-import React from "react";
+import Category from "../../components/Category/Category";
+import { useCategories } from "../../src/utils/hooks";
 
-type Props = {};
-
-function Page({}: Props) {
-  const products = new Array(30).fill(1);
+const Page = () => {
   const router = useRouter();
-  const { params } = router.query;
-  return (
-    <div style={{ height: "500px" }}>
-      <div>{params}</div>
-      kshdgjhsj
-    </div>
-  );
-}
+  const { slug } = router.query;
+
+  const { getProducts } = useCategories();
+  const products = getProducts(String(slug));
+
+  return <Category products={products} />;
+};
 
 export default Page;

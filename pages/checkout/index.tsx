@@ -1,12 +1,12 @@
 import { Container } from "@mantine/core";
 import Checkout from "../../components/Checkout";
 
-function Page() {
+const CheckoutPage = () => {
   return (
     <Container size="lg">
       <Checkout />
     </Container>
   );
-}
+};
 
-export default Page;
+export default CheckoutPage;

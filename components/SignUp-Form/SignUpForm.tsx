@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocFromAuth,
-} from "../../src/Utils/Firebase/firebase.utils";
+} from "../../src/utils/firebase/firebase.utils";
 
 import FromInput from "../Form-Input/FormInput";
 
@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 import Button from "../Button/Button";
 import { SignUpContainer } from "./sign-up-form.styles";
 import { useDispatch } from "react-redux";
-import { emailSignUpLoading } from "../../src/Utils/Redux/features/user/userSlice";
+import { emailSignUpLoading } from "../../src/utils/redux/features/user/userSlice";
 
 export interface FormFields {
   displayName: string;

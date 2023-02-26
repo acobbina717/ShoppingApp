@@ -9,12 +9,11 @@ import {
   Text,
 } from "@mantine/core";
 
-import { useAppDispatch } from "../src/Utils/Redux/hooks/hooks";
-import { increaseCartItemQuantity } from "../src/Utils/Redux/features/cart/cartSlice";
+import { useAppDispatch } from "../src/utils/redux/hooks/hooks";
+import { increaseCartItemQuantity } from "../src/utils/redux/features/cart/cartSlice";
+import type { Product } from "../src/utils/typeDef";
 
 // import { useHover } from "@mantine/hooks";
-
-import type { Product } from "../src/Utils/Redux/features/categories/categoriesSlice";
 
 type ProductCardProps = {
   product: Product;

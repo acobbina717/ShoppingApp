@@ -15,19 +15,22 @@ import {
   getDoc,
   setDoc,
   collection,
-  writeBatch,
+  // writeBatch,
   query,
   getDocs,
   DocumentSnapshot,
   DocumentData,
 } from "firebase/firestore";
-import type { Product } from "../Redux/features/categories/categoriesSlice";
+
+// import SHOP_DATA from "../../shop-data";
+import { Product } from "../redux/features/categories/categoriesSlice";
 
 export interface ShopDataCollection {
   title: string;
   items: Array<Product>;
 }
 
+// eslint-disable-next-line no-unused-vars
 type UserAuthState = (user: User | null) => void;
 
 const firebaseConfig = {
@@ -38,34 +41,43 @@ const firebaseConfig = {
   messagingSenderId: "261171838189",
   appId: "1:261171838189:web:c42fc80c24c1745347a0e4",
 };
+// eslint-disable-next-line no-unused-vars
 const firebaseApp = initializeApp(firebaseConfig);
 
 export const db = getFirestore();
 
-export const addCollectionAndDocuments = async (
-  collectionKey: string,
-  objectsToAdd: Array<ShopDataCollection>
-) => {
-  const collectionRef = collection(db, collectionKey);
+// Add collection and  documents to Firebase DB
+// const addCollectionAndDocuments = async (
+//   collectionKey: string,
+//   objectsToAdd: Array<ShopDataCollection>
+// ) => {
+//   const collectionRef = collection(db, collectionKey);
 
-  const batch = writeBatch(db);
+//   const batch = writeBatch(db);
 
-  objectsToAdd.forEach((object) => {
-    const docRef = doc(collectionRef, object.title.toLowerCase());
-    batch.set(docRef, object);
-  });
+//   objectsToAdd.forEach((object) => {
+//     const docRef = doc(collectionRef, object.title.toLowerCase());
+//     batch.set(docRef, object);
+//   });
 
-  await batch.commit();
-};
+//   await batch.commit();
+// };
 
-export const getCategoriesAndDocuments = async () => {
-  const collectionRef = collection(db, "categories");
+// addCollectionAndDocuments("categories", SHOP_DATA);
+
+interface CategoriesCollection {
+  title?: any;
+  [key: string]: Array<Product>;
+}
+
+export const getCategoriesAndDocuments = async (path: string) => {
+  const collectionRef = collection(db, path);
   const q = query(collectionRef);
 
   const querySnapshot = await getDocs(q);
 
   const categoryMap = querySnapshot.docs.reduce(
-    (acc: { [key: string]: Array<Product> }, docSnapshot) => {
+    (acc: CategoriesCollection, docSnapshot) => {
       const { items, title } = docSnapshot.data();
       acc[title.toLowerCase()] = items;
       return acc;
@@ -86,7 +98,7 @@ export const signInWithGooglePopup = () =>
 
 export const createUserDocFromAuth = async (
   user: User,
-  additionInfomation = {}
+  additionInformation = {}
 ): Promise<DocumentSnapshot<DocumentData> | undefined> => {
   if (!user) return;
 
@@ -102,10 +114,10 @@ export const createUserDocFromAuth = async (
         displayName,
         email,
         createdAt,
-        ...additionInfomation,
+        ...additionInformation,
       });
     } catch (error) {
-      if (error instanceof Error) console.log(error.message);
+      if (error instanceof Error) throw new Error(error.message);
     }
   }
   return userSnapshot;
@@ -117,7 +129,7 @@ export const createAuthUserWithEmailAndPassword = async (
 ) => {
   if (!email || !password) return;
 
-  return await createUserWithEmailAndPassword(auth, email, password);
+  return createUserWithEmailAndPassword(auth, email, password);
 };
 
 export const signInAuthUserWithEmailAndPassword = async (
@@ -126,10 +138,10 @@ export const signInAuthUserWithEmailAndPassword = async (
 ) => {
   if (!email || !password) return;
 
-  return await signInWithEmailAndPassword(auth, email, password);
+  return signInWithEmailAndPassword(auth, email, password);
 };
 
-export const signOutUser = async () => await signOut(auth);
+export const signOutUser = async () => signOut(auth);
 
 export const onAuthStateChangeListener = (callback: UserAuthState) =>
   onAuthStateChanged(auth, callback);

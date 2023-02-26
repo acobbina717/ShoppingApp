@@ -1,41 +1,21 @@
-// import { useParams } from "react-router-dom";
-import { Fragment, useEffect, useState } from "react";
-
+import { Container, Skeleton } from "@mantine/core";
+import type { Product } from "../../src/utils/typeDef";
 import ProductCard from "../ProductCard";
 
-import { CategoryContainer } from "./category.styles";
-import { useAppSelector } from "../../src/Utils/Redux/hooks/hooks";
-import { Product } from "../../src/Utils/Redux/features/categories/categoriesSlice";
-import { Skeleton } from "@mantine/core";
-// import Spinner from "../Spinner/Spinner";
+interface CategoryProps {
+  products: Product[];
+}
 
-const Category = () => {
-  const { category } = useParams();
-  const [products, setProducts] = useState<Product[]>([]);
-  const { categoriesMap, error, status } = useAppSelector(
-    (state) => state.categories
-  );
-
-  useEffect(() => {
-    if (category) {
-      setProducts(categoriesMap[category]);
-    }
-  }, [category, categoriesMap]);
-
+const Category = ({ products }: CategoryProps) => {
   return (
-    <Fragment>
-      <h1>{category?.toUpperCase()}</h1>
-      {status === "loading" ? (
-        <Skeleton />
-      ) : (
-        <CategoryContainer>
-          {products &&
-            products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-        </CategoryContainer>
-      )}
-    </Fragment>
+    <Container>
+      {products.length < 1 && <Skeleton height={400} />}
+
+      {products &&
+        products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+    </Container>
   );
 };
 

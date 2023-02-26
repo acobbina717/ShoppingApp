@@ -1,8 +1,8 @@
 import { Button, ButtonProps } from "@mantine/core";
 import Link from "next/link";
-import { RootState } from "../src/Utils/Redux/app/store/store";
-import { signOutLoading } from "../src/Utils/Redux/features/user/userSlice";
-import { useAppDispatch, useAppSelector } from "../src/Utils/Redux/hooks/hooks";
+import { RootState } from "../src/utils/redux/app/store/store";
+import { signOutLoading } from "../src/utils/redux/features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "../src/utils/redux/hooks/hooks";
 
 type AuthButtonProps = {
   // eslint-disable-next-line react/require-default-props

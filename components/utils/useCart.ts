@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Product } from "../../src/Utils/Redux/features/categories/categoriesSlice";
+import { Product } from "../../src/utils/redux/features/categories/categoriesSlice";
 
 export const useCart = (cartItems: Product[]) => {
   const cartCount = useMemo(
