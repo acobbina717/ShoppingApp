@@ -16,7 +16,7 @@ import { useStyles } from "./cart.styles";
 
 import CartItem from "../Cart-Item/CartItem";
 import { useAppSelector } from "../../src/utils/redux/hooks/hooks";
-import { useCart } from "../utils/useCart";
+import { useCart } from "../../src/utils/hooks";
 
 const Cart = () => {
   const router = useRouter();

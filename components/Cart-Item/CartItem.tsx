@@ -11,8 +11,7 @@ import {
 } from "../../src/utils/redux/features/cart/cartSlice";
 
 import { useStyles } from "./cart-item.styles";
-
-import type { Product } from "../../src/utils/redux/features/categories/categoriesSlice";
+import type { Product } from "../../src/utils/typeDef";
 
 type CartItemProps = {
   cartItem: Product;

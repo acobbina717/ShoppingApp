@@ -12,7 +12,7 @@ import { useState } from "react";
 import CheckoutItem from "./CheckoutItem";
 import PaymentForm from "./Payment-Form/PaymentForm";
 import { useAppSelector } from "../src/utils/redux/hooks/hooks";
-import { useCart } from "./utils/useCart";
+import { useCart } from "../src/utils/hooks";
 
 const Checkout = () => {
   const [opened, setOpened] = useState(false);
