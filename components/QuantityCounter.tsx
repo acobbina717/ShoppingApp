@@ -36,20 +36,12 @@ const useStyles = createStyles((theme) => ({
 }));
 
 type Props = {
-  // eslint-disable-next-line react/require-default-props
-  max?: number;
   quantity: number;
   addToCart: () => void;
   subtractFromCart: () => void;
 };
 
-const QuantityCounter = ({
-  // eslint-disable-next-line no-unused-vars
-  max = 10,
-  quantity,
-  addToCart,
-  subtractFromCart,
-}: Props) => {
+const QuantityCounter = ({ quantity, addToCart, subtractFromCart }: Props) => {
   const { classes, theme } = useStyles();
 
   return (
@@ -85,7 +77,7 @@ const QuantityCounter = ({
         size={28}
         variant="transparent"
         onClick={addToCart}
-        disabled={quantity === max}
+        disabled={quantity === 10}
         className={classes.control}
         onMouseDown={(event) => event.preventDefault()}
       >

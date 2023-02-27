@@ -10,19 +10,19 @@ import {
 } from "@mantine/core";
 import { BsBag } from "react-icons/bs";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useStyles } from "./cart.styles";
-
-import CartItem from "../Cart-Item/CartItem";
-import { useAppSelector } from "../../src/utils/redux/hooks/hooks";
+import { useStore } from "zustand";
 import { useCart } from "../../src/utils/hooks";
+import CartItem from "../Cart-Item/CartItem";
+
+import { useStyles } from "./cart.styles";
 
 const Cart = () => {
   const router = useRouter();
   const { classes } = useStyles();
-  const { cartItems } = useAppSelector((state) => state.cart);
-  const { cartCount, cartTotal } = useCart(cartItems);
+  const { cartItems, cartTotal, cartCount, setCartCount, setCartTotal } =
+    useStore(useCart);
 
   const [opened, setOpened] = useState(false);
 
@@ -30,6 +30,11 @@ const Cart = () => {
     router.push("/checkout");
     setOpened(false);
   };
+
+  useEffect(() => {
+    setCartCount();
+    setCartTotal();
+  }, [cartItems, setCartCount, setCartTotal]);
 
   return (
     <>

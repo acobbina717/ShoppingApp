@@ -11,7 +11,7 @@ type CategoryPreviewProps = {
 
 const CategoryPreview = ({ title, products }: CategoryPreviewProps) => {
   return (
-    <Container fluid mb={50}>
+    <Container size="xl">
       <Stack pb={10}>
         <Title order={2}>
           <Text component={Link} href={`/shop/${title}`}>

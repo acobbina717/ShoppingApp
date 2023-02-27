@@ -1,16 +1,10 @@
 import { Card, Group, Image, Stack, Text } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
-
+import { useStore } from "zustand";
+import { useCart } from "../../src/utils/hooks";
 import QuantityCounter from "../QuantityCounter";
-
-import { useAppDispatch } from "../../src/utils/redux/hooks/hooks";
-import {
-  decreaseCartItemQuantity,
-  increaseCartItemQuantity,
-  removeItemFromCart,
-} from "../../src/utils/redux/features/cart/cartSlice";
-
 import { useStyles } from "./cart-item.styles";
+
 import type { Product } from "../../src/utils/typeDef";
 
 type CartItemProps = {
@@ -19,11 +13,17 @@ type CartItemProps = {
 
 const CartItem = ({ cartItem }: CartItemProps) => {
   const { name, quantity, imageUrl, price } = cartItem;
-  const dispatch = useAppDispatch();
-  const addToCart = () => dispatch(increaseCartItemQuantity(cartItem));
-  const subtractFromCart = () => dispatch(decreaseCartItemQuantity(cartItem));
-  const removeFromCart = () => dispatch(removeItemFromCart(cartItem));
+  const { addToCart, subtractFromCart, removeFromCart } = useStore(useCart);
 
+  const handleAddToCart = () => {
+    addToCart(cartItem);
+  };
+  const handleSubtractFromCart = () => {
+    subtractFromCart(cartItem);
+  };
+  const handleRemoveFromCart = () => {
+    removeFromCart(cartItem);
+  };
   const { theme } = useStyles();
 
   return (
@@ -46,12 +46,16 @@ const CartItem = ({ cartItem }: CartItemProps) => {
         <Text>{name}</Text>
         <Text>{`$${Number(quantity) * price} `}</Text>
         <Group position="right" mr={15}>
-          <IconTrash cursor="pointer" size={20} onClick={removeFromCart} />
+          <IconTrash
+            cursor="pointer"
+            size={20}
+            onClick={handleRemoveFromCart}
+          />
 
           <QuantityCounter
             quantity={Number(quantity)}
-            addToCart={addToCart}
-            subtractFromCart={subtractFromCart}
+            addToCart={handleAddToCart}
+            subtractFromCart={handleSubtractFromCart}
           />
         </Group>
       </Stack>

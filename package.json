@@ -48,7 +48,8 @@
     "reset-css": "^5.0.1",
     "stripe": "^11.2.0",
     "swr": "^2.0.4",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "zustand": "^4.3.4"
   },
   "devDependencies": {
     "@types/redux-logger": "^3.0.9",
