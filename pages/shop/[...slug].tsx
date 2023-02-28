@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import Category from "../../components/Category/Category";
+import Category from "../../components/Category";
 import { useCategories } from "../../src/utils/hooks";
 
 const Page = () => {

@@ -2,7 +2,7 @@ import { Grid, Stack, Title, Text, Container } from "@mantine/core";
 import Link from "next/link";
 import type { Product } from "../src/utils/typeDef";
 
-import ProductCard from "./ProductCard";
+import ProductCard from "./product-card/ProductCard";
 
 type CategoryPreviewProps = {
   title: string;

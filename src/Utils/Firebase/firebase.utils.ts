@@ -15,15 +15,15 @@ import {
   getDoc,
   setDoc,
   collection,
-  // writeBatch,
   query,
   getDocs,
   DocumentSnapshot,
   DocumentData,
+  // writeBatch,
 } from "firebase/firestore";
+import { Product } from "../typeDef";
 
-// import SHOP_DATA from "../../shop-data";
-import { Product } from "../redux/features/categories/categoriesSlice";
+// import { NEW_SHOP_DATA } from "../../shop-data";
 
 export interface ShopDataCollection {
   title: string;
@@ -63,7 +63,7 @@ export const db = getFirestore();
 //   await batch.commit();
 // };
 
-// addCollectionAndDocuments("categories", SHOP_DATA);
+// addCollectionAndDocuments("categories", NEW_SHOP_DATA);
 
 interface CategoriesCollection {
   title?: any;

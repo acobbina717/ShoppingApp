@@ -1,11 +1,13 @@
 import { Card, Group, Image, Stack, Text } from "@mantine/core";
+
 import { IconTrash } from "@tabler/icons-react";
 import { useStore } from "zustand";
-import { useCart } from "../../src/utils/hooks";
-import QuantityCounter from "../QuantityCounter";
+import { useCart } from "../../../src/utils/hooks/useCart";
+import QuantityCounter from "../../QuantityCounter";
+
 import { useStyles } from "./cart-item.styles";
 
-import type { Product } from "../../src/utils/typeDef";
+import type { Product } from "../../../src/utils/typeDef";
 
 type CartItemProps = {
   cartItem: Product;

@@ -1,10 +1,4 @@
-import type { Product } from "../../src/utils/redux/features/categories/categoriesSlice";
-export interface DirectoryObj extends Pick<Product, "id" | "imageUrl"> {
-  title: string;
-  route: string;
-}
-
-export const directoryCategories: DirectoryObj[] = [
+export const directoryCategories = [
   {
     id: 1,
     title: "hats",

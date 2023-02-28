@@ -1,13 +1,8 @@
 import { Center, Image, Text } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 
-import { useAppDispatch } from "../src/utils/redux/hooks/hooks";
-import {
-  increaseCartItemQuantity,
-  decreaseCartItemQuantity,
-  removeItemFromCart,
-} from "../src/utils/redux/features/cart/cartSlice";
-
+import { useStore } from "zustand";
+import { useCart } from "../src/utils/hooks/useCart";
 import QuantityCounter from "./QuantityCounter";
 import { Product } from "../src/utils/typeDef";
 
@@ -16,11 +11,18 @@ type Props = {
 };
 
 const CheckoutItem = ({ cartItem }: Props) => {
-  const dispatch = useAppDispatch();
   const { imageUrl, name, price, quantity } = cartItem;
-  const addToCart = () => dispatch(increaseCartItemQuantity(cartItem));
-  const subtractFromCart = () => dispatch(decreaseCartItemQuantity(cartItem));
-  const removeFromCart = () => dispatch(removeItemFromCart(cartItem));
+  const { addToCart, subtractFromCart, removeFromCart } = useStore(useCart);
+
+  const handleAddToCart = () => {
+    addToCart(cartItem);
+  };
+  const handleSubtractFromCart = () => {
+    subtractFromCart(cartItem);
+  };
+  const handleRemoveFromCart = () => {
+    removeFromCart(cartItem);
+  };
 
   // const useStyles = createStyles({});
   // const { theme } = useStyles();
@@ -46,8 +48,8 @@ const CheckoutItem = ({ cartItem }: Props) => {
       <td style={{ width: "5%" }}>
         <QuantityCounter
           quantity={Number(quantity)}
-          addToCart={addToCart}
-          subtractFromCart={subtractFromCart}
+          addToCart={handleAddToCart}
+          subtractFromCart={handleSubtractFromCart}
         />
       </td>
 
@@ -55,7 +57,7 @@ const CheckoutItem = ({ cartItem }: Props) => {
         <Center>
           <IconTrash
             cursor="pointer"
-            onClick={removeFromCart}
+            onClick={handleRemoveFromCart}
             // color={hovered ? theme.colors.red[5] : theme.colors.gray[4]}
           />
         </Center>

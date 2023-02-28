@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import {
   Header,
   Container,
@@ -7,16 +8,19 @@ import {
   Popover,
   Button,
   Flex,
+  Loader,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconCrown } from "@tabler/icons-react";
 
 import Link from "next/link";
 import AuthButton from "../AuthButton";
-
-import Cart from "../cart/Cart";
-
 import { useStyles } from "./nav.styles";
+
+const Cart = dynamic(() => import("../cart/Cart"), {
+  ssr: false,
+  loading: () => <Loader color="gray" size="sm" variant="dots" />,
+});
 
 const NavLinks = () => (
   <>

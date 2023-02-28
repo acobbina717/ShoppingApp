@@ -2,13 +2,7 @@ import { Card, Overlay, Stack, Text, Image } from "@mantine/core";
 import Link from "next/link";
 import { useStyles } from "./directory-item.styles";
 
-import { DirectoryObj } from "../directory/data";
-
-type DirectoryProps = {
-  category: DirectoryObj;
-};
-
-const DirectoryItem = ({ category }: DirectoryProps) => {
+const DirectoryItem = ({ category }) => {
   const { classes } = useStyles();
   const { imageUrl, title, route } = category;
 

@@ -4,7 +4,7 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
 // eslint-disable-next-line no-unused-vars
-import { persister, store } from "../src/utils/redux/app/store/store";
+import { store } from "../src/utils/redux/app/store/store";
 import Navigation from "../components/nav/Nav";
 import "reset-css";
 

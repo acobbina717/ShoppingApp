@@ -1,39 +1,12 @@
-import { Button, Paper, Text, Title, createStyles } from "@mantine/core";
+import { Button, Paper, Text, Title } from "@mantine/core";
 import { useStore } from "zustand";
-import { useCart } from "../src/utils/hooks";
-import type { Product } from "../src/utils/typeDef";
+import { useCart } from "../../src/utils/hooks/useCart";
+import type { Product } from "../../src/utils/typeDef";
+import { useStyles } from "./product-card.styles";
 
 type ProductCardProps = {
   product: Product;
 };
-
-const useStyles = createStyles((theme) => ({
-  card: {
-    height: 480,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-  },
-
-  title: {
-    fontFamily: `Greycliff CF ${theme.fontFamily}`,
-    fontWeight: 900,
-    color: theme.white,
-    lineHeight: 1.2,
-    fontSize: 32,
-    marginTop: theme.spacing.xs,
-  },
-
-  category: {
-    color: theme.white,
-    opacity: 0.7,
-    fontWeight: 700,
-    textTransform: "uppercase",
-  },
-}));
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const { imageUrl, name, price } = product;

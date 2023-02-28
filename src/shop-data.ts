@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 const SHOP_DATA = [
   {
     title: "hats",
@@ -256,4 +258,11 @@ const SHOP_DATA = [
   },
 ];
 
-export default SHOP_DATA;
+export const NEW_SHOP_DATA = SHOP_DATA.map((data) => {
+  const newData = data.items.map((item) => {
+    const id = uuidv4();
+    item.id = id;
+    return item;
+  });
+  return { title: data.title, items: [...newData] };
+});
