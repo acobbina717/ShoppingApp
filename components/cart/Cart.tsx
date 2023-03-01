@@ -12,18 +12,16 @@ import { BsBag } from "react-icons/bs";
 
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { useStore } from "zustand";
-import { useCart } from "../../src/utils/hooks/useCart";
 import CartItem from "./cart-item/CartItem";
 
 import { useStyles } from "./cart.styles";
+import { useCart } from "../../src/utils/hooks";
 
 const Cart = () => {
   const router = useRouter();
   const { classes } = useStyles();
-  const { cartItems, getCartCount, getCartTotal } = useStore(useCart);
-  const cartCount = getCartCount();
-  const cartTotal = getCartTotal();
+
+  const { cartItems, cartCount, cartTotal } = useCart();
 
   const [opened, setOpened] = useState(false);
 

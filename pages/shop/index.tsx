@@ -5,6 +5,7 @@ import { useCategories } from "../../src/utils/hooks";
 
 const Shop = () => {
   const { categories, isLoading } = useCategories();
+
   return (
     <Container fluid>
       {isLoading && (

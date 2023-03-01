@@ -1,6 +1,7 @@
 import { Button, Paper, Text, Title } from "@mantine/core";
-import { useStore } from "zustand";
-import { useCart } from "../../src/utils/hooks/useCart";
+
+import { useCart } from "../../src/utils/hooks";
+
 import type { Product } from "../../src/utils/typeDef";
 import { useStyles } from "./product-card.styles";
 
@@ -10,8 +11,7 @@ type ProductCardProps = {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const { imageUrl, name, price } = product;
-
-  const { addToCart } = useStore(useCart);
+  const { addToCart } = useCart();
   const handleAddToCart = () => {
     addToCart(product);
   };

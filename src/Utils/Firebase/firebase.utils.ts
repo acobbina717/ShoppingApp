@@ -65,7 +65,7 @@ export const db = getFirestore();
 
 // addCollectionAndDocuments("categories", NEW_SHOP_DATA);
 
-interface CategoriesCollection {
+export interface CategoriesCollection {
   title?: any;
   [key: string]: Array<Product>;
 }

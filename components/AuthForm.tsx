@@ -12,6 +12,7 @@ import {
 import { useToggle, upperFirst } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { GoogleButton } from "./google-button/GoogleButton";
+import { useUser } from "../src/utils/hooks/useUser";
 
 const AuthForm = (props: PaperProps) => {
   const [type, toggle] = useToggle(["login", "register"]);
@@ -31,6 +32,7 @@ const AuthForm = (props: PaperProps) => {
           : null,
     },
   });
+  // useUser();
   return (
     <Paper radius="md" p="xl" withBorder {...props}>
       <Group grow mb="md" mt="md">

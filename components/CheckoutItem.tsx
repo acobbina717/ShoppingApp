@@ -1,10 +1,9 @@
 import { Center, Image, Text } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 
-import { useStore } from "zustand";
-import { useCart } from "../src/utils/hooks/useCart";
 import QuantityCounter from "./QuantityCounter";
 import { Product } from "../src/utils/typeDef";
+import { useCart } from "../src/utils/hooks";
 
 type Props = {
   cartItem: Product;
@@ -12,7 +11,8 @@ type Props = {
 
 const CheckoutItem = ({ cartItem }: Props) => {
   const { imageUrl, name, price, quantity } = cartItem;
-  const { addToCart, subtractFromCart, removeFromCart } = useStore(useCart);
+
+  const { addToCart, subtractFromCart, removeFromCart } = useCart();
 
   const handleAddToCart = () => {
     addToCart(cartItem);

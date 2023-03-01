@@ -9,15 +9,14 @@ import {
   Title,
 } from "@mantine/core";
 import { useState } from "react";
-import { useStore } from "zustand";
-import { useCart } from "../src/utils/hooks/useCart";
+import { useCart } from "../src/utils/hooks";
 import CheckoutItem from "./CheckoutItem";
 import PaymentForm from "./Payment-Form/PaymentForm";
 
 const Checkout = () => {
   const [opened, setOpened] = useState(false);
-  const { getCartTotal, cartItems } = useStore(useCart);
-  const cartTotal = getCartTotal();
+
+  const { cartItems, cartTotal } = useCart();
 
   const tableData = cartItems.map((product) => {
     return <CheckoutItem key={product.id} cartItem={product} />;

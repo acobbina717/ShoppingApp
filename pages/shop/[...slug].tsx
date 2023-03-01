@@ -7,7 +7,7 @@ const Page = () => {
   const { slug } = router.query;
 
   const { getProducts } = useCategories();
-  const products = getProducts(String(slug));
+  const products = getProducts()(String(slug));
 
   return <Category products={products} />;
 };
