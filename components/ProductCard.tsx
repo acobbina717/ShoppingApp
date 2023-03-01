@@ -4,6 +4,7 @@ import {
   Card,
   Center,
   Container,
+  Grid,
   Group,
   Image,
   Overlay,
@@ -54,38 +55,33 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <Card.Section href="/shop" component={Link}>
           <Image src={imageUrl} alt={name} />
         </Card.Section>
-        <Center>
-          <Button
-            display="none"
-            variant="outline"
-            style={{ position: "absolute", bottom: "10%", width: "80%" }}
-            onClick={handleAddToCart}
-          >
-            Add To Cart
-          </Button>
-        </Center>
       </Card>
+
       <Paper pt={5} component={Link} href="/shop">
         <Tooltip label={name} withArrow position="bottom">
-          <Group display="flex" position="apart">
-            <Text
-              size="md"
-              weight="bold"
-              w="61%"
-              style={{
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-              }}
-            >
-              {name}
-            </Text>
-            <Text pr={10} weight="bold">
-              ${price}
-            </Text>
-          </Group>
+          <Grid>
+            <Grid.Col span={12} p={5}>
+              <Group position="apart">
+                <Text
+                  size="md"
+                  weight="bold"
+                  w="60%"
+                  style={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
+                  }}
+                >
+                  {name}
+                </Text>
+                <Text pr="3%" weight="bold">
+                  ${price}
+                </Text>
+              </Group>
+            </Grid.Col>
+          </Grid>
         </Tooltip>
       </Paper>
     </Box>

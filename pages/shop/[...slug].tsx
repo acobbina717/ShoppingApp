@@ -1,3 +1,4 @@
+import { Container } from "@mantine/core";
 import { useRouter } from "next/router";
 import Category from "../../components/Category";
 import { useCategories } from "../../src/utils/hooks";
@@ -9,7 +10,11 @@ const Page = () => {
   const { getProducts } = useCategories();
   const products = getProducts()(String(slug));
 
-  return <Category products={products} />;
+  return (
+    <Container fluid>
+      <Category products={products} />
+    </Container>
+  );
 };
 
 export default Page;

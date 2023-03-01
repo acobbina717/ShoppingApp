@@ -1,21 +1,13 @@
-import { Container, Skeleton, Space } from "@mantine/core";
-
+import { Container, Grid } from "@mantine/core";
 import CategoryPreview from "../../components/CategoryPreview";
-import { useCategories } from "../../src/utils/hooks";
+import { useCategories, useGridColSkeleton } from "../../src/utils/hooks";
 
 const Shop = () => {
   const { categories, isLoading } = useCategories();
-
+  const skeletonCol = useGridColSkeleton({ height: 320 });
   return (
     <Container fluid>
-      {isLoading && (
-        <>
-          <Skeleton height={50} />
-          <Space />
-          <Skeleton width={50} height={200} />
-          <Skeleton height={50} />
-        </>
-      )}
+      {isLoading && <Grid>{skeletonCol}</Grid>}
 
       {categories &&
         Object.keys(categories).map((title) => {
