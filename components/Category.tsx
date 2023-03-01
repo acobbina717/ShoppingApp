@@ -1,7 +1,7 @@
 import { Container, Grid, Skeleton, Stack } from "@mantine/core";
 import { v4 as uuid } from "uuid";
 import type { Product } from "../src/utils/typeDef";
-import ProductCard from "./product-card/ProductCard";
+import ProductCard from "./ProductCard";
 
 interface CategoryProps {
   products: Product[];
