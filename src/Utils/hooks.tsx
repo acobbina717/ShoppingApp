@@ -4,11 +4,16 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import { createContext, useContextSelector } from "use-context-selector";
 import { v4 as uuid } from "uuid";
+import { User } from "firebase/auth";
 import {
   CategoriesCollection,
+  createUserDocFromAuth,
   getCategoriesAndDocuments,
+  getCurrentUser,
+  signInWithGooglePopup,
 } from "./firebase/firebase.utils";
 import { Product } from "./typeDef";
+import { UserDocumentSnapshot } from "./redux/features/user/userSlice";
 
 interface AppProps {
   categories?: CategoriesCollection;
@@ -23,7 +28,7 @@ interface AppProps {
   removeFromCart: (payload: Product) => void;
 }
 
-export const AppStateContext = createContext<AppProps>({
+const AppStateContext = createContext<AppProps>({
   categories: {},
   isLoadingData: false,
   isDataError: null,
@@ -55,8 +60,10 @@ export const AppStateContextProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState<Product[]>([]);
 
   useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem("cart") || "");
-    if (storedCart) setCartItems(storedCart);
+    if (localStorage.getItem("cart") || "") {
+      const storedCart = JSON.parse(localStorage.getItem("cart") || "");
+      setCartItems(storedCart);
+    }
   }, []);
 
   const cartCount = cartItems.reduce(
@@ -165,6 +172,8 @@ export const AppStateContextProvider = ({ children }) => {
 };
 
 export const useCategories = () => {
+  const context = AppStateContext;
+  if (!context) throw new Error("Hook used out of context");
   const { categories, getProducts, isLoadingData, isDataError } =
     useContextSelector(AppStateContext, (s) => s);
   return {
@@ -205,4 +214,77 @@ export const useGridColSkeleton = ({
       <Skeleton height={height} />
     </Grid.Col>
   ));
+};
+
+interface UserState {
+  currentUser: UserDocumentSnapshot | null;
+  signInWithGoogle: () => void;
+}
+
+const UserContext = createContext<UserState>({
+  currentUser: null,
+  signInWithGoogle: () => {},
+});
+
+export const UserContextProvider = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState<UserDocumentSnapshot | null>(
+    null
+  );
+
+  const getSnapshotFromUserAuth = async (
+    userAuth: User,
+    additionInformation?: any
+  ) => {
+    try {
+      const userSnapshot = await createUserDocFromAuth(
+        userAuth,
+        additionInformation
+      );
+      if (userSnapshot) return userSnapshot;
+    } catch (error) {
+      if (error) console.log(error.message);
+    }
+  };
+  const isUserAuthenticated = useCallback(
+    () => async () => {
+      const userAuth = await getCurrentUser();
+      if (!userAuth) return;
+      const userSnapshot = await getSnapshotFromUserAuth(userAuth, {});
+      if (userSnapshot)
+        setCurrentUser({ id: userSnapshot?.id, ...userSnapshot?.data() });
+    },
+    []
+  );
+
+  useEffect(() => {
+    try {
+      isUserAuthenticated()();
+      console.log(currentUser);
+    } catch (error) {
+      if (error) console.log(error.message);
+    }
+  }, []);
+
+  const signInWithGoogle = useCallback(async () => {
+    try {
+      const { user } = await signInWithGooglePopup();
+      getSnapshotFromUserAuth(user);
+    } catch (error) {
+      if (error) console.log(error.message);
+    }
+  }, []);
+
+  const value = useMemo(
+    () => ({ currentUser, signInWithGoogle }),
+    [currentUser, signInWithGoogle]
+  );
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+};
+
+export const useUser = () => {
+  const { currentUser, signInWithGoogle } = useContextSelector(
+    UserContext,
+    (s) => s
+  );
+  return { currentUser, signInWithGoogle };
 };

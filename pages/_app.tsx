@@ -7,7 +7,10 @@ import { MantineProvider } from "@mantine/core";
 import { store } from "../src/utils/redux/app/store/store";
 import Navigation from "../components/nav/Nav";
 import "reset-css";
-import { AppStateContextProvider } from "../src/utils/hooks";
+import {
+  AppStateContextProvider,
+  UserContextProvider,
+} from "../src/utils/hooks";
 
 const App = (props: AppProps) => {
   const { Component, pageProps } = props;
@@ -22,18 +25,20 @@ const App = (props: AppProps) => {
         />
       </Head>
       <Provider store={store}>
-        <AppStateContextProvider>
-          <MantineProvider
-            withGlobalStyles
-            withNormalizeCSS
-            theme={{
-              colorScheme: "dark",
-            }}
-          >
-            <Navigation />
-            <Component {...pageProps} />
-          </MantineProvider>
-        </AppStateContextProvider>
+        <UserContextProvider>
+          <AppStateContextProvider>
+            <MantineProvider
+              withGlobalStyles
+              withNormalizeCSS
+              theme={{
+                colorScheme: "dark",
+              }}
+            >
+              <Navigation />
+              <Component {...pageProps} />
+            </MantineProvider>
+          </AppStateContextProvider>
+        </UserContextProvider>
       </Provider>
     </>
   );

@@ -12,9 +12,10 @@ import {
 import { useToggle, upperFirst } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { GoogleButton } from "./google-button/GoogleButton";
-import { useUser } from "../src/utils/hooks/useUser";
+import { useUser } from "../src/utils/hooks";
 
 const AuthForm = (props: PaperProps) => {
+  const { signInWithGoogle } = useUser();
   const [type, toggle] = useToggle(["login", "register"]);
   const form = useForm({
     initialValues: {
@@ -32,11 +33,12 @@ const AuthForm = (props: PaperProps) => {
           : null,
     },
   });
-  // useUser();
   return (
     <Paper radius="md" p="xl" withBorder {...props}>
       <Group grow mb="md" mt="md">
-        <GoogleButton radius="xl">Google</GoogleButton>
+        <GoogleButton clickHandler={signInWithGoogle} props={{ radius: "xl" }}>
+          Google
+        </GoogleButton>
       </Group>
 
       <Divider label="Or continue with email" labelPosition="center" my="lg" />
