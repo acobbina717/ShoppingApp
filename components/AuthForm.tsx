@@ -11,18 +11,20 @@ import {
 } from "@mantine/core";
 import { useToggle, upperFirst } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
+import { useRouter } from "next/router";
+import { useSWRConfig } from "swr";
 import { GoogleButton } from "./google-button/GoogleButton";
 import { useUser } from "../src/utils/hooks";
+import { auth } from "../src/utils/mutations";
 
-const AuthForm = (props: PaperProps) => {
+const AuthForm = () => {
   const { signInWithGoogle } = useUser();
-  const [type, toggle] = useToggle(["login", "register"]);
+  const [type, toggle] = useToggle(["signin", "signup"]);
   const form = useForm({
     initialValues: {
       email: "",
       name: "",
       password: "",
-      terms: true,
     },
 
     validate: {
