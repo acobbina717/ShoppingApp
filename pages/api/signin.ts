@@ -18,14 +18,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         email,
         time: Date.now(),
       },
-      "secret",
+      process.env.TOKENKEY,
       {
         expiresIn: "6h",
       }
     );
     res.setHeader(
       "Set-Cookie",
-      cookie.serialize("SHOPPING-COOKIE", token, {
+      cookie.serialize("SHOPPING_COOKIE", token, {
         httpOnly: true,
         maxAge: 6 * 60 * 60,
         path: "/",

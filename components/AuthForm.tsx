@@ -13,12 +13,15 @@ import { useToggle, upperFirst } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { useRouter } from "next/router";
 import { useSWRConfig } from "swr";
+import { FormEvent, useState } from "react";
 import { GoogleButton } from "./google-button/GoogleButton";
 import { useUser } from "../src/utils/hooks";
 import { auth } from "../src/utils/mutations";
 
-const AuthForm = () => {
+const AuthForm = (props: PaperProps) => {
   const { signInWithGoogle } = useUser();
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const [type, toggle] = useToggle(["signin", "signup"]);
   const form = useForm({
     initialValues: {
@@ -27,14 +30,37 @@ const AuthForm = () => {
       password: "",
     },
 
-    validate: {
-      email: (val) => (/^\S+@\S+$/.test(val) ? null : "Invalid email"),
-      password: (val) =>
-        val.length <= 6
-          ? "Password should include at least 6 characters"
-          : null,
-    },
+    // validate: {
+    //   email: (val) => (/^\S+@\S+$/.test(val) ? null : "Invalid email"),
+    //   password: (val) =>
+    //     val.length <= 6
+    //       ? "Password should include at least 6 characters"
+    //       : null,
+    // },
   });
+
+  const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    console.log(":hello");
+    e.preventDefault();
+    setIsLoading(true);
+    const { email, name, password } = form.values;
+
+    try {
+      if (type === "signup") {
+        await auth(type, {
+          email,
+          password,
+          name,
+        });
+      } else if (type === "signin") {
+        await auth(type, { email, password });
+      }
+      setIsLoading(false);
+      router.push("/");
+    } catch (error) {
+      if (error instanceof Error) throw new Error(error.message);
+    }
+  };
   return (
     <Paper radius="md" p="xl" withBorder {...props}>
       <Group grow mb="md" mt="md">
@@ -45,9 +71,9 @@ const AuthForm = () => {
 
       <Divider label="Or continue with email" labelPosition="center" my="lg" />
 
-      <form onSubmit={form.onSubmit(() => {})}>
+      <form onSubmit={handleOnSubmit}>
         <Stack>
-          {type === "register" && (
+          {type === "signup" && (
             <TextInput
               label="Name"
               placeholder="Your name"
@@ -92,7 +118,7 @@ const AuthForm = () => {
             onClick={() => toggle()}
             size="xs"
           >
-            {type === "register"
+            {type === "signup"
               ? "Already have an account? Login"
               : "Don't have an account? Register"}
           </Anchor>
