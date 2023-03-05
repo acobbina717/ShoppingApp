@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 import CartItem from "./cart-item/CartItem";
 
 import { useStyles } from "./cart.styles";
-import { useCart } from "../../src/utils/hooks";
+import { useCart } from "../../utils/hooks";
 
 const Cart = () => {
   const router = useRouter();

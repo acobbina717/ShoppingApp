@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from "@mantine/core";
 import Link from "next/link";
-import { useUser } from "../src/utils/hooks";
+import { useUser } from "../utils/hooks";
 
 type AuthButtonProps = {
   // eslint-disable-next-line react/require-default-props

@@ -1,16 +1,11 @@
-import React from "react";
-import { Provider } from "react-redux";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
 // eslint-disable-next-line no-unused-vars
-import { store } from "../src/utils/redux/app/store/store";
+
 import Navigation from "../components/nav/Nav";
-import "reset-css";
-import {
-  AppStateContextProvider,
-  UserContextProvider,
-} from "../src/utils/hooks";
+// import "reset-css";
+import { AppStateContextProvider, UserContextProvider } from "../utils/hooks";
 
 const App = (props: AppProps) => {
   const { Component, pageProps } = props;
@@ -24,22 +19,21 @@ const App = (props: AppProps) => {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-      <Provider store={store}>
-        <UserContextProvider>
-          <AppStateContextProvider>
-            <MantineProvider
-              withGlobalStyles
-              withNormalizeCSS
-              theme={{
-                colorScheme: "dark",
-              }}
-            >
-              <Navigation />
-              <Component {...pageProps} />
-            </MantineProvider>
-          </AppStateContextProvider>
-        </UserContextProvider>
-      </Provider>
+
+      <UserContextProvider>
+        <AppStateContextProvider>
+          <MantineProvider
+            withGlobalStyles
+            withNormalizeCSS
+            theme={{
+              colorScheme: "dark",
+            }}
+          >
+            <Navigation />
+            <Component {...pageProps} />
+          </MantineProvider>
+        </AppStateContextProvider>
+      </UserContextProvider>
     </>
   );
 };

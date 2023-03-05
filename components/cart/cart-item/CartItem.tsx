@@ -5,8 +5,8 @@ import QuantityCounter from "../../QuantityCounter";
 
 import { useStyles } from "./cart-item.styles";
 
-import type { Product } from "../../../src/utils/typeDef";
-import { useCart } from "../../../src/utils/hooks";
+import type { Product } from "../../../utils/typeDef";
+import { useCart } from "../../../utils/hooks";
 
 type CartItemProps = {
   cartItem: Product;

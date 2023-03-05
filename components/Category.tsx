@@ -1,6 +1,6 @@
 import { Container, Grid, Stack } from "@mantine/core";
-import { useGridColSkeleton } from "../src/utils/hooks";
-import type { Product } from "../src/utils/typeDef";
+import { useGridColSkeleton } from "../utils/hooks";
+import type { Product } from "../utils/typeDef";
 import ProductCard from "./ProductCard";
 
 interface CategoryProps {
@@ -14,7 +14,7 @@ const Category = ({ products }: CategoryProps) => {
       <Stack>
         <Grid>
           <>
-            {products.length < 1 && skeletonCol}
+            {!products && skeletonCol}
 
             {products && (
               <>

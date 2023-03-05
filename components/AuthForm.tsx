@@ -15,8 +15,8 @@ import { useRouter } from "next/router";
 import { useSWRConfig } from "swr";
 import { FormEvent, useState } from "react";
 import { GoogleButton } from "./google-button/GoogleButton";
-import { useUser } from "../src/utils/hooks";
-import { auth } from "../src/utils/mutations";
+import { useUser } from "../utils/hooks";
+import { auth } from "../utils/mutations";
 
 const AuthForm = (props: PaperProps) => {
   const { signInWithGoogle } = useUser();
@@ -47,13 +47,13 @@ const AuthForm = (props: PaperProps) => {
 
     try {
       if (type === "signup") {
-        await auth(type, {
+        await auth("/signup", {
           email,
           password,
           name,
         });
       } else if (type === "signin") {
-        await auth(type, { email, password });
+        await auth("/signin", { email, password });
       }
       setIsLoading(false);
       router.push("/");

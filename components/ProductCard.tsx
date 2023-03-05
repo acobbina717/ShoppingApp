@@ -15,16 +15,16 @@ import {
 import Link from "next/link";
 import { useHover } from "@mantine/hooks";
 
-import { useCart } from "../src/utils/hooks";
+import { useCart } from "../utils/hooks";
 
-import type { Product } from "../src/utils/typeDef";
+import type { Product } from "../utils/typeDef";
 
 type ProductCardProps = {
   product: Product;
 };
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const { imageUrl, name, price } = product;
+  const { image, name, price } = product;
   const { addToCart } = useCart();
   const handleAddToCart = () => {
     addToCart(product);
@@ -53,7 +53,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         )}
 
         <Card.Section href="/shop" component={Link}>
-          <Image src={imageUrl} alt={name} />
+          <Image src={image} alt={name} />
         </Card.Section>
       </Card>
 

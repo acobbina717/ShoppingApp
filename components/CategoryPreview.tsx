@@ -1,6 +1,6 @@
 import { Grid, Stack, Title, Text, Container } from "@mantine/core";
 import Link from "next/link";
-import type { Product } from "../src/utils/typeDef";
+import type { Product } from "../utils/typeDef";
 
 import ProductCard from "./ProductCard";
 

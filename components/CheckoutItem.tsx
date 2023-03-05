@@ -2,8 +2,8 @@ import { Center, Image, Text } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 
 import QuantityCounter from "./QuantityCounter";
-import { Product } from "../src/utils/typeDef";
-import { useCart } from "../src/utils/hooks";
+import { Product } from "../utils/typeDef";
+import { useCart } from "../utils/hooks";
 
 type Props = {
   cartItem: Product;

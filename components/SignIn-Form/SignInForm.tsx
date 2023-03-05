@@ -6,11 +6,11 @@ import FormInput from "../Form-Input/FormInput";
 
 import { FormFields } from "../SignUp-Form/SignUpForm";
 import { ButtonsContainer, SignInContainer } from "./sign-in-form.styles";
-import { useAppDispatch } from "../../src/utils/redux/hooks/hooks";
+import { useAppDispatch } from "../../utils/redux/hooks/hooks";
 import {
   googleSignInLoading,
   emailSignInLoading,
-} from "../../src/utils/redux/features/user/userSlice";
+} from "../../utils/redux/features/user/userSlice";
 
 type SignUpFormFields = Omit<FormFields, "displayName" | "confirmPassword">;
 

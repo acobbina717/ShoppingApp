@@ -1,25 +1,21 @@
 /* eslint-disable no-unused-vars */
 import { Grid, Skeleton } from "@mantine/core";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import useSWR from "swr";
 import { createContext, useContextSelector } from "use-context-selector";
 import { v4 as uuid } from "uuid";
-import { User } from "firebase/auth";
-import {
-  CategoriesCollection,
-  createUserDocFromAuth,
-  getCategoriesAndDocuments,
-  getCurrentUser,
-  signInWithGooglePopup,
-} from "./firebase/firebase.utils";
+import fetcher from "./fetcher";
+
 import { Product } from "./typeDef";
-import { UserDocumentSnapshot } from "./redux/features/user/userSlice";
 
 interface AppProps {
-  categories?: CategoriesCollection;
-  isLoadingData: boolean;
-  isDataError: any;
-  getProducts: () => (category: string) => Product[];
   cartItems: Product[];
   cartCount: number;
   cartTotal: number;
@@ -29,10 +25,6 @@ interface AppProps {
 }
 
 const AppStateContext = createContext<AppProps>({
-  categories: {},
-  isLoadingData: false,
-  isDataError: null,
-  getProducts: () => (category: string) => [],
   cartItems: [],
   addToCart: (product: Product) => {},
   cartCount: 0,
@@ -42,21 +34,6 @@ const AppStateContext = createContext<AppProps>({
 });
 
 export const AppStateContextProvider = ({ children }) => {
-  const { data, error, isLoading } = useSWR(
-    "categories",
-    getCategoriesAndDocuments
-  );
-
-  const getProducts = useCallback(
-    () => (category: string) => {
-      if (data && data[category]) {
-        return data[category];
-      }
-      return [];
-    },
-    [data]
-  );
-
   const [cartItems, setCartItems] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -139,31 +116,22 @@ export const AppStateContextProvider = ({ children }) => {
 
   const value = useMemo(
     () => ({
-      categories: data,
       cartItems,
-      isLoadingData: isLoading,
-      isDataError: error,
       cartCount,
       cartTotal,
-      getProducts,
       addToCart,
       subtractFromCart,
       removeFromCart,
     }),
     [
-      data,
       cartItems,
-      isLoading,
-      error,
       cartCount,
       cartTotal,
-      getProducts,
       addToCart,
       subtractFromCart,
       removeFromCart,
     ]
   );
-
   return (
     <AppStateContext.Provider value={value}>
       {children}
@@ -172,16 +140,17 @@ export const AppStateContextProvider = ({ children }) => {
 };
 
 export const useCategories = () => {
-  const context = AppStateContext;
-  if (!context) throw new Error("Hook used out of context");
-  const { categories, getProducts, isLoadingData, isDataError } =
-    useContextSelector(AppStateContext, (s) => s);
-  return {
-    categories,
-    getProducts,
-    isLoading: isLoadingData,
-    isError: isDataError,
-  };
+  let categories = [];
+  const { data, error, isLoading } = useSWR("/categories", fetcher);
+  if (data) categories = data;
+  return { categories, isLoading, isError: error };
+};
+
+export const useCategory = (slug: string) => {
+  let products = [];
+  const { data, isLoading, error } = useSWR(`/category${slug}`, fetcher);
+  if (data) products = data.products;
+  return { products, isLoading, isError: error };
 };
 
 export const useCart = () => {
@@ -217,74 +186,31 @@ export const useGridColSkeleton = ({
 };
 
 interface UserState {
-  currentUser: UserDocumentSnapshot | null;
-  signInWithGoogle: () => void;
+  currentUser: null | {};
+  setCurrentUser: Dispatch<SetStateAction<null | {}>>;
 }
 
 const UserContext = createContext<UserState>({
   currentUser: null,
-  signInWithGoogle: () => {},
+  setCurrentUser: () => null,
 });
 
 export const UserContextProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<UserDocumentSnapshot | null>(
-    null
-  );
-
-  const getSnapshotFromUserAuth = async (
-    userAuth: User,
-    additionInformation?: any
-  ) => {
-    try {
-      const userSnapshot = await createUserDocFromAuth(
-        userAuth,
-        additionInformation
-      );
-      if (userSnapshot) return userSnapshot;
-    } catch (error) {
-      if (error) console.log(error.message);
-    }
-  };
-  const isUserAuthenticated = useCallback(
-    () => async () => {
-      const userAuth = await getCurrentUser();
-      if (!userAuth) return;
-      const userSnapshot = await getSnapshotFromUserAuth(userAuth, {});
-      if (userSnapshot)
-        setCurrentUser({ id: userSnapshot?.id, ...userSnapshot?.data() });
-    },
-    []
-  );
-
-  useEffect(() => {
-    try {
-      isUserAuthenticated()();
-      console.log(currentUser);
-    } catch (error) {
-      if (error) console.log(error.message);
-    }
-  }, []);
-
-  const signInWithGoogle = useCallback(async () => {
-    try {
-      const { user } = await signInWithGooglePopup();
-      getSnapshotFromUserAuth(user);
-    } catch (error) {
-      if (error) console.log(error.message);
-    }
-  }, []);
+  const [currentUser, setCurrentUser] = useState<null>(null);
 
   const value = useMemo(
-    () => ({ currentUser, signInWithGoogle }),
-    [currentUser, signInWithGoogle]
+    () => ({ currentUser, setCurrentUser }),
+    [currentUser, setCurrentUser]
   );
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
 export const useUser = () => {
-  const { currentUser, signInWithGoogle } = useContextSelector(
+  const { data, isLoading, error } = useSWR("/authuser", fetcher);
+  const { currentUser, setCurrentUser } = useContextSelector(
     UserContext,
     (s) => s
   );
-  return { currentUser, signInWithGoogle };
+  if (data) setCurrentUser(data);
+  return { currentUser, isLoading, isError: error };
 };
