@@ -8,13 +8,8 @@ type AuthButtonProps = {
 };
 
 const AuthButton = ({ otherProps }: AuthButtonProps) => {
-  // const dispatch = useAppDispatch();
-
   const { currentUser } = useUser();
-  const handleSignOut = () => {
-    // dispatch(signOutLoading());
-  };
-  // console.log(currentUser);
+  const handleSignOut = () => {};
 
   if (!currentUser) {
     return (

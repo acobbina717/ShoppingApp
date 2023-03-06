@@ -5,7 +5,7 @@ import { MantineProvider } from "@mantine/core";
 
 import Navigation from "../components/nav/Nav";
 // import "reset-css";
-import { AppStateContextProvider, UserContextProvider } from "../utils/hooks";
+import { CartContextProvider } from "../utils/hooks";
 
 const App = (props: AppProps) => {
   const { Component, pageProps } = props;
@@ -20,20 +20,18 @@ const App = (props: AppProps) => {
         />
       </Head>
 
-      <UserContextProvider>
-        <AppStateContextProvider>
-          <MantineProvider
-            withGlobalStyles
-            withNormalizeCSS
-            theme={{
-              colorScheme: "dark",
-            }}
-          >
-            <Navigation />
-            <Component {...pageProps} />
-          </MantineProvider>
-        </AppStateContextProvider>
-      </UserContextProvider>
+      <CartContextProvider>
+        <MantineProvider
+          withGlobalStyles
+          withNormalizeCSS
+          theme={{
+            colorScheme: "dark",
+          }}
+        >
+          <Navigation />
+          <Component {...pageProps} />
+        </MantineProvider>
+      </CartContextProvider>
     </>
   );
 };

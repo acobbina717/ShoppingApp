@@ -3,6 +3,7 @@ import {
   Button,
   Divider,
   Group,
+  Loader,
   Paper,
   PaperProps,
   PasswordInput,
@@ -15,18 +16,17 @@ import { useRouter } from "next/router";
 import { useSWRConfig } from "swr";
 import { FormEvent, useState } from "react";
 import { GoogleButton } from "./google-button/GoogleButton";
-import { useUser } from "../utils/hooks";
 import { auth } from "../utils/mutations";
 
 const AuthForm = (props: PaperProps) => {
-  const { signInWithGoogle } = useUser();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const [type, toggle] = useToggle(["signin", "signup"]);
   const form = useForm({
     initialValues: {
       email: "",
-      name: "",
+      firstName: "",
+      lastName: "",
       password: "",
     },
 
@@ -40,33 +40,34 @@ const AuthForm = (props: PaperProps) => {
   });
 
   const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    console.log(":hello");
     e.preventDefault();
     setIsLoading(true);
-    const { email, name, password } = form.values;
+    const { email, firstName, lastName, password } = form.values;
 
     try {
       if (type === "signup") {
         await auth("/signup", {
           email,
           password,
-          name,
+          firstName,
+          lastName,
         });
-      } else if (type === "signin") {
-        await auth("/signin", { email, password });
       }
-      setIsLoading(false);
-      router.push("/");
+      const user = await auth("/signin", { email, password });
+      if (user) {
+        setIsLoading(false);
+        router.push("/checkout");
+      }
     } catch (error) {
-      if (error instanceof Error) throw new Error(error.message);
+      if (error) console.log(error);
     }
   };
   return (
     <Paper radius="md" p="xl" withBorder {...props}>
       <Group grow mb="md" mt="md">
-        <GoogleButton clickHandler={signInWithGoogle} props={{ radius: "xl" }}>
+        {/* <GoogleButton clickHandler={signInWithGoogle} props={{ radius: "xl" }}>
           Google
-        </GoogleButton>
+        </GoogleButton> */}
       </Group>
 
       <Divider label="Or continue with email" labelPosition="center" my="lg" />
@@ -74,14 +75,24 @@ const AuthForm = (props: PaperProps) => {
       <form onSubmit={handleOnSubmit}>
         <Stack>
           {type === "signup" && (
-            <TextInput
-              label="Name"
-              placeholder="Your name"
-              value={form.values.name}
-              onChange={(event) =>
-                form.setFieldValue("name", event.currentTarget.value)
-              }
-            />
+            <>
+              <TextInput
+                label="First Name"
+                placeholder="First name"
+                value={form.values.firstName}
+                onChange={(event) =>
+                  form.setFieldValue("name", event.currentTarget.value)
+                }
+              />
+              <TextInput
+                label="Last Name"
+                placeholder="Last name"
+                value={form.values.lastName}
+                onChange={(event) =>
+                  form.setFieldValue("name", event.currentTarget.value)
+                }
+              />
+            </>
           )}
 
           <TextInput
@@ -122,7 +133,10 @@ const AuthForm = (props: PaperProps) => {
               ? "Already have an account? Login"
               : "Don't have an account? Register"}
           </Anchor>
-          <Button type="submit">{upperFirst(type)}</Button>
+
+          <Button variant="outline" type="submit">
+            {isLoading ? <Loader color="blue" size="sm" /> : upperFirst(type)}
+          </Button>
         </Group>
       </form>
     </Paper>

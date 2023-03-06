@@ -1,33 +1,26 @@
-import { Container, Grid, Stack } from "@mantine/core";
-import { useGridColSkeleton } from "../utils/hooks";
-import type { Product } from "../utils/typeDef";
+import { Container, Grid } from "@mantine/core";
+
 import ProductCard from "./ProductCard";
+import type { Product } from "../utils/typeDef";
 
 interface CategoryProps {
   products: Product[];
 }
 
 const Category = ({ products }: CategoryProps) => {
-  const skeletonCol = useGridColSkeleton({ height: 320 });
   return (
     <Container size="xl">
-      <Stack>
-        <Grid>
+      <Grid>
+        {products && (
           <>
-            {!products && skeletonCol}
-
-            {products && (
-              <>
-                {products.map((product) => (
-                  <Grid.Col key={product.id} span={6} sm={3} mb={30}>
-                    <ProductCard product={product} />
-                  </Grid.Col>
-                ))}
-              </>
-            )}
+            {products.map((product) => (
+              <Grid.Col key={product.id} span={6} sm={3} mb={30}>
+                <ProductCard product={product} />
+              </Grid.Col>
+            ))}
           </>
-        </Grid>
-      </Stack>
+        )}
+      </Grid>
     </Container>
   );
 };

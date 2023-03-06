@@ -1,30 +1,17 @@
 import { Card, Group, Image, Stack, Text } from "@mantine/core";
-
 import { IconTrash } from "@tabler/icons-react";
 import QuantityCounter from "../../QuantityCounter";
-
 import { useStyles } from "./cart-item.styles";
-
-import type { Product } from "../../../utils/typeDef";
 import { useCart } from "../../../utils/hooks";
+import type { Product } from "../../../utils/typeDef";
 
 type CartItemProps = {
   cartItem: Product;
 };
 
 const CartItem = ({ cartItem }: CartItemProps) => {
-  const { name, quantity, imageUrl, price } = cartItem;
+  const { name, quantity, image, price } = cartItem;
   const { addToCart, subtractFromCart, removeFromCart } = useCart();
-
-  const handleAddToCart = () => {
-    addToCart(cartItem);
-  };
-  const handleSubtractFromCart = () => {
-    subtractFromCart(cartItem);
-  };
-  const handleRemoveFromCart = () => {
-    removeFromCart(cartItem);
-  };
   const { theme } = useStyles();
 
   return (
@@ -40,23 +27,24 @@ const CartItem = ({ cartItem }: CartItemProps) => {
       }}
     >
       <Card.Section>
-        <Image src={imageUrl} alt={`${name}`} width={136} mr={4} />
+        <Image src={image} alt={`${name}`} width={136} mr={4} />
       </Card.Section>
 
       <Stack pl={10} w="100%">
         <Text>{name}</Text>
-        <Text>{`$${Number(quantity) * price} `}</Text>
+        <Text>{`$${(quantity as number) * price} `}</Text>
+
         <Group position="right" mr={15}>
           <IconTrash
             cursor="pointer"
             size={20}
-            onClick={handleRemoveFromCart}
+            onClick={() => removeFromCart(cartItem)}
           />
 
           <QuantityCounter
-            quantity={Number(quantity)}
-            addToCart={handleAddToCart}
-            subtractFromCart={handleSubtractFromCart}
+            quantity={quantity as number}
+            addToCart={() => addToCart(cartItem)}
+            subtractFromCart={() => subtractFromCart(cartItem)}
           />
         </Group>
       </Stack>

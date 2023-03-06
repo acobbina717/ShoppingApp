@@ -10,7 +10,7 @@ type Props = {
 };
 
 const CheckoutItem = ({ cartItem }: Props) => {
-  const { imageUrl, name, price, quantity } = cartItem;
+  const { image, name, price, quantity } = cartItem;
 
   const { addToCart, subtractFromCart, removeFromCart } = useCart();
 
@@ -30,7 +30,7 @@ const CheckoutItem = ({ cartItem }: Props) => {
   return (
     <tr>
       <td style={{ width: "25%" }}>
-        <Image src={imageUrl} alt={name} height="100%" />
+        <Image src={image} alt={name} height="100%" />
       </td>
 
       <td style={{ width: "23%" }}>

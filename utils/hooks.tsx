@@ -1,21 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { Grid, Skeleton } from "@mantine/core";
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import { createContext, useContextSelector } from "use-context-selector";
 import { v4 as uuid } from "uuid";
 import fetcher from "./fetcher";
-
 import { Product } from "./typeDef";
 
-interface AppProps {
+interface CartProps {
   cartItems: Product[];
   cartCount: number;
   cartTotal: number;
@@ -24,7 +16,7 @@ interface AppProps {
   removeFromCart: (payload: Product) => void;
 }
 
-const AppStateContext = createContext<AppProps>({
+const CartContext = createContext<CartProps>({
   cartItems: [],
   addToCart: (product: Product) => {},
   cartCount: 0,
@@ -33,7 +25,7 @@ const AppStateContext = createContext<AppProps>({
   subtractFromCart: (product: Product) => {},
 });
 
-export const AppStateContextProvider = ({ children }) => {
+export const CartContextProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -132,25 +124,23 @@ export const AppStateContextProvider = ({ children }) => {
       removeFromCart,
     ]
   );
-  return (
-    <AppStateContext.Provider value={value}>
-      {children}
-    </AppStateContext.Provider>
-  );
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 
 export const useCategories = () => {
   let categories = [];
   const { data, error, isLoading } = useSWR("/categories", fetcher);
   if (data) categories = data;
-  return { categories, isLoading, isError: error };
+  const noData = isLoading || error || categories.length < 1;
+  return { categories, isLoading, isError: error, noData };
 };
 
 export const useCategory = (slug: string) => {
   let products = [];
   const { data, isLoading, error } = useSWR(`/category${slug}`, fetcher);
   if (data) products = data.products;
-  return { products, isLoading, isError: error };
+  const noData = isLoading || error || products.length < 1;
+  return { products, isLoading, isError: error, noData };
 };
 
 export const useCart = () => {
@@ -161,7 +151,7 @@ export const useCart = () => {
     cartTotal,
     subtractFromCart,
     removeFromCart,
-  } = useContextSelector(AppStateContext, (s) => s);
+  } = useContextSelector(CartContext, (s) => s);
   return {
     cartItems,
     cartCount,
@@ -185,32 +175,10 @@ export const useGridColSkeleton = ({
   ));
 };
 
-interface UserState {
-  currentUser: null | {};
-  setCurrentUser: Dispatch<SetStateAction<null | {}>>;
-}
-
-const UserContext = createContext<UserState>({
-  currentUser: null,
-  setCurrentUser: () => null,
-});
-
-export const UserContextProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<null>(null);
-
-  const value = useMemo(
-    () => ({ currentUser, setCurrentUser }),
-    [currentUser, setCurrentUser]
-  );
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
-};
-
 export const useUser = () => {
+  let currentUser = null;
   const { data, isLoading, error } = useSWR("/authuser", fetcher);
-  const { currentUser, setCurrentUser } = useContextSelector(
-    UserContext,
-    (s) => s
-  );
-  if (data) setCurrentUser(data);
+  if (data) currentUser = data;
+
   return { currentUser, isLoading, isError: error };
 };
