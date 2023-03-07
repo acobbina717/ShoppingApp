@@ -3,7 +3,7 @@ import { IconTrash } from "@tabler/icons-react";
 
 import QuantityCounter from "./QuantityCounter";
 import { Product } from "../utils/typeDef";
-import { useCart } from "../utils/hooks";
+import { useCart } from "../utils/useCartContext";
 
 type Props = {
   cartItem: Product;

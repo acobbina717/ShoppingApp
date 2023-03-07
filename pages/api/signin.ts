@@ -18,14 +18,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         email,
         time: Date.now(),
       },
-      process.env.TOKENKEY,
+      process.env.TOKENKEY as string,
       {
         expiresIn: "6h",
       }
     );
     res.setHeader(
       "Set-Cookie",
-      cookie.serialize(process.env.COOKIE, token, {
+
+      cookie.serialize(process.env.COOKIE as string, token, {
         httpOnly: true,
         maxAge: 6 * 60 * 60,
         path: "/",

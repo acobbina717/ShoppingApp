@@ -1,11 +1,17 @@
 /* eslint-disable no-unused-vars */
-import { Grid, Skeleton } from "@mantine/core";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import useSWR from "swr";
 import { createContext, useContextSelector } from "use-context-selector";
-import { v4 as uuid } from "uuid";
-import fetcher from "./fetcher";
+import useSWR from "swr";
 import { Product } from "./typeDef";
+import fetcher from "./fetcher";
+
+export const useCategories = () => {
+  let categories = [];
+  const { data, error, isLoading } = useSWR("/categories", fetcher);
+  if (data) categories = data;
+  const noData = isLoading || error || categories.length < 1;
+  return { categories, isLoading, isError: error, noData };
+};
 
 interface CartProps {
   cartItems: Product[];
@@ -127,22 +133,6 @@ export const CartContextProvider = ({ children }) => {
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 
-export const useCategories = () => {
-  let categories = [];
-  const { data, error, isLoading } = useSWR("/categories", fetcher);
-  if (data) categories = data;
-  const noData = isLoading || error || categories.length < 1;
-  return { categories, isLoading, isError: error, noData };
-};
-
-export const useCategory = (slug: string) => {
-  let products = [];
-  const { data, isLoading, error } = useSWR(`/category${slug}`, fetcher);
-  if (data) products = data.products;
-  const noData = isLoading || error || products.length < 1;
-  return { products, isLoading, isError: error, noData };
-};
-
 export const useCart = () => {
   const {
     cartItems,
@@ -160,25 +150,4 @@ export const useCart = () => {
     subtractFromCart,
     removeFromCart,
   };
-};
-
-export const useGridColSkeleton = ({
-  colCount = 16,
-  height = 300,
-  span = 6,
-}) => {
-  const skeletonLayoutCount = new Array(colCount).fill(1);
-  return skeletonLayoutCount.map(() => (
-    <Grid.Col key={uuid()} span={span} sm={span / 2} mb={30}>
-      <Skeleton height={height} />
-    </Grid.Col>
-  ));
-};
-
-export const useUser = () => {
-  let currentUser = null;
-  const { data, isLoading, error } = useSWR("/authuser", fetcher);
-  if (data) currentUser = data;
-
-  return { currentUser, isLoading, isError: error };
 };

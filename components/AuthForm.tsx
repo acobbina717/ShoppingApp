@@ -17,8 +17,10 @@ import { useSWRConfig } from "swr";
 import { FormEvent, useState } from "react";
 import { GoogleButton } from "./google-button/GoogleButton";
 import { auth } from "../utils/mutations";
+import { useUser } from "../utils/useUserContext";
 
 const AuthForm = (props: PaperProps) => {
+  const { setCurrentUser } = useUser();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const [type, toggle] = useToggle(["signin", "signup"]);
@@ -56,6 +58,7 @@ const AuthForm = (props: PaperProps) => {
       const user = await auth("/signin", { email, password });
       if (user) {
         setIsLoading(false);
+        setCurrentUser(user);
         router.push("/checkout");
       }
     } catch (error) {

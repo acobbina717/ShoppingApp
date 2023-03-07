@@ -2,8 +2,9 @@ import { Card, Group, Image, Stack, Text } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 import QuantityCounter from "../../QuantityCounter";
 import { useStyles } from "./cart-item.styles";
-import { useCart } from "../../../utils/hooks";
+
 import type { Product } from "../../../utils/typeDef";
+import { useCart } from "../../../utils/useCartContext";
 
 type CartItemProps = {
   cartItem: Product;

@@ -15,9 +15,8 @@ import {
 import Link from "next/link";
 import { useHover } from "@mantine/hooks";
 
-import { useCart } from "../utils/hooks";
-
 import type { Product } from "../utils/typeDef";
+import { useCart } from "../utils/useCartContext";
 
 type ProductCardProps = {
   product: Product;

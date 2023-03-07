@@ -2,10 +2,7 @@ import { Container, Grid } from "@mantine/core";
 import DirectoryItem from "../directory-item/DirectoryItem";
 import { directoryCategories } from "./data";
 
-// const useStyles = createStyles({});
-
 const Directory = () => {
-  // const { theme } = useStyles();
   return (
     <Container fluid>
       <Grid

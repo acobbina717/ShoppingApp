@@ -1,6 +1,7 @@
 import { Container, Grid } from "@mantine/core";
 import CategoryPreview from "../../components/CategoryPreview";
-import { useCategories, useGridColSkeleton } from "../../utils/hooks";
+import { useCategories } from "../../utils/useCartContext";
+import { useGridColSkeleton } from "../../utils/useUserContext";
 
 const Shop = () => {
   const { categories, isLoading, isError } = useCategories();

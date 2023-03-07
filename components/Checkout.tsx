@@ -9,7 +9,8 @@ import {
   Title,
 } from "@mantine/core";
 import { useState } from "react";
-import { useCart } from "../utils/hooks";
+import { useCart } from "../utils/useCartContext";
+
 import CheckoutItem from "./CheckoutItem";
 import PaymentForm from "./Payment-Form/PaymentForm";
 

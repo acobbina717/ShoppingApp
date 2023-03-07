@@ -6,14 +6,15 @@ import prisma from "../../utils/prisma";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const salt = bcrypt.genSaltSync();
-  const { name, email, password } = req.body;
+  const { firstName, lastName, email, password } = req.body;
 
   let user;
 
   try {
     user = await prisma.user.create({
       data: {
-        name,
+        firstName,
+        lastName,
         email,
         password: bcrypt.hashSync(password, salt),
       },
@@ -30,13 +31,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       id: user.id,
       time: Date.now(),
     },
-    process.env.TOKENKEY,
+    process.env.TOKENKEY as string,
     { expiresIn: "6h" }
   );
 
   res.setHeader(
     "Set-Cookie",
-    cookie.serialize(process.env.COOKIE, token, {
+    cookie.serialize(process.env.COOKIE as string, token, {
       httpOnly: true,
       maxAge: 6 * 60 * 60,
       path: "/",

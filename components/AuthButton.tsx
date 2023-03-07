@@ -1,6 +1,7 @@
 import { Button, ButtonProps } from "@mantine/core";
 import Link from "next/link";
-import { useUser } from "../utils/hooks";
+import { useRouter } from "next/router";
+import { useUser } from "../utils/useUserContext";
 
 type AuthButtonProps = {
   // eslint-disable-next-line react/require-default-props
@@ -8,8 +9,24 @@ type AuthButtonProps = {
 };
 
 const AuthButton = ({ otherProps }: AuthButtonProps) => {
-  const { currentUser } = useUser();
-  const handleSignOut = () => {};
+  const router = useRouter();
+  const { currentUser, setCurrentUser, signOut, authorizedUser } = useUser();
+
+  if (authorizedUser) {
+    setCurrentUser(authorizedUser);
+  }
+
+  const handleSignOut = async () => {
+    try {
+      const loggedOut = await signOut();
+      if (loggedOut) {
+        setCurrentUser(null);
+        router.push("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (!currentUser) {
     return (
