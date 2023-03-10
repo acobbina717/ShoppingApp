@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { Grid, Skeleton } from "@mantine/core";
-import { Dispatch, SetStateAction, useMemo, useState } from "react";
-import useSWR from "swr";
+import { useMemo } from "react";
+import useSWR, { KeyedMutator } from "swr";
 import { createContext, useContextSelector } from "use-context-selector";
 import { v4 as uuid } from "uuid";
 import fetcher from "./fetcher";
@@ -19,59 +19,46 @@ export const useGridColSkeleton = ({
   ));
 };
 
+interface User {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
 interface UserProps {
-  currentUser: {} | null;
-  setCurrentUser: Dispatch<SetStateAction<null>>;
+  authorizedUser: User | null;
+  mutate: KeyedMutator<undefined | User | null>;
+  error: any;
 }
 export const UserContext = createContext<UserProps>({
-  currentUser: null,
-  setCurrentUser: () => null,
+  authorizedUser: null,
+  mutate: async () => null,
+  error: undefined,
 });
 
 export const UserContextProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const { data: authorizedUser, error, mutate } = useSWR("/authuser", fetcher);
 
   const value = useMemo(
-    () => ({ currentUser, setCurrentUser }),
-    [currentUser, setCurrentUser]
+    () => ({
+      authorizedUser,
+      mutate,
+      error,
+    }),
+    [authorizedUser, mutate, error]
   );
-
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
-export const useUser = (
-  mode?: "/signin" | "/signup",
-  body?: {
-    email: string;
-    password: string;
-    firstName?: string;
-    lastName?: string;
-  }
-) => {
-  const { currentUser, setCurrentUser } = useContextSelector(
+export const useUser = () => {
+  const { authorizedUser, mutate, error } = useContextSelector(
     UserContext,
     (s) => s
   );
-
-  const { data: authorizedUser } = useSWR("/authuser", fetcher);
-
-  const {
-    data: authenticatedUser,
-    isLoading: authenticatedUserLoading,
-    error: authenticatedUserError,
-  } = useSWR([mode, body], fetcher);
-
-  const signOut = async () => {
-    const loggedOut = await fetcher("/logout");
-    return loggedOut;
-  };
-
   return {
-    currentUser,
-    setCurrentUser,
-    signOut,
     authorizedUser,
-    authenticatedUser,
-    authenticatedUserLoading,
+    mutate,
+    error,
   };
 };

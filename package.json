@@ -21,7 +21,6 @@
     "@stripe/stripe-js": "^1.46.0",
     "@tabler/icons-react": "^2.4.0",
     "@types/bcrypt": "^5.0.0",
-    "@types/jsonwebtoken": "^9.0.1",
     "bcrypt": "^5.1.0",
     "cookie": "^0.5.0",
     "firebase": "^9.14.0",

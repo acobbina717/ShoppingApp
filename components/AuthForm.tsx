@@ -13,14 +13,14 @@ import {
 import { useToggle, upperFirst } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { useRouter } from "next/router";
-import { useSWRConfig } from "swr";
+
 import { FormEvent, useState } from "react";
 import { GoogleButton } from "./google-button/GoogleButton";
 import { auth } from "../utils/mutations";
 import { useUser } from "../utils/useUserContext";
 
 const AuthForm = (props: PaperProps) => {
-  const { setCurrentUser } = useUser();
+  const { mutate } = useUser();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const [type, toggle] = useToggle(["signin", "signup"]);
@@ -57,9 +57,9 @@ const AuthForm = (props: PaperProps) => {
       }
       const user = await auth("/signin", { email, password });
       if (user) {
+        mutate();
         setIsLoading(false);
-        setCurrentUser(user);
-        router.push("/checkout");
+        router.back();
       }
     } catch (error) {
       if (error) console.log(error);
@@ -80,19 +80,21 @@ const AuthForm = (props: PaperProps) => {
           {type === "signup" && (
             <>
               <TextInput
+                required
                 label="First Name"
                 placeholder="First name"
                 value={form.values.firstName}
                 onChange={(event) =>
-                  form.setFieldValue("name", event.currentTarget.value)
+                  form.setFieldValue("firstName", event.currentTarget.value)
                 }
               />
               <TextInput
+                required
                 label="Last Name"
                 placeholder="Last name"
                 value={form.values.lastName}
                 onChange={(event) =>
-                  form.setFieldValue("name", event.currentTarget.value)
+                  form.setFieldValue("lastName", event.currentTarget.value)
                 }
               />
             </>

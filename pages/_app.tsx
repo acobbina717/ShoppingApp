@@ -21,20 +21,20 @@ const App = (props: AppProps) => {
         />
       </Head>
 
-      <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
-        theme={{
-          colorScheme: "dark",
-        }}
-      >
-        <CartContextProvider>
-          <UserContextProvider>
+      <UserContextProvider>
+        <MantineProvider
+          withGlobalStyles
+          withNormalizeCSS
+          theme={{
+            colorScheme: "dark",
+          }}
+        >
+          <CartContextProvider>
             <Navigation />
             <Component {...pageProps} />
-          </UserContextProvider>
-        </CartContextProvider>
-      </MantineProvider>
+          </CartContextProvider>
+        </MantineProvider>
+      </UserContextProvider>
     </>
   );
 };

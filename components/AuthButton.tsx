@@ -1,6 +1,8 @@
 import { Button, ButtonProps } from "@mantine/core";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import fetcher from "../utils/fetcher";
+
 import { useUser } from "../utils/useUserContext";
 
 type AuthButtonProps = {
@@ -10,17 +12,13 @@ type AuthButtonProps = {
 
 const AuthButton = ({ otherProps }: AuthButtonProps) => {
   const router = useRouter();
-  const { currentUser, setCurrentUser, signOut, authorizedUser } = useUser();
-
-  if (authorizedUser) {
-    setCurrentUser(authorizedUser);
-  }
+  const { mutate, authorizedUser } = useUser();
 
   const handleSignOut = async () => {
     try {
-      const loggedOut = await signOut();
-      if (loggedOut) {
-        setCurrentUser(null);
+      const signedOut = await fetcher("/signout");
+      if (signedOut) {
+        mutate(null);
         router.push("/");
       }
     } catch (error) {
@@ -28,7 +26,7 @@ const AuthButton = ({ otherProps }: AuthButtonProps) => {
     }
   };
 
-  if (!currentUser) {
+  if (!authorizedUser) {
     return (
       <Button
         variant="subtle"
