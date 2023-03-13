@@ -8,6 +8,7 @@ import fetcher from "./fetcher";
 export const useCategories = () => {
   let categories = [];
   const { data, error, isLoading } = useSWR("/categories", fetcher);
+
   if (data) categories = data;
   const noData = isLoading || error || categories.length < 1;
   return { categories, isLoading, isError: error, noData };

@@ -1,149 +1,78 @@
 import {
-  Anchor,
+  Box,
   Button,
+  Container,
   Divider,
   Group,
   Loader,
   Paper,
-  PaperProps,
-  PasswordInput,
   Stack,
   TextInput,
 } from "@mantine/core";
-import { useToggle, upperFirst } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
-import { useRouter } from "next/router";
 
 import { FormEvent, useState } from "react";
-import { GoogleButton } from "./google-button/GoogleButton";
-import { auth } from "../utils/mutations";
-import { useUser } from "../utils/useUserContext";
+import { signIn } from "next-auth/react";
 
-const AuthForm = (props: PaperProps) => {
-  const { mutate } = useUser();
+import { GoogleButton } from "./google-button/GoogleButton";
+
+const AuthForm = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-  const [type, toggle] = useToggle(["signin", "signup"]);
+
   const form = useForm({
     initialValues: {
       email: "",
-      firstName: "",
-      lastName: "",
-      password: "",
     },
-
-    // validate: {
-    //   email: (val) => (/^\S+@\S+$/.test(val) ? null : "Invalid email"),
-    //   password: (val) =>
-    //     val.length <= 6
-    //       ? "Password should include at least 6 characters"
-    //       : null,
-    // },
+    validate: {
+      email: (val) => (/^\S+@\S+$/.test(val) ? null : "Invalid email"),
+    },
   });
 
-  const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    const { email, firstName, lastName, password } = form.values;
+    const { email } = form.values;
 
-    try {
-      if (type === "signup") {
-        await auth("/signup", {
-          email,
-          password,
-          firstName,
-          lastName,
-        });
-      }
-      const user = await auth("/signin", { email, password });
-      if (user) {
-        mutate();
-        setIsLoading(false);
-        router.back();
-      }
-    } catch (error) {
-      if (error) console.log(error);
-    }
+    await signIn("email", { email, redirect: false });
   };
+
   return (
-    <Paper radius="md" p="xl" withBorder {...props}>
-      <Group grow mb="md" mt="md">
-        {/* <GoogleButton clickHandler={signInWithGoogle} props={{ radius: "xl" }}>
-          Google
-        </GoogleButton> */}
-      </Group>
+    <Paper radius="md" p="xl" withBorder>
+      <Container size="xs" mt={70}>
+        <Box>
+          <GoogleButton props={{ radius: "xl", fullWidth: true }}>
+            Google
+          </GoogleButton>
+        </Box>
 
-      <Divider label="Or continue with email" labelPosition="center" my="lg" />
+        <Divider
+          label="Or continue with email"
+          labelPosition="center"
+          my="lg"
+        />
 
-      <form onSubmit={handleOnSubmit}>
-        <Stack>
-          {type === "signup" && (
-            <>
-              <TextInput
-                required
-                label="First Name"
-                placeholder="First name"
-                value={form.values.firstName}
-                onChange={(event) =>
-                  form.setFieldValue("firstName", event.currentTarget.value)
-                }
-              />
-              <TextInput
-                required
-                label="Last Name"
-                placeholder="Last name"
-                value={form.values.lastName}
-                onChange={(event) =>
-                  form.setFieldValue("lastName", event.currentTarget.value)
-                }
-              />
-            </>
-          )}
+        <form onSubmit={submitHandler}>
+          <Stack>
+            <TextInput
+              required
+              label="Email"
+              placeholder="hello@mantine.dev"
+              value={form.values.email}
+              onChange={(event) =>
+                form.setFieldValue("email", event.currentTarget.value)
+              }
+              error={form.errors.email && "Invalid email"}
+              radius="md"
+            />
+          </Stack>
 
-          <TextInput
-            required
-            label="Email"
-            placeholder="hello@mantine.dev"
-            value={form.values.email}
-            onChange={(event) =>
-              form.setFieldValue("email", event.currentTarget.value)
-            }
-            error={form.errors.email && "Invalid email"}
-          />
-
-          <PasswordInput
-            required
-            label="Password"
-            placeholder="Your password"
-            value={form.values.password}
-            onChange={(event) =>
-              form.setFieldValue("password", event.currentTarget.value)
-            }
-            error={
-              form.errors.password &&
-              "Password should include at least 6 characters"
-            }
-          />
-        </Stack>
-
-        <Group position="apart" mt="xl">
-          <Anchor
-            component="button"
-            type="button"
-            color="dimmed"
-            onClick={() => toggle()}
-            size="xs"
-          >
-            {type === "signup"
-              ? "Already have an account? Login"
-              : "Don't have an account? Register"}
-          </Anchor>
-
-          <Button variant="outline" type="submit">
-            {isLoading ? <Loader color="blue" size="sm" /> : upperFirst(type)}
-          </Button>
-        </Group>
-      </form>
+          <Group position="center" mt="xl">
+            <Button disabled={isLoading} fullWidth type="submit" radius="xl">
+              {isLoading ? <Loader /> : "Login"}
+            </Button>
+          </Group>
+        </form>
+      </Container>
     </Paper>
   );
 };

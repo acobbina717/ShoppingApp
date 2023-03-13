@@ -1,16 +1,12 @@
-import { AppProps } from "next/app";
 import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
-// eslint-disable-next-line no-unused-vars
+import { SessionProvider } from "next-auth/react";
 
 import Navigation from "../components/nav/Nav";
-// import "reset-css";
 import { CartContextProvider } from "../utils/useCartContext";
 import { UserContextProvider } from "../utils/useUserContext";
 
-const App = (props: AppProps) => {
-  const { Component, pageProps } = props;
-
+const App = ({ Component, pageProps: { session, ...pageProps } }) => {
   return (
     <>
       <Head>
@@ -21,20 +17,22 @@ const App = (props: AppProps) => {
         />
       </Head>
 
-      <UserContextProvider>
-        <MantineProvider
-          withGlobalStyles
-          withNormalizeCSS
-          theme={{
-            colorScheme: "dark",
-          }}
-        >
-          <CartContextProvider>
-            <Navigation />
-            <Component {...pageProps} />
-          </CartContextProvider>
-        </MantineProvider>
-      </UserContextProvider>
+      <SessionProvider session={session}>
+        <UserContextProvider>
+          <MantineProvider
+            withGlobalStyles
+            withNormalizeCSS
+            theme={{
+              colorScheme: "dark",
+            }}
+          >
+            <CartContextProvider>
+              <Navigation />
+              <Component {...pageProps} />
+            </CartContextProvider>
+          </MantineProvider>
+        </UserContextProvider>
+      </SessionProvider>
     </>
   );
 };
