@@ -2,7 +2,7 @@
 
 # ShoppingApp
 
-A modern, fully-featured shopping app built with [Vite](https://github.com/vitejs/vite), [React](https://reactjs.org/), [TypeScript](https://www.typescriptlang.org/), [Redux Toolkit](https://redux-toolkit.js.org/), [Redux Saga](https://redux-saga.js.org/), [Firebase](https://firebase.google.com/), [Stripe](https://stripe.com/), and [Styled Components](https://styled-components.com/).
+A retail e-commerce app built with NextJs, TypeScript NextAuth, Prisma, MongoDB, Stripe, and Mantine UI.
 
 ## Features
 
@@ -18,11 +18,11 @@ The purpose of ShoppingApp is to provide a user-friendly platform for customers 
 
 ## Dependencies
 
-- [Vite](https://github.com/vitejs/vite) - A web build tool based on native ES module imports
-- [React](https://reactjs.org/) - A JavaScript library for building user interfaces
-- [TypeScript](https://www.typescriptlang.org/) - A typed superset of JavaScript that compiles to plain JavaScript
-- [Redux Toolkit](https://redux-toolkit.js.org/) - A toolkit for Redux with opinionated defaults and improved developer experience
-- [Redux Saga](https://redux-saga.js.org/) - A library that aims to make application side effects easier to manage
-- [Firebase](https://firebase.google.com/) - A mobile and web application development platform
-- [Stripe](https://stripe.com/) - A payment gateway for processing online transactions
-- [Styled Components](https://styled-components.com/) - A library for styling React components with CSS
+
+- Next JS
+- TypeScript
+- NextAuth
+- Prisma
+- MongoDB
+- Stripe
+
