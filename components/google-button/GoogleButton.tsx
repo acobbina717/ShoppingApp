@@ -18,6 +18,7 @@ export const GoogleButton = ({
   const handleGoogleSignIn = () =>
     signIn("google", {
       callbackUrl: `/auth?callbackUrl=${router.asPath}`,
+      redirect: false,
     });
 
   return (

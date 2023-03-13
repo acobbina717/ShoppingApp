@@ -28,13 +28,13 @@ const AuthForm = () => {
     },
   });
 
-  const submitHandler = async (e: FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    const { email } = form.values;
+  // const submitHandler = async (e: FormEvent) => {
+  //   e.preventDefault();
+  //   setIsLoading(true);
+  //   const { email } = form.values;
 
-    await signIn("email", { email, redirect: false });
-  };
+  //   await signIn("email", { email, redirect: false });
+  // };
 
   return (
     <Paper radius="md" p="xl" withBorder>
@@ -51,7 +51,7 @@ const AuthForm = () => {
           my="lg"
         />
 
-        <form onSubmit={submitHandler}>
+        {/* <form onSubmit={submitHandler}>
           <Stack>
             <TextInput
               required
@@ -71,7 +71,7 @@ const AuthForm = () => {
               {isLoading ? <Loader /> : "Login"}
             </Button>
           </Group>
-        </form>
+        </form> */}
       </Container>
     </Paper>
   );
