@@ -14,15 +14,15 @@ A retail e-commerce app built with NextJs, TypeScript NextAuth, Prisma, MongoDB,
 
 ## Purpose
 
-The purpose of ShoppingApp is to provide a user-friendly platform for customers to browse and purchase sneakers and clothing from a variety of brands.
+Provide a user-friendly platform for customers to browse and purchase sneakers and clothing from a variety of categories.
+
 
 ## Dependencies
-
-
 - Next JS
 - TypeScript
 - NextAuth
 - Prisma
 - MongoDB
 - Stripe
+- Mantine UI
 
