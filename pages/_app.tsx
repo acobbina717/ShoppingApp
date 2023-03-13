@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider as AuthProvider } from "next-auth/react";
 
 import Navigation from "../components/nav/Nav";
 import { CartContextProvider } from "../utils/useCartContext";
@@ -17,7 +17,7 @@ const App = ({ Component, pageProps: { session, ...pageProps } }) => {
         />
       </Head>
 
-      <SessionProvider session={session}>
+      <AuthProvider session={session}>
         <UserContextProvider>
           <MantineProvider
             withGlobalStyles
@@ -32,7 +32,7 @@ const App = ({ Component, pageProps: { session, ...pageProps } }) => {
             </CartContextProvider>
           </MantineProvider>
         </UserContextProvider>
-      </SessionProvider>
+      </AuthProvider>
     </>
   );
 };
