@@ -1,10 +1,13 @@
 import { Container } from "@mantine/core";
-import AuthForm from "../../components/AuthForm";
+
+import { GoogleButton } from "../../components/google-button/GoogleButton";
 
 const AuthPage = () => {
   return (
     <Container>
-      <AuthForm />
+      <GoogleButton props={{ radius: "xl", fullWidth: true }}>
+        Google
+      </GoogleButton>
     </Container>
   );
 };

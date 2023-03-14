@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Container,
   Divider,
@@ -11,10 +10,8 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { signIn } from "next-auth/react";
-
-import { GoogleButton } from "./google-button/GoogleButton";
 
 const AuthForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,30 +25,24 @@ const AuthForm = () => {
     },
   });
 
-  // const submitHandler = async (e: FormEvent) => {
-  //   e.preventDefault();
-  //   setIsLoading(true);
-  //   const { email } = form.values;
+  const submitHandler = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const { email } = form.values;
 
-  //   await signIn("email", { email, redirect: false });
-  // };
+    await signIn("email", { email, redirect: false });
+  };
 
   return (
     <Paper radius="md" p="xl" withBorder>
       <Container size="xs" mt={70}>
-        <Box>
-          <GoogleButton props={{ radius: "xl", fullWidth: true }}>
-            Google
-          </GoogleButton>
-        </Box>
-
         <Divider
           label="Or continue with email"
           labelPosition="center"
           my="lg"
         />
 
-        {/* <form onSubmit={submitHandler}>
+        <form onSubmit={submitHandler}>
           <Stack>
             <TextInput
               required
@@ -71,7 +62,7 @@ const AuthForm = () => {
               {isLoading ? <Loader /> : "Login"}
             </Button>
           </Group>
-        </form> */}
+        </form>
       </Container>
     </Paper>
   );
