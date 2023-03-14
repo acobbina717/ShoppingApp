@@ -8,7 +8,9 @@ import {
   Table,
   Title,
 } from "@mantine/core";
+
 import { useState } from "react";
+
 import { useCart } from "../utils/useCartContext";
 
 import CheckoutItem from "./CheckoutItem";
