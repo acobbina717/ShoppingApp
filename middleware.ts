@@ -12,7 +12,13 @@ const authenticatedPages = ["/checkout"];
 
 export default function middleware(req: NextRequest) {
   if (authenticatedPages.find((p) => p === req.nextUrl.pathname)) {
-    const token = req.cookies.get("next-auth.session-token");
+    const env = process.env.NODE_ENV;
+    let token;
+
+    if (env === "production") {
+      token = req.cookies.get("__Secure-next-auth.session-token");
+    }
+    token = req.cookies.get("next-auth.session-token");
 
     const url = req.nextUrl.clone();
     url.pathname = "/auth";
