@@ -1,5 +1,3 @@
-import * as dotenv from "dotenv";
-dotenv.config();
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
@@ -21,6 +19,7 @@ export const handler = async (event: any) => {
       body: JSON.stringify({ paymentIntent }),
     };
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log({ error });
     return {
       status: 400,
