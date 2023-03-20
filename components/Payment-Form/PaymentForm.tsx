@@ -1,9 +1,4 @@
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-// import {
-//   FormContainer,
-//   PaymentFormContainer,
-//   // PaymentButton,
-// } from "./payment-form.styles";
 
 import { FormEvent, useState } from "react";
 
@@ -47,15 +42,17 @@ const PaymentForm = () => {
     setIsPaymentProcessing(false);
 
     if (paymentResult.error) {
+      // eslint-disable-next-line no-alert
       alert(paymentResult.error);
     } else if (paymentResult.paymentIntent.status === "succeeded") {
+      // eslint-disable-next-line no-alert
       alert("Payment Successful");
     }
   };
 
   return (
     <div style={{ backgroundColor: "white" }}>
-      <form>
+      <form onSubmit={paymentHandler}>
         <h2>Credit Card Payment: </h2>
         <CardElement />
       </form>

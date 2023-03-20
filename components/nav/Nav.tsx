@@ -28,7 +28,7 @@ const NavLinks = () => (
     >
       Shop
     </Button>
-    <AuthButton otherProps={{ size: "md" }} />
+    <AuthButton />
   </>
 );
 
