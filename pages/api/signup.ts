@@ -1,12 +1,12 @@
-import bcrypt from "bcrypt";
+// import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import cookie from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../utils/prisma";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const salt = bcrypt.genSaltSync();
-  const { name, email, password } = req.body;
+  // const salt = bcrypt.genSaltSync();
+  const { name, email } = req.body;
 
   let user;
 
@@ -15,7 +15,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       data: {
         name,
         email,
-        password: bcrypt.hashSync(password, salt),
+        // password: bcrypt.hashSync(password, salt),
       },
     });
   } catch (error) {
