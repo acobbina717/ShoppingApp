@@ -1,7 +1,6 @@
 import { Button, ButtonProps } from "@mantine/core";
 import { signIn } from "next-auth/react";
 import { ReactNode } from "react";
-import { useRouter } from "next/router";
 import { GoogleIcon } from "./GoogleIcon";
 
 interface GoogleButtonProps {
@@ -14,12 +13,7 @@ export const GoogleButton = ({
 
   props,
 }: GoogleButtonProps) => {
-  const router = useRouter();
-  const handleGoogleSignIn = () =>
-    signIn("google", {
-      callbackUrl: `/auth?callbackUrl=${router.asPath}`,
-      redirect: false,
-    });
+  const handleGoogleSignIn = () => signIn("google", {});
 
   return (
     <Button

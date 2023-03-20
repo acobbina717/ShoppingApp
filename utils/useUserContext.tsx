@@ -38,7 +38,7 @@ export const UserContext = createContext<UserProps>({
 });
 
 export const UserContextProvider = ({ children }) => {
-  const { data: authorizedUser, error, mutate } = useSWR("/authuser", fetcher);
+  const { data: authorizedUser, error, mutate } = useSWR("", fetcher);
 
   const value = useMemo(
     () => ({
