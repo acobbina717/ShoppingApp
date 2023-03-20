@@ -5,7 +5,7 @@ import { SessionProvider as AuthProvider } from "next-auth/react";
 import { Elements } from "@stripe/react-stripe-js";
 import Navigation from "../components/nav/Nav";
 import { CartContextProvider } from "../utils/useCartContext";
-import { UserContextProvider } from "../utils/useUserContext";
+
 import { stripePromise } from "../utils/stripe/stripe.utils";
 
 const App = ({ Component, pageProps: { session, ...pageProps } }) => {
@@ -20,22 +20,20 @@ const App = ({ Component, pageProps: { session, ...pageProps } }) => {
       </Head>
 
       <AuthProvider session={session}>
-        <UserContextProvider>
-          <MantineProvider
-            withGlobalStyles
-            withNormalizeCSS
-            theme={{
-              colorScheme: "dark",
-            }}
-          >
-            <CartContextProvider>
-              <Navigation />
-              <Elements stripe={stripePromise}>
-                <Component {...pageProps} />
-              </Elements>
-            </CartContextProvider>
-          </MantineProvider>
-        </UserContextProvider>
+        <MantineProvider
+          withGlobalStyles
+          withNormalizeCSS
+          theme={{
+            colorScheme: "dark",
+          }}
+        >
+          <CartContextProvider>
+            <Navigation />
+            <Elements stripe={stripePromise}>
+              <Component {...pageProps} />
+            </Elements>
+          </CartContextProvider>
+        </MantineProvider>
       </AuthProvider>
     </>
   );
